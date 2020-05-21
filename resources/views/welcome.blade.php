@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html, body {
@@ -81,19 +81,26 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    大山さんサポートします
                 </div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                {!! Form::open(['route'=>'import','enctype'=>'multipart/form-data']) !!}
+                    <div class="form-group">
+                        {!! Form::label('csv','csvをアップロード') !!}
+                        {!! Form::file('csv') !!}
+                    </div>
+                    {!! Form::submit('アップロード',['class'=>'btn btn-primary']) !!}
+                {!! Form::close() !!}
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                
             </div>
         </div>
     </body>
