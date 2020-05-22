@@ -16,8 +16,8 @@ class CreateRoomsTable extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('building_id')->index();
-            $table->char('room_number',150)->index();
-            $table->smallInteger('floor_number')->index();
+            $table->char('room_number',150)->nullable()->index();
+            $table->smallInteger('floor_number')->nullable()->index();
             $table->char('layout',50)->nullable();
             $table->char('direction',50)->nullable();
             $table->decimal('occupied_area',6,2)->default(0);
@@ -28,8 +28,8 @@ class CreateRoomsTable extends Migration
             $table->char('residential_building_name',100)->nullable();//棟名
             $table->char('layout_type',100)->nullable()->index();
             $table->integer('published_price')->default(0);//新築時売買価格
-            $table->integer('expected_price');//予想売買価格
-            $table->integer('expected_rent_price');//予想賃料
+            $table->integer('expected_price')->default(0);//予想売買価格
+            $table->integer('expected_rent_price')->default(0);//予想賃料
             $table->timestamps();
 
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');

@@ -15,24 +15,26 @@ class CreateBuildingsTable extends Migration
     {
         Schema::create('buildings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('building_name',150)->index();
-            $table->char('prefecture',20);
-            $table->char('city',80);
-            $table->char('street',150);
-            $table->smallInteger('built_year');
+            $table->char('building_name',150)->nullable()->index();
+            $table->char('prefecture',20)->nullable();
+            $table->char('city',80)->nullable();
+            $table->char('street',150)->nullable();
+            $table->smallInteger('built_year')->default(0);
             $table->smallInteger('built_month')->default(0);
             $table->smallInteger('total_unit')->nullable();
             $table->char('layout',80)->nullable();
             $table->char('occupied_area',80)->nullable();//占有面積
-            $table->char('construction',80);//構造
+            $table->char('construction',80)->nullable();//構造
             $table->char('construction_company',80)->nullable();//施工会社
             $table->char('seller',80)->nullable();//分譲時会社
             $table->char('parking',80)->nullable();
+            $table->smallInteger('level_underground')->default(0);//地下階数
+            $table->smallInteger('level_floor')->nullable();//階数
             $table->char('kindergarten_district',80)->nullable();
             $table->char('primary_school_district',80)->nullable();
             $table->char('middle_school_district',80)->nullable();
             $table->char('station_route_01',80)->nullable();//最寄り駅路線1
-            $table->char('station_name_01',80);
+            $table->char('station_name_01',80)->nullable();
             $table->smallInteger('station_walk_01');
             $table->char('station_route_02',80)->nullable();//最寄り駅路線2
             $table->char('station_name_02',80)->nullable();
