@@ -13,4 +13,5 @@
 
 Route::get('/', 'BuildingsController@index');
 
+Route::get('buildings/show/{id}','BuildingsController@show')->name('buildings_show');
 Route::post('import','CSVController@import')->name('import');
