@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'BuildingsController@index');
 
 Route::post('import','CSVController@import')->name('import');

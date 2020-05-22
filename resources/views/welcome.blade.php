@@ -1,107 +1,42 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('title','物件一覧')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+@section('content')
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+<div class="container">
+    <div class="row">
+        <div class='col-sm-12'>
+            <h1>大山査定</h1>
+            <table class='table table-striped table-bordered table-sm'>
+                <tr>
+                    <th>物件名</th>
+                    <th>総戸数</th>
+                    <th>新築時価格有り戸数</th>
+                    <th>大山査定数</th>
+                    <th>査定進捗率(総戸数比)</th>
+                </tr>
+                @foreach($buildings as $building)
+                <tr>
+                    <td>{{ $building->building_name }}</td>
+                    <td>{{ $building->total_unit }}</td>
+                    <td>
+                        @if(isset($building->rooms->published_price))
+                        {{ count($building->rooms->published_price) }}
                         @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    大山さんサポートします
-                </div>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                {!! Form::open(['route'=>'import','enctype'=>'multipart/form-data']) !!}
-                    <div class="form-group">
-                        {!! Form::label('csv','csvをアップロード') !!}
-                        {!! Form::file('csv') !!}
-                    </div>
-                    {!! Form::submit('アップロード',['class'=>'btn btn-primary']) !!}
-                {!! Form::close() !!}
-
-                
-            </div>
+                    </td>
+                    <td>
+                        @if(isset($building->rooms->expected_price))
+                        {{ count($building->rooms->expected_price) }}</td>
+                        @endif
+                    <td>
+                        @if(isset($building->rooms->expected_price) && isset($building->room->total_unit))
+                        {{ round($building->rooms->expected_price / $building->total_unit * 100,2) }}
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </table>
         </div>
-    </body>
-</html>
+    </div>
+</div>
