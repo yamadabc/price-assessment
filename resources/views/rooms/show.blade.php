@@ -33,9 +33,9 @@
                     <th>謄本</th>
                     <th>編集</th>
                 </tr>
-                @include('layouts.basicRoomTable')
-                
+                @include('components.basicRoomTable')
             </table>
+            <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫新規登録</a>
     </div>
 </div>
 @endsection

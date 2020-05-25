@@ -12,4 +12,28 @@ class StockSalesRoom extends Model
     {
         return $this->belongsTo('App\Room');
     }
+
+    //nullなら0を代入
+    public function nullSubZero($request)
+    {
+        if($request->previous_price === null){
+            $previous_price = 0;
+        }else{
+            $previous_price = $request->previous_price;
+        }
+        if($request->management_fee === null){
+            $management_fee = 0;
+        }else{
+            $management_fee = $request->management_fee;
+        }
+        if($request->reserve_fund === null){
+            $reserve_fund = 0;
+        }else{
+            $reserve_fund = $request->reserve_fund;
+        }
+       
+
+        return ['previous_price' => $previous_price,'management_fee' => $management_fee,'reserve_fund' => $reserve_fund];
+
+    }
 }
