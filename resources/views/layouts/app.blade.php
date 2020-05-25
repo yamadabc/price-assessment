@@ -10,6 +10,9 @@
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <h1><a href="/">大山査定</a></h1>
+    </header>
     @yield('content')
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

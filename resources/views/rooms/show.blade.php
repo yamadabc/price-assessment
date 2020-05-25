@@ -6,7 +6,6 @@
 
 <div class="container">
     <div class="row">
-            <h2><a href="/">大山査定</a></h2>
             <h2>{{ $building->building_name }}</h2>
             <div class="bottun">
                 <a href="#" class='btn btn-danger'>売買</a>
@@ -39,6 +38,7 @@
             <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫</a>
             <a href="{{ route('stock_rent_create',$room->id) }}">/賃貸在庫</a>
             <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約</a>
+            <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>
     </div>
 </div>
 @endsection

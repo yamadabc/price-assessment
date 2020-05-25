@@ -7,9 +7,9 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
-            <h2><a href="/">大山査定</a></h2>
-            <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>{{ $room->room_number }}号室</h2>
-            <h2>賃貸在庫情報新規入力</h2>
+            <h3>賃貸在庫情報新規入力</h3>
+            <h4><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a></h4>
+            <h4>{{ $room->room_number }}号室</h4>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

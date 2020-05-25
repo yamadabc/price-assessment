@@ -7,7 +7,6 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
-        <h2><a href="/">大山査定</a></h2>
             <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>{{ $room->room_number }}号室</h2>
             <h2>売買成約情報新規入力</h2>
             @if ($errors->any())

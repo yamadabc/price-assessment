@@ -6,7 +6,6 @@
 
 <div class="container">
     <div class="row">
-            <h2><a href="/">大山査定</a></h2>
             <h2>{{ $building->building_name }}</h2>
             <div class="bottun">
                 <a href="#" class='btn btn-danger'>売買</a>

@@ -7,7 +7,6 @@
 <div class="container">
     <div class="row">
         <div class='col-sm-12'>
-            <h1>大山査定</h1>
             @if (session('flash_message'))
                 <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
                     {{ session('flash_message') }}
