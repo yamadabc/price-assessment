@@ -7,7 +7,7 @@ use App\StockSalesRoom;
 use App\StockRentRoom;
 use App\Building;
 use App\Room;
-use App\Http\Requests\Stock;
+use App\Http\Requests\Rent;
 
 class StockRentRoomController extends Controller
 {
@@ -20,7 +20,7 @@ class StockRentRoomController extends Controller
         return view('stocks.createRent',compact('id','room'));
     }
 
-    public function store(Stock $request,$id)
+    public function store(Rent $request,$id)
     {
         $validated = $request->validated();
 
