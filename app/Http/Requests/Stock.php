@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Sales extends FormRequest
+class Stock extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,13 @@ class Sales extends FormRequest
     public function rules()
     {
         return [
-            'price'               => 'required|integer',
-            'previous_price'      => 'integer|nullable',
-            'management_fee'      => 'integer|nullable',
-            'reserve_fund'        => 'integer|nullable',
+            'price'               => 'required|numeric',
+            'previous_price'      => 'numeric|nullable',
+            'management_fee'      => 'numeric|nullable',
+            'monthly_fee'         => 'numeric|nullable',
+            'security_deposit'    => 'numeric|nullable',
+            'gratuity_fee'        => 'numeric|nullable',
+            'deposit'             => 'numeric|nullable',
             'company_name'        => 'string|nullable|max:255',
             'contact_phonenumber' => 'string|nullable',
             'pic'                 => 'string|nullable|max:255',
@@ -36,5 +39,4 @@ class Sales extends FormRequest
             'changed_at'          => 'date|nullable',
         ];
     }
-
 }

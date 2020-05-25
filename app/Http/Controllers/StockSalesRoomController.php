@@ -33,6 +33,7 @@ class StockSalesRoomController extends Controller
             'management_fee' => $stackSalesRoomData['management_fee'],
             'reserve_fund' => $stackSalesRoomData['reserve_fund'],
             'company_name' => $request->company_name,
+            'contact_phonenumber'     => $request->contact_phonenumber,
             'pic' => $request->pic,
             'email' => $request->email,
             'registered_at' => $request->registered_at,

@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title','売買在庫新規入力')
+@section('title','賃貸在庫新規入力')
 
 @section('content')
 
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
-        <h2><a href="/">大山査定</a></h2>
+            <h2><a href="/">大山査定</a></h2>
             <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>{{ $room->room_number }}号室</h2>
-            <h2>売買成約情報新規入力</h2>
+            <h2>賃貸在庫情報新規入力</h2>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -19,10 +19,10 @@
                     </ul>
                 </div>
             @endif
-            {!! Form::model($room,['route'=>['sold_sales_store',$room->id],'method' => 'post']) !!}
+            {!! Form::model($room,['route'=>['stock_rent_store',$room->id],'method' => 'post']) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-sm-5">{!! Form::label('price','成約価格') !!}<span class='badge-pill badge-danger' style='margin:5px;'>必須 </span></div>
+                    <div class="col-sm-5">{!! Form::label('price','掲載中の賃料') !!}<span class='badge-pill badge-danger' style='margin:5px;'>必須 </span></div>
                     <div class="col-sm-7">
                         <div class="input-group">
                             {!! Form::text('price',old('price'),['class'=>'form-control']) !!}
@@ -36,7 +36,7 @@
                 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-sm-5">{!! Form::label('previous_price','成約前の価格') !!}</div>
+                    <div class="col-sm-5">{!! Form::label('previous_price','変更前の賃料') !!}</div>
                     <div class="col-sm-7">    
                         <div class="input-group">
                             {!! Form::text('previous_price',old('previous_price'),['class'=>'form-control']) !!}
@@ -62,10 +62,49 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-sm-5">{!! Form::label('reserve_fund','修繕積立金') !!}</div>
+                    <div class="col-sm-5">{!! Form::label('monthly_fee','共益費') !!}</div>
                     <div class="col-sm-7">
                         <div class="input-group">
-                            {!! Form::text('reserve_fund',old('reserve_fund'),['class'=>'form-control']) !!}
+                            {!! Form::text('monthly_fee',old('monthly_fee'),['class'=>'form-control']) !!}
+                            <div class='input-group-append'>
+                                <span class='input-group-text' id='addon1'>円</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-5">{!! Form::label('security_deposit','敷金') !!}</div>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            {!! Form::text('security_deposit',old('security_deposit'),['class'=>'form-control']) !!}
+                            <div class='input-group-append'>
+                                <span class='input-group-text' id='addon1'>ヶ月</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-5">{!! Form::label('gratuity_fee','礼金') !!}</div>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            {!! Form::text('gratuity_fee',old('gratuity_fee'),['class'=>'form-control']) !!}
+                            <div class='input-group-append'>
+                                <span class='input-group-text' id='addon1'>ヶ月</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-5">{!! Form::label('deposit','保証金') !!}</div>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            {!! Form::text('deposit',old('deposit'),['class'=>'form-control']) !!}
                             <div class='input-group-append'>
                                 <span class='input-group-text' id='addon1'>円</span>
                             </div>
