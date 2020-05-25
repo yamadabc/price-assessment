@@ -38,4 +38,14 @@ class Building extends Model
     {
         return $this->hasMany('App\Room');
     }
+    //building@index
+    public static function getWithRooms()
+    {
+        return self::with('rooms:id,building_id,published_price,expected_price,expected_rent_price')->select('id','building_name','total_unit')->get();
+    }
+    //building@show,rooms@show
+    public function getForRoomsShow($id)
+    {
+        return $this->with('rooms.soldSalesRooms:price')->select('id','building_name')->find($id);
+    }
 }

@@ -18,11 +18,11 @@
                 </tr>
                 @foreach($buildings as $building)
                 <tr>
-                    <td>{{ $building->building_name }}</td>
+                    <td><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></td>
                     <td>{{ $building->total_unit }}</td>
                     <td>
                         @if(isset($building->rooms->published_price))
-                        {{ count($building->rooms->published_price) }}
+                        {{ $building->rooms_count }}
                         @endif
                     </td>
                     <td>
@@ -30,7 +30,7 @@
                         {{ count($building->rooms->expected_price) }}</td>
                         @endif
                     <td>
-                        @if(isset($building->rooms->expected_price) && isset($building->room->total_unit))
+                        @if(isset($building->rooms->expected_price) && isset($building->total_unit))
                         {{ round($building->rooms->expected_price / $building->total_unit * 100,2) }}
                         @endif
                     </td>
@@ -40,3 +40,4 @@
         </div>
     </div>
 </div>
+@endsection

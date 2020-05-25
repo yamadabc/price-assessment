@@ -14,13 +14,13 @@ class BuildingsController extends Controller
     */
     public function index()
     {
-        $buildings = Building::with('rooms')->select('id','building_name','total_unit')->get();
-        return view('welcome',['buildings'=>$buildings]);
+        $builings = Building::getWithRooms();
+        return view('welcome',['buildings' => $builings]);
     }
 
     public function show($id)
     {
-        $building = Building::with('rooms.soldSalesRooms:price')->find($id);
-        return view('buildings.show',['building' => $building]);
+        $building = new Building();
+        return view('buildings.show',['building' => $building->getForRoomsShow($id)]);
     }
 }
