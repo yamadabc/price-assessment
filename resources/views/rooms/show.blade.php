@@ -35,7 +35,8 @@
                 </tr>
                 @include('components.basicRoomTable')
             </table>
-            <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫新規登録</a>
+            <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫・新規登録</a>
+            <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約・新規登録</a>
     </div>
 </div>
 @endsection
