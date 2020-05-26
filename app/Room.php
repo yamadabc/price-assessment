@@ -50,5 +50,16 @@ class Room extends Model
         return $this->hasMany('App\CopyOfRegister');
     }
 
-    
+    //buildings@sales
+    public function getRoomSalesVer($id)
+    {
+        $soldSalesRoom = $this::find($id)->soldSalesRooms()->orderBy('created_at','desc')->first();
+        $stockSalesRoom = $this::find($id)->stockSalesRooms()->orderBy('created_at','desc')->first();
+
+        return [
+            'soldSalesRoom' => $soldSalesRoom,
+            'stockSalesRoom' => $stockSalesRoom,
+        ];
+        
+    }
 }

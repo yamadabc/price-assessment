@@ -18,4 +18,18 @@ class RoomsController extends Controller
             'room' => $room,
             ]);
     }
+    /*  
+    * 売買バージョンに切り替え
+    *　@param $room->id
+    */
+    public function sales($id)
+    {
+        $room = Room::find($id);
+        $salesData = $room->getRoomSalesVer($id);
+        return view('rooms.sales',[
+            'room' => $room,
+            'soldSalesRoom' => $salesData['soldSalesRoom'],
+            'stockSalesRoom' => $salesData['stockSalesRoom'],
+            ]);
+    }
 }

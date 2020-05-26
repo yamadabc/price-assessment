@@ -48,4 +48,5 @@ class Building extends Model
     {
         return $this->with('rooms.soldSalesRooms:price')->select('id','building_name')->find($id);
     }
+
 }

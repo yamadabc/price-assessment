@@ -8,8 +8,6 @@
     <div class="row">
             <h2>{{ $building->building_name }}</h2>
             <div class="bottun">
-                <a href="#" class='btn btn-danger'>売買</a>
-                <a href="#" class='btn btn-success'>賃貸</a>
             </div>
             </div>
             <table class='table table-hover table-striped table-bordered table-sm'>

@@ -6,9 +6,9 @@
 
 <div class="container">
     <div class="row">
-            <h2>{{ $building->building_name }}</h2>
+        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
             <div class="bottun">
-                <a href="#" class='btn btn-danger'>売買</a>
+                <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
                 <a href="#" class='btn btn-success'>賃貸</a>
             </div>
             <table class='table table-hover table-striped table-bordered table-sm'>
