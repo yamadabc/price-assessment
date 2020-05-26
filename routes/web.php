@@ -33,5 +33,6 @@ Route::prefix('sold')->group(function(){
 Route::prefix('room')->group(function(){
     Route::get('room/{id}','RoomsController@show')->name('room_show');
     Route::get('/show/{id}/sales','RoomsController@sales')->name('room_sales');//売買切り替え
+    Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え
 });
 Route::post('import','CSVController@import')->name('import');

@@ -32,4 +32,18 @@ class RoomsController extends Controller
             'stockSalesRoom' => $salesData['stockSalesRoom'],
             ]);
     }
+    /*  
+    * 賃貸バージョンに切り替え
+    *　@param $room->id
+    */
+    public function rent($id)
+    {
+        $room = Room::find($id);
+        $salesData = $room->getRoomRentVer($id);
+        return view('rooms.rent',[
+            'room' => $room,
+            'soldRentRoom' => $salesData['soldRentRoom'],
+            'stockRentRoom' => $salesData['stockRentRoom'],
+            ]);
+    }
 }

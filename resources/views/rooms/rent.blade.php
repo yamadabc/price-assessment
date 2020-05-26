@@ -6,9 +6,9 @@
 
 <div class="container">
     <div class="row">
-        <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・売買</h2>
+        <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸</h2>
             <div class="bottun">
-                <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a>
+                <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
             </div>
             </div>
             <table class='table table-hover table-striped table-bordered table-sm'>
@@ -27,7 +27,7 @@
                     <th>成約前価格</th>
                     <th>登録年月日</th>
                     <th>変更年月日</th>
-                    <th>予想売買価格</th>
+                    <th>予想賃料</th>
                     <th>謄本</th>
                 </tr>
             <tr>
@@ -38,55 +38,55 @@
                 <td>{{ $room->direction }}</td>
                 <td>{{ $room->occupied_area }}㎡</td>
                 <td>
-                    @if(isset($stockSalesRoom))
-                        {{ $stockSalesRoom->price }}
+                    @if(isset($stockRentRoom))
+                        {{ $stockRentRoom->price }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($stockSalesRoom))
-                        {{ $stockSalesRoom->previous_price }}
+                    @if(isset($stockRentRoom))
+                        {{ $stockRentRoom->previous_price }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($stockSalesRoom))
-                        {{ $stockSalesRoom->registered_at }}
+                    @if(isset($stockRentRoom))
+                        {{ $stockRentRoom->registered_at }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($stockSalesRoom))
-                        {{ $stockSalesRoom->changed_at }}
+                    @if(isset($stockRentRoom))
+                        {{ $stockRentRoom->changed_at }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($soldSalesRoom))
-                        {{ $soldSalesRoom->price }}
+                    @if(isset($soldRentRoom))
+                        {{ $soldRentRoom->price }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($soldSalesRoom))
-                        {{ $soldSalesRoom->previous_price }}
+                    @if(isset($soldRentRoom))
+                        {{ $soldRentRoom->previous_price }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($soldSalesRoom))
-                        {{ $soldSalesRoom->registered_at }}
+                    @if(isset($soldRentRoom))
+                        {{ $soldRentRoom->registered_at }}
                     @endif
                 </td>
                 <td>
-                    @if(isset($soldSalesRoom))
-                        {{ $soldSalesRoom->changed_at }}
+                    @if(isset($soldRentRoom))
+                        {{ $soldRentRoom->changed_at }}
                     @endif
                 </td>
-                <td>{{ $room->expected_price }}</td>
+                <td>{{ $room->expected_rent_price }}</td>
                 
                 <td><a href="#">リンク</a></td>
             </tr>
-            </table>     
+            </table>  
             <p>新規登録</p>
             <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫</a>
             <a href="{{ route('stock_rent_create',$room->id) }}">/賃貸在庫</a>
             <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約</a>
-            <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>  
+            <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>     
     </div>
 </div>
 @endsection
