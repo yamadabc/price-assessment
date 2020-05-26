@@ -160,6 +160,16 @@ return [
         'email' => 'メールアドレス',
         'registered_at' => '登録年月日',
         'changed_at' => '変更年月日',
+
+        'room_number' => '部屋番号',
+        'floor_number' => '階数',
+        'layout' => '間取り',
+        'layout_type' => '間取りタイプ',
+        'direction' => '方角',
+        'occupied_area' => '占有面積',
+        'published_price' => '新築時売買価格',
+        'expected_price' => '予想売買価格',
+        'expected_rent_price' => '予想賃料価格',
     ],
 
 ];

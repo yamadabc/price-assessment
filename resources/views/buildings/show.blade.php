@@ -90,7 +90,7 @@
                     @endif
                 </td>
                 <td><a href="#">リンク</a></td>
-                <td><a href="#">編集</a></td>
+                <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
             </tr>
             
             @endforeach

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\Building;
 use App\SoldSalesRoom;
+use App\Http\Requests\RoomEdit;
 
 class RoomsController extends Controller
 {
@@ -45,5 +46,39 @@ class RoomsController extends Controller
             'soldRentRoom' => $salesData['soldRentRoom'],
             'stockRentRoom' => $salesData['stockRentRoom'],
             ]);
+    }
+    /*
+    * @param $room->id
+    */
+    public function edit($id)
+    {
+        $room = Room::find($id);
+        return view('rooms.edit',[
+            'room' => $room,
+            ]);
+    }
+
+    public function update(RoomEdit $request,$id)
+    {
+        $request->validated();
+        $room = Room::find($id);
+        $roomData = [];
+        $roomData = $room->nullSubZero($request);
+
+        Room::find($id)->update([
+            'room_number' => $request->room_number,
+            'floor_number' => $request->floor_number,
+            'layout' => $request->layout,
+            'layout_type' => $request->layout_type,
+            'direction' => $request->direction,
+            'occupied_area' => $roomData['occupied_area'],
+            'published_price' => $roomData['published_price'],
+            'expected_price' => $roomData['expected_price'],
+            'expected_rent_price' => $roomData['expected_rent_price'],
+        ]);
+
+        $builings = Building::getWithRooms();
+        \Session::flash('flash_message', '部屋情報を編集しました！');
+        return view('welcome',['buildings' => $builings]);
     }
 }

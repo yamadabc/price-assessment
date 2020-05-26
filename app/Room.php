@@ -53,23 +53,58 @@ class Room extends Model
     //rooms@sales
     public function getRoomSalesVer($id)
     {
-        $soldSalesRoom = $this::find($id)->soldSalesRooms()->orderBy('created_at','desc')->first();
+        $soldSalesRoom  = $this::find($id)->soldSalesRooms()->orderBy('created_at','desc')->first();
         $stockSalesRoom = $this::find($id)->stockSalesRooms()->orderBy('created_at','desc')->first();
 
         return [
-            'soldSalesRoom' => $soldSalesRoom,
+            'soldSalesRoom'  => $soldSalesRoom,
             'stockSalesRoom' => $stockSalesRoom,
         ];
     }
     //rooms@rent
     public function getRoomRentVer($id)
     {
-        $soldRentRoom = $this::find($id)->soldRentRooms()->orderBy('created_at','desc')->first();
+        $soldRentRoom  = $this::find($id)->soldRentRooms()->orderBy('created_at','desc')->first();
         $stockRentRoom = $this::find($id)->stockRentRooms()->orderBy('created_at','desc')->first();
 
         return [
-            'soldRentRoom' => $soldRentRoom,
+            'soldRentRoom'  => $soldRentRoom,
             'stockRentRoom' => $stockRentRoom,
+        ];
+    }
+
+    //nullなら0を代入
+    public function nullSubZero($request)
+    {
+        if($request->occupied_area === null){
+            $occupied_area = 0;
+        }else{
+            $occupied_area = $request->occupied_area;
+        }
+        
+        if($request->published_price === null){
+            $published_price = 0;
+        }else{
+            $published_price = $request->published_price;
+        }
+        
+        if($request->expected_price === null){
+            $expected_price = 0;
+        }else{
+            $expected_price = $request->expected_price;
+        }
+        
+        if($request->expected_rent_price === null){
+            $expected_rent_price = 0;
+        }else{
+            $expected_rent_price = $request->expected_rent_price;
+        }
+
+        return [
+            'occupied_area' => $occupied_area,
+            'published_price' => $published_price,
+            'expected_price' => $expected_price,
+            'expected_rent_price' => $expected_rent_price,
         ];
     }
 

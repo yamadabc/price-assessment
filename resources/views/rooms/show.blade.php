@@ -30,7 +30,7 @@
                     <th>成約価格</th>
                     <th>差分</th>
                     <th>謄本</th>
-                    <th>編集</th>
+                    <th></th>
                 </tr>
                 @include('components.basicRoomTable')
             </table>

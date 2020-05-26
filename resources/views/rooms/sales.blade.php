@@ -29,6 +29,7 @@
                     <th>変更年月日</th>
                     <th>予想売買価格</th>
                     <th>謄本</th>
+                    <th></th>
                 </tr>
             <tr>
                 <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
@@ -80,6 +81,7 @@
                 <td>{{ $room->expected_price }}</td>
                 
                 <td><a href="#">リンク</a></td>
+                <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
             </tr>
             </table>     
             <p>新規登録</p>

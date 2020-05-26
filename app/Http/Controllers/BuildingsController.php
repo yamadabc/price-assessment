@@ -21,7 +21,8 @@ class BuildingsController extends Controller
     public function show($id)
     {
         $building = new Building();
-        return view('buildings.show',['building' => $building->getForRoomsShow($id)]);
+        $building = $building->getForRoomsShow($id);
+        return view('buildings.show',['building' => $building]);
     }
     
 }
