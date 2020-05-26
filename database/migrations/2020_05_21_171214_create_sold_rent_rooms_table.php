@@ -16,7 +16,7 @@ class CreateSoldRentRoomsTable extends Migration
         Schema::create('sold_rent_rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id')->index();
-            $table->float('price',8,2);//成約賃料（万円）
+            $table->float('price',8,2)->default(0);//成約賃料（万円）
             $table->float('previous_price',8,2)->default(0);//成約前賃料（万円）
             $table->integer('management_fee')->default(0);//管理費
             $table->integer('monthly_fee')->default(0);//共益費
