@@ -24,7 +24,7 @@ class Rent extends FormRequest
     public function rules()
     {
         return [
-            'price'               => 'required|numeric',
+            'price'               => 'numeric|nullable',
             'previous_price'      => 'numeric|nullable',
             'management_fee'      => 'numeric|nullable',
             'monthly_fee'         => 'numeric|nullable',
@@ -34,9 +34,14 @@ class Rent extends FormRequest
             'company_name'        => 'string|nullable|max:255',
             'contact_phonenumber' => 'string|nullable',
             'pic'                 => 'string|nullable|max:255',
-            'email'               => 'string|nullable|max:255|email',
+            'email'               => 'email|nullable|max:255',
             'registered_at'       => 'date|nullable',
             'changed_at'          => 'date|nullable',
+
+            'sold_price'               => 'numeric|nullable',
+            'sold_previous_price'      => 'numeric|nullable',
+            'sold_registered_at'       => 'date|nullable',
+            'sold_changed_at'          => 'date|nullable',
         ];
     }
 }

@@ -16,6 +16,12 @@ class StockRentRoom extends Model
     //nullなら0を代入
     public function nullSubZero($request)
     {
+        if($request->price === null){
+            $price = 0;
+        }else{
+            $price = $request->price;
+        }
+
         if($request->previous_price === null){
             $previous_price = 0;
         }else{
@@ -52,13 +58,30 @@ class StockRentRoom extends Model
             $deposit = $request->deposit;
         }
 
+        if($request->sold_price === null){
+            $sold_price = 0;
+        }else{
+            $sold_price = $request->sold_price;
+        }
+
+        if($request->sold_previous_price === null){
+            $sold_previous_price = 0;
+        }else{
+            $sold_previous_price = $request->sold_previous_price;
+        }
+
         return [
+            'price'   => $price,
             'previous_price'   => $previous_price,
             'management_fee'   => $management_fee,
             'monthly_fee'      => $monthly_fee,
             'security_deposit' => $security_deposit,
             'gratuity_fee'     => $gratuity_fee,
             'deposit'          => $deposit,
+            'sold_price'   => $sold_price,
+            'sold_previous_price'   => $sold_previous_price,
         ];
     }
+
+    
 }

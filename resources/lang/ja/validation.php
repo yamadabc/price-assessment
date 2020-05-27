@@ -160,6 +160,10 @@ return [
         'email' => 'メールアドレス',
         'registered_at' => '登録年月日',
         'changed_at' => '変更年月日',
+        'sold_price' => '成約価格',
+        'sold_previous_price' => '成約前の価格',
+        'sold_registered_at' => '登録年月日(成約時)',
+        'sold_changed_at' => '変更年月日(成約時)',
 
         'room_number' => '部屋番号',
         'floor_number' => '階数',

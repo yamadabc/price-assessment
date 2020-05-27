@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\Building;
 use App\SoldSalesRoom;
+use App\StockRentRoom;
+use App\SoldRentRoom;
 use App\Http\Requests\RoomEdit;
+use App\Http\Requests\Rent;
 
 class RoomsController extends Controller
 {
@@ -62,7 +65,6 @@ class RoomsController extends Controller
     {
         $request->validated();
         $room = Room::find($id);
-        $roomData = [];
         $roomData = $room->nullSubZero($request);
 
         Room::find($id)->update([
@@ -79,6 +81,61 @@ class RoomsController extends Controller
 
         $builings = Building::getWithRooms();
         \Session::flash('flash_message', '部屋情報を編集しました！');
+        return view('welcome',['buildings' => $builings]);
+    }
+
+    /*
+    * @param $room->id
+    */
+    public function rentEdit($id)
+    {
+        $room = Room::find($id);
+        $rentData = $room->getRoomRentVer($id);
+        $soldRentRoom = $rentData['soldRentRoom'];
+        $stockRentRoom = $rentData['stockRentRoom'];
+        return view('rooms.rentEdit',[
+            'room' => $room,
+            'soldRentRoom' => $rentData['soldRentRoom'],
+            'stockRentRoom' => $rentData['stockRentRoom'],
+            ]);
+    }
+    /*
+    * 賃貸情報編集
+    */
+    public function rentUpdate(Rent $request,$roomId,$stockId = -1,$soldId = -1)
+    {
+        $request->validated();
+        //在庫賃貸更新
+        $stockRentRoom = StockRentRoom::firstOrNew(['id' => $stockId]);
+        $stockRentRoomData = $stockRentRoom->nullSubZero($request);
+        if(!empty($stockRentRoomData['price']) || !empty($stockRentRoomData['previous_price']) || $request->registered_at || $request->changed_at){
+            StockRentRoom::updateOrCreate(
+                ['id' => $stockId ],
+                [
+                    'room_id' => $roomId,
+                    'price' => $stockRentRoomData['price'],
+                    'previous_price' => $stockRentRoomData['previous_price'],
+                    'registered_at' => $request->registered_at,
+                    'changed_at' => $request->changed_at,
+                ]
+                );
+        }
+        //売買賃貸更新
+        $soldRentRoom = new StockRentRoom();
+        $soldRentRoomData = $soldRentRoom->nullSubZero($request);
+        if(!empty($soldRentRoomData['sold_price']) || !empty($soldRentRoomData['sold_previous_price']) || $request->sold_registered_at || $request->sold_changed_at){
+            SoldRentRoom::updateOrCreate(
+                ['id' => $soldId ],
+                [
+                    'room_id' => $roomId,
+                    'price' => $soldRentRoomData['sold_price'],
+                    'previous_price' => $soldRentRoomData['sold_previous_price'],
+                    'registered_at' => $request->sold_registered_at,
+                    'changed_at' => $request->sold_changed_at,
+                ]
+                );
+        }
+        $builings = Building::getWithRooms();
         return view('welcome',['buildings' => $builings]);
     }
 }
