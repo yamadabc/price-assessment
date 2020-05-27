@@ -11,7 +11,7 @@
                 <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
                 <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a>
             </div>
-            <table class='table table-hover table-striped table-bordered table-sm'>
+            <table class='table table-striped table-bordered table-sm'>
                 <tr>
                     <th>部屋番号</th>
                     <th>階数</th>

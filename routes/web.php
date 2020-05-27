@@ -38,5 +38,7 @@ Route::prefix('room')->group(function(){
     Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え
     Route::get('/show/{id}/rent/edit','RoomsController@rentEdit')->name('rent_edit');//賃貸編集
     Route::put('/show/{roomId}/rent/update/{stockId?}/{soldId?}','RoomsController@rentUpdate')->name('rent_update');//賃貸編集
+    Route::get('/show/{id}/sales/edit','RoomsController@salesEdit')->name('sales_edit');//売買編集
+    Route::put('/show/{roomId}/sales/update/{stockId?}/{soldId?}','RoomsController@salesUpdate')->name('sales_update');//売買編集
 });
 Route::post('import','CSVController@import')->name('import');

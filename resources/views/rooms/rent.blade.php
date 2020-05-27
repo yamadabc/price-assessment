@@ -11,7 +11,7 @@
                 <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
             </div>
             </div>
-            <table class='table table-hover table-striped table-bordered table-sm'>
+            <table class='table table-striped table-bordered table-sm'>
                 <tr>
                     <th>部屋番号</th>
                     <th>階数</th>
@@ -19,12 +19,12 @@
                     <th>間取りタイプ</th>
                     <th>方角</th>
                     <th>占有面積</th>
-                    <th>掲載中の価格(万円)</th>
-                    <th>変更前価格(万円)</th>
+                    <th>掲載中の賃料(万円)</th>
+                    <th>変更前賃料(万円)</th>
                     <th>登録年月日</th>
                     <th>変更年月日</th>
-                    <th>成約価格</th>
-                    <th>成約前価格</th>
+                    <th>成約賃料</th>
+                    <th>成約前賃料</th>
                     <th>登録年月日</th>
                     <th>変更年月日</th>
                     <th>予想賃料</th>

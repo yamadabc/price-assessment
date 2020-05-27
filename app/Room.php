@@ -72,7 +72,7 @@ class Room extends Model
             'stockRentRoom' => $stockRentRoom,
         ];
     }
-
+    
     //nullなら0を代入
     public function nullSubZero($request)
     {

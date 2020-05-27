@@ -11,7 +11,7 @@
                 <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a>
             </div>
             </div>
-            <table class='table table-hover table-striped table-bordered table-sm'>
+            <table class='table table-striped table-bordered table-sm'>
                 <tr>
                     <th>部屋番号</th>
                     <th>階数</th>
@@ -29,7 +29,9 @@
                     <th>変更年月日</th>
                     <th>予想売買価格</th>
                     <th>謄本</th>
-                    <th></th>
+                    @if($stockSalesRoom || $soldSalesRoom)
+                        <th></th>
+                    @endif
                 </tr>
             <tr>
                 <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
@@ -81,7 +83,11 @@
                 <td>{{ $room->expected_price }}</td>
                 
                 <td><a href="#">リンク</a></td>
-                <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
+                @if($stockSalesRoom || $soldSalesRoom)
+                    <td>
+                        <a href="{{ route('sales_edit',$room->id) }}">編集</a>
+                    </td>
+                @endif
             </tr>
             </table>     
             <p>新規登録</p>
