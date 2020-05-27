@@ -1,4 +1,11 @@
-table {
-  width: 100%;
+body {
+  width: 95%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 

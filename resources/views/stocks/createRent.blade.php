@@ -8,8 +8,7 @@
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             <h3>賃貸在庫情報新規入力</h3>
-            <h4><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a></h4>
-            <h4>{{ $room->room_number }}号室</h4>
+            <h3><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>{{ $room->room_number }}号室</h3>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
