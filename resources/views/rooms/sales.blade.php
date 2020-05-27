@@ -4,7 +4,6 @@
 
 @section('content')
 
-<div class="container">
     <div class="row">
         <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・売買</h2>
             <div class="bottun">
@@ -96,5 +95,4 @@
             <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約</a>
             <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>  
     </div>
-</div>
 @endsection

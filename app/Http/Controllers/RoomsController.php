@@ -13,14 +13,16 @@ use App\Http\Requests\Rent;
 
 class RoomsController extends Controller
 {
+    /*
+    *@param $room->id
+    *
+    */
     public function show($id)
     {
-        $building = new Building();
-        $room = Room::with('soldSalesRooms')->select('id','building_id','room_number','layout','layout_type','direction','occupied_area','published_price','expected_price','expected_rent_price')->find($id);;
-        return view('rooms.show',[
-            'building'=>$building->getForRoomsShow($room->building_id),
-            'room' => $room,
-            ]);
+        $room = new Room();
+        $room = $room->getForRoomsShowRoomId($id);
+        return view('rooms.show',compact('room'));
+            
     }
     /*  
     * 売買バージョンに切り替え

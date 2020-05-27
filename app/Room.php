@@ -72,7 +72,16 @@ class Room extends Model
             'stockRentRoom' => $stockRentRoom,
         ];
     }
-    
+    //building@show
+    public function getForRoomsShow($id)
+    {
+        return $this->with('building:id,building_name','soldSalesRooms:id,room_id,price')->where('building_id',$id)->get();
+    }
+    //rooms@show
+    public function getForRoomsShowRoomId($id)
+    {
+        return $this->with('soldSalesRooms:id,room_id,price')->find($id);
+    }
     //nullなら0を代入
     public function nullSubZero($request)
     {

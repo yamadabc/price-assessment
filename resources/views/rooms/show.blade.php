@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
-@section('title',$building->building_name.'|'.$room->room_number)
+@section('title',$room->building->building_name.'|'.$room->room_number)
 
 @section('content')
 
-<div class="container">
     <div class="row">
-        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
+        <a href="{{ route('buildings_show',$room->building_id) }}"><h2>{{ $room->building->building_name }}</h2></a>
             <div class="bottun">
                 <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
                 <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a>
@@ -40,5 +39,4 @@
             <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約</a>
             <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>
     </div>
-</div>
 @endsection
