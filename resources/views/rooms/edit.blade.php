@@ -7,8 +7,8 @@
     <div class="row">
         <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a> 編集</h2>
             <div class="bottun">
-                <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買編集</a>
-                <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸編集</a>
+                <a href="{{ route('sales_edit',$room->id) }}" class='btn btn-danger'>売買編集</a>
+                <a href="{{ route('rent_edit',$room->id) }}" class='btn btn-success'>賃貸編集</a>
             </div>
             
             <table class='table table-striped table-bordered table-sm'>
