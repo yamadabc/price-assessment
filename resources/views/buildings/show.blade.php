@@ -81,11 +81,13 @@
             @endif
         %</td>
         <td>
-            @if(isset($room->soldSalesRooms->price))
-                {{ $room->soldSalesRooms->price }}
-            @else
-                0
-            @endif
+            
+            @foreach($room->soldSalesRooms as $soldSalesRoom)
+                @if($loop->last)
+                    {{ $soldSalesRoom->price }}
+                @endif
+            @endforeach
+                    
         </td>
         <td>
             @if(isset($room->soldSalesRooms->price))

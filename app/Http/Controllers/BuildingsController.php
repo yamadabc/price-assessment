@@ -26,7 +26,7 @@ class BuildingsController extends Controller
     {
         $rooms = new Room();
         $building = Building::select('id','building_name')->find($id);
-        
+        //部屋番号検索
         $keyword = $request->input('room_number');
         if(!empty($keyword)){
             $query = Room::with('building');
@@ -38,7 +38,9 @@ class BuildingsController extends Controller
         }else{
             $rooms = $rooms->getForRoomsShow($id);
         }
-        return view('buildings.show',compact('rooms','building'));
+        $prices = [];
+        
+        return view('buildings.show',compact('rooms','building','prices'));
     }
     
 }
