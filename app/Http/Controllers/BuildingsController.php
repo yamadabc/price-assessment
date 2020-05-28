@@ -15,8 +15,8 @@ class BuildingsController extends Controller
     public function index()
     {
         
-        $builings = Building::getWithRooms();
-        return view('welcome',['buildings' => $builings]);
+        $buildings = Building::getWithRooms();
+        return view('welcome',compact('buildings'));
     }
     /* 
     * @param $building->id
@@ -38,9 +38,9 @@ class BuildingsController extends Controller
         }else{
             $rooms = $rooms->getForRoomsShow($id);
         }
-        $prices = [];
         
-        return view('buildings.show',compact('rooms','building','prices'));
+        
+        return view('buildings.show',compact('rooms','building'));
     }
     
 }

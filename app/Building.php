@@ -49,4 +49,29 @@ class Building extends Model
         return $this->rooms()->orderBy('id');
     }
 
+    public function countExpectedPrice()
+    {
+        $expectedPriceCount = 0;
+
+        foreach($this->rooms as $room){
+            if(empty($room->expected_price)){
+                continue;
+            }
+            $expectedPriceCount ++;
+        }
+        return $expectedPriceCount;
+    }
+
+    public function countPublishedPrice()
+    {
+        $publishedPriceCount = 0;
+        foreach($this->rooms as $room){
+            if(empty($room->published_price)){
+                continue;
+            }
+            $publishedPriceCount ++;
+        }
+        return $publishedPriceCount;
+    }
+
 }

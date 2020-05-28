@@ -25,17 +25,16 @@
                     <td><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></td>
                     <td>{{ $building->total_unit }}</td>
                     <td>
-                        @if(isset($building->rooms->published_price))
-                        {{ $building->rooms_count }}
-                        @endif
+                        {{ $building->countPublishedPrice() }}
                     </td>
                     <td>
-                        @if(isset($building->rooms->expected_price))
-                        {{ count($building->rooms->expected_price) }}</td>
-                        @endif
+                        {{ $building->countExpectedPrice() }}
+                    </td>
                     <td>
-                        @if(isset($building->rooms->expected_price) && isset($building->total_unit))
-                        {{ round($building->rooms->expected_price / $building->total_unit * 100,2) }}
+                        @if(!empty($building->countExpectedPrice()) && isset($building->total_unit))
+                            {{ round($building->countExpectedPrice() / $building->total_unit * 100,2) }}%
+                        @else
+                            0.00%
                         @endif
                     </td>
                 </tr>
