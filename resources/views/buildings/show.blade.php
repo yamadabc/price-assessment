@@ -81,20 +81,22 @@
             @endif
         %</td>
         <td>
-            
             @foreach($room->soldSalesRooms as $soldSalesRoom)
                 @if($loop->last)
                     {{ $soldSalesRoom->price }}
                 @endif
             @endforeach
-                    
         </td>
         <td>
-            @if(isset($room->soldSalesRooms->price))
-                {{ $room->expected_price - $room->soldSalesRooms->price }}
-            @else
-                0
-            @endif
+            @foreach($room->soldSalesRooms as $soldSalesRoom)
+                @if($loop->last)
+                    @if($soldSalesRoom->price - $room->expected_price > 0)
+                        <div class="red">+{{ $soldSalesRoom->price - $room->expected_price }}</div>
+                    @else
+                        <div class="blue">{{ $soldSalesRoom->price - $room->expected_price }}</div>
+                    @endif
+                @endif
+            @endforeach
         </td>
         <td><a href="#">リンク</a></td>
         <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
