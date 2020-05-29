@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   width: 95%;
   margin: 0 auto;
@@ -19,5 +20,17 @@ body {
 
 .blue {
   color: blue;
+}
+
+.sort.desc:after {
+  content: "▼";
+}
+
+.sort.asc:after {
+  content: "▲";
+}
+
+th {
+  cursor: pointer;
 }
 /*# sourceMappingURL=app.css.map */

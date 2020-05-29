@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
   width: 95%;
   margin: 0 auto;
@@ -16,3 +18,16 @@ body {
 .blue {
   color: blue;
 }
+
+.sort.desc:after {
+  content: "\25BC";
+}
+
+.sort.asc:after {
+  content: "\25B2";
+}
+
+th {
+  cursor: pointer;
+}
+

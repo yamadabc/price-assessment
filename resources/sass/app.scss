@@ -15,3 +15,14 @@ body {
 .blue {
     color: blue;
 }
+
+.sort.desc:after {
+    content:"▼";
+}
+
+.sort.asc:after {
+    content:"▲";
+}
+th {
+    cursor: pointer;
+}
