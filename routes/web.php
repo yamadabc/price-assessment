@@ -15,6 +15,8 @@ Route::get('/', 'BuildingsController@index');
 
 Route::prefix('buildings')->group(function(){
     Route::get('/show/{id}','BuildingsController@show')->name('buildings_show');
+    Route::get('/{id}/floor/{floor}','BuildingsController@floorSort')->name('floor_sort');
+    Route::get('/{id}/layout_type/{layout}','BuildingsController@layoutTypeSort')->name('layout_type_sort');
 });
 
 Route::prefix('stocks')->group(function(){

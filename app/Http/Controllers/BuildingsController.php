@@ -39,7 +39,33 @@ class BuildingsController extends Controller
             $rooms = $rooms->getForRoomsShow($id);
         }
         
-        
+        return view('buildings.show',compact('rooms','building'));
+    }
+
+    /* 
+    * @param $building->id,$floor_number
+    *  階数別検索
+    */
+    public function floorSort($id,$floor)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price')
+                        ->where('building_id',$id)
+                        ->where('floor_number',$floor)
+                        ->get();
+        return view('buildings.show',compact('rooms','building'));
+    }
+    /* 
+    * @param $building->id,$layout_type
+    *  間取タイプ別検索
+    */
+    public function layoutTypeSort($id,$layout)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price')
+                        ->where('building_id',$id)
+                        ->where('layout_type',$layout)
+                        ->get();
         return view('buildings.show',compact('rooms','building'));
     }
     

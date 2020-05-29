@@ -12,4 +12,12 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
 /*# sourceMappingURL=app.css.map */

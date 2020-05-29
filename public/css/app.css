@@ -9,3 +9,10 @@ body {
   justify-content: space-between;
 }
 
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
