@@ -43,9 +43,13 @@ Route::prefix('room')->group(function(){
     Route::get('/show/{id}/sales/edit','RoomsController@salesEdit')->name('sales_edit');//売買編集
     Route::put('/show/{roomId}/sales/update/{stockId?}/{soldId?}','RoomsController@salesUpdate')->name('sales_update');//売買編集
 });
-
+//登記簿謄本
 Route::prefix('register')->group(function(){
     Route::post('/upload/{id}','CopyOfRegisterController@upload')->name('pdf_upload');
     Route::get('/show/{id}','CopyOfRegisterController@show')->name('pdf_show');
 });
-Route::post('import','CSVController@import')->name('import');
+//csvアップロード
+Route::prefix('import')->group(function(){
+    Route::post('/rooms','CSVController@importRoom')->name('import.rooms');
+    Route::post('/buildings','CSVController@importBuilding')->name('import.buildings');
+});
