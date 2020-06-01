@@ -75,12 +75,12 @@ class Room extends Model
     //building@show
     public function getForRoomsShow($id)
     {
-        return $this->with('building:id,building_name','soldSalesRooms:id,room_id,price')->where('building_id',$id)->get();
+        return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->get();
     }
     //rooms@show
     public function getForRoomsShowRoomId($id)
     {
-        return $this->with('soldSalesRooms:id,room_id,price')->find($id);
+        return $this->with(['soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->find($id);
     }
     //nullなら0を代入
     public function nullSubZero($request)
@@ -115,6 +115,16 @@ class Room extends Model
             'expected_price' => $expected_price,
             'expected_rent_price' => $expected_rent_price,
         ];
+    }
+
+    public function getCopyOfRegisters($id)
+    {
+        $end = $this->copyOfRegisters;
+        foreach($this->copyOfRegisters as $copyOfRegister){
+            if(!next($end)){
+                return $copyOfRegister->where('room_id',$id)->latest()->value('id');
+            }
+        }
     }
 
 }

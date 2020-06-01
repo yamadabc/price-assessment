@@ -14,6 +14,11 @@
 <body>
     <header>
         <h1><a href="/">大山査定</a></h1>
+        @if (session('flash_message'))
+            <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
+                {{ session('flash_message') }}
+            </div>
+        @endif
     </header>
     @yield('content')
 

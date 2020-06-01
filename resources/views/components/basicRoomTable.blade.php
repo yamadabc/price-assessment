@@ -56,7 +56,15 @@
                 0
             @endif
         </td>
-        <td><a href="#">リンク</a></td>
+        <td>
+            @foreach($room->copyOfRegisters as $copyOfRegister)
+                @if(isset($copyOfRegister))
+                    @if($loop->last)   
+                    <a href="{{ route('pdf_show',$room->getCopyOfRegisters($room->id)) }}">リンク</a>
+                    @endif
+                @endif    
+            @endforeach
+        </td>
         <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
     </tr>
     

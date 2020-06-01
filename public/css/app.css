@@ -3,7 +3,6 @@
 body {
   width: 95%;
   margin: 0 auto;
-  text-align: center;
 }
 
 .flex {
@@ -29,5 +28,9 @@ body {
 
 th {
   cursor: pointer;
+}
+
+p {
+  margin-top: 1rem;
 }
 
