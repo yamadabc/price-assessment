@@ -24,19 +24,31 @@
                     部屋情報をアップロードする
                 </button>
             </div>
+            
             <!-- モーダルの配置 -->
-            <div class="modal" id="modal-buildings" tabindex="-1">
+            <div class="modal fade" id="modal-buildings" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class='modal-title' id='modal-label'>物件情報のアップロード</h4>
+                            <button type='button' class='close' data-dismiss='modal'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
                         </div>
                         {!! Form::open(['route'=>'import.buildings','enctype'=>'multipart/form-data']) !!}
                         <div class="modal-body">
                                 {!! Form::file('csv') !!}
                         </div>
                         <div class="modal-footer">
-                            <button type='button' class='btn btn-default pull-left' data-dismiss='modal'>X閉じる</button>
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                             {!! Form::submit('アップロード',['class'=>'btn btn-primary']) !!}
                             {!! Form::close() !!}
                         </div>
@@ -45,11 +57,14 @@
             </div>
         </div>
         <!-- モーダルの配置 -->
-        <div class="modal" id="modal-rooms" tabindex="-1">
+        <div class="modal fade" id="modal-rooms" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class='modal-title' id='modal-label'>部屋情報のアップロード</h4>
+                        <button type='button' class='close' data-dismiss='modal'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
                     </div>
                     {!! Form::open(['route'=>'import.rooms','enctype'=>'multipart/form-data']) !!}
                     <div class="modal-body">
@@ -64,11 +79,7 @@
             </div>
         </div>
     </div>
-        @if (session('flash_message'))
-            <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
-                {{ session('flash_message') }}
-            </div>
-        @endif
+        
     </header>
     @yield('content')
 
