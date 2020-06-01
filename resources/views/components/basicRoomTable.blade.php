@@ -42,19 +42,23 @@
                 0
             @endif
         %</td>
-        <td>
-            @if(isset($room->soldSalesRooms->price))
-                {{ $room->soldSalesRooms->price }}
-            @else
-                0
-            @endif
+        <td class='price'>
+            @foreach($room->soldSalesRooms as $soldSalesRoom)
+                @if($loop->last)
+                    {{ $soldSalesRoom->price }}
+                @endif
+            @endforeach
         </td>
-        <td>
-            @if(isset($room->soldSalesRooms->price))
-                {{ $room->expected_price - $room->soldSalesRooms->price }}
-            @else
-                0
-            @endif
+        <td class='diffarence'>
+            @foreach($room->soldSalesRooms as $soldSalesRoom)
+                @if($loop->last)
+                    @if($soldSalesRoom->price - $room->expected_price > 0)
+                        <div class="red">+{{ $soldSalesRoom->price - $room->expected_price }}</div>
+                    @else
+                        <div class="blue">{{ $soldSalesRoom->price - $room->expected_price }}</div>
+                    @endif
+                @endif
+            @endforeach
         </td>
         <td>
             @foreach($room->copyOfRegisters as $copyOfRegister)
