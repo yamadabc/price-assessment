@@ -6,8 +6,12 @@
 <div class="flex">
     <h2 class='item'><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a> 編集</h2>
         <div class="item">
-            <a href="{{ route('sales_edit',$room->id) }}" class='btn btn-danger'>売買編集</a>
-            <a href="{{ route('rent_edit',$room->id) }}" class='btn btn-success'>賃貸編集</a>
+            @if($stockSalesRoom || $soldSalesRoom)
+                <a href="{{ route('sales_edit',$room->id) }}" class='btn btn-danger'>売買編集</a>
+            @endif
+            @if($stockRentRoom || $soldRentRoom)
+                <a href="{{ route('rent_edit',$room->id) }}" class='btn btn-success'>賃貸編集</a>
+            @endif
         </div>
 </div>
             

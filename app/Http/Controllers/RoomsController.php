@@ -58,9 +58,14 @@ class RoomsController extends Controller
     public function edit($id)
     {
         $room = Room::find($id);
-        return view('rooms.edit',[
-            'room' => $room,
-            ]);
+        $rentData = $room->getRoomRentVer($id);
+        $soldRentRoom = $rentData['soldRentRoom'];
+        $stockRentRoom = $rentData['stockRentRoom'];
+        $rentData = $room->getRoomSalesVer($id);
+        $soldSalesRoom = $rentData['soldSalesRoom'];
+        $stockSalesRoom = $rentData['stockSalesRoom'];
+
+        return view('rooms.edit',compact('room','soldRentRoom','stockRentRoom','soldSalesRoom','stockSalesRoom'));
     }
 
     public function update(RoomEdit $request,$id)
