@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SplFileObject;
 use App\Room;
 use App\Building;
 use DB;
@@ -71,7 +70,11 @@ class CSVController extends Controller
         \Session::flash('flash_message', '部屋情報を登録しました');
         return view('welcome',['buildings' => $builings]);
     }
-
+    /**
+     * 
+     * @param  CSV  $request
+     * @return Response
+     */
     public function importBuildingUpdate(CSVFormRequest $request)
     {
         $request->validated();
@@ -96,6 +99,37 @@ class CSVController extends Controller
         }
         $builings = Building::getWithRooms();
         \Session::flash('flash_message', '物件情報を編集しました');
+        return view('welcome',['buildings' => $builings]);
+    }
+    /**
+     * 
+     * @param  CSV  $request
+     * @return Response
+     */
+    public function importRoomUpdate(CSVFormRequest $request)
+    {
+        $request->validated();
+
+        $array = CSV::importRoomPrepare($request);
+        $array_count = count($array);
+        if($array_count < 500){
+            foreach($array as $row){
+                $room = Room::where('id',$row['id']);
+                $room->update($row);
+            }
+        }else{
+            $array_partial = array_chunk($array,500);//配列を５００ずつに分割
+            $array_partial_count = count($array_partial);
+            //分割した数だけinsert
+            for($i = 0;$i <= $array_partial_count-1;$i++){
+                foreach($array as $row){
+                    $room = Room::where('id',$row['id']);
+                    $room->update($row);
+                }
+            }
+        }
+        $builings = Building::getWithRooms();
+        \Session::flash('flash_message', '部屋情報を編集しました');
         return view('welcome',['buildings' => $builings]);
     }
 }

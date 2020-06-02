@@ -125,6 +125,7 @@ class CSV
             if($row_count > 1)//ヘッダーは取り込まない
             {
                  // CSVの文字コードがSJISなのでUTF-8に変更
+                 $id                        = $row[0];
                  $building_id               = $row[1];
                  $room_number               = $row[2];
                  $floor_number              = $row[3];
@@ -144,6 +145,7 @@ class CSV
                  $updated_at                = $row[17];
 
                  $csvimport_array = [
+                     'id'                        => $id,
                      'building_id'               => $building_id,
                      'room_number'               => $room_number,
                      'floor_number'              => $floor_number,
