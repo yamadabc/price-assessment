@@ -75,7 +75,7 @@ class Room extends Model
     //building@show
     public function getForRoomsShow($id)
     {
-        return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->get();
+        return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
     }
     //rooms@show
     public function getForRoomsShowRoomId($id)

@@ -34,7 +34,7 @@ class BuildingsController extends Controller
             $query->where(function ($query) use($keyword) {
                 $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
             });
-            $rooms = $query->orderBy('created_at')->get();
+            $rooms = $query->orderBy('id','asc')->get();
         }else{
             $rooms = $rooms->getForRoomsShow($id);
         }
