@@ -50,6 +50,8 @@ Route::prefix('register')->group(function(){
 });
 //csvアップロード
 Route::prefix('import')->group(function(){
-    Route::post('/rooms','CSVController@importRoom')->name('import.rooms');
-    Route::post('/buildings','CSVController@importBuilding')->name('import.buildings');
+    Route::post('/rooms','CSVController@importRoom')->name('import.room');
+    Route::post('/buildings','CSVController@importBuilding')->name('import.building');
+    Route::post('/rooms/update','CSVController@importRoomUpdate')->name('import.roomsUpdate');
+    Route::post('/buildings/update','CSVController@importBuildingUpdate')->name('import.buildingsUpdate');
 });
