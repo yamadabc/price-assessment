@@ -71,7 +71,15 @@
                             {!! Form::file('csv') !!}
                     </div>
                     <div class="modal-footer">
-                        <button type='button' class='btn btn-default pull-left' data-dismiss='modal'>X閉じる</button>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                         {!! Form::submit('アップロード',['class'=>'btn btn-primary']) !!}
                         {!! Form::close() !!}
                     </div>
