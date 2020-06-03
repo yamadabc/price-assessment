@@ -31,6 +31,8 @@ body {
 
 th {
   cursor: pointer;
+  color: white;
+  background-color: #443833;
 }
 
 p {
