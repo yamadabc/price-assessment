@@ -5,3 +5,8 @@ var options = {
 };
 
 var roomList = new List('rooms',options);
+
+var optionsForBuildings = {
+    valueNames:['name','total_unit','countPublishedPrice','countExpectedPrice','percent']
+};
+var buildingList = new List('buildings',optionsForBuildings);
