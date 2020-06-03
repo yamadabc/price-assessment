@@ -52,7 +52,7 @@
                 <td class='direction'>{{ $room->direction }}</td>
                 <td class='occupied_area'>{{ $room->occupied_area }}㎡</td>
                 <td class='published_price'>{{ $room->published_price }}</td>
-                <td class='published_price'>
+                <td class='published_unit_price'>
                     @if($room->occupied_area != 0)
                         {{ round($room->published_price / ($room->occupied_area * 0.3025)) }}</td>
                     @else
