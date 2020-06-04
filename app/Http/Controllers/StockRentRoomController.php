@@ -43,9 +43,12 @@ class StockRentRoomController extends Controller
             'registered_at'       => $request->registered_at,
             'changed_at'          => $request->changed_at,
         ]);
-        $builings = Building::getWithRooms();
         \Session::flash('flash_message', '新規賃貸在庫情報を登録しました！');
-        return view('welcome',['buildings' => $builings]);
+        $buildingId = Room::where('id',$id)->value('building_id');
+        $building = Building::select('id','building_name')->find($buildingId);
+        $rooms = new Room();
+        $rooms = $rooms->getForRoomsShow($buildingId);
+        return view('buildings.show',compact('rooms','building'));
     }
 
 }

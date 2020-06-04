@@ -15,6 +15,11 @@
             </div>
         {!! Form::close() !!}
 </div>
+@if (session('flash_message'))
+    <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
+        {{ session('flash_message') }}
+    </div>
+@endif
 <div id="rooms">
     <table class='table table-hover table-striped table-bordered table-sm'>
         <thead>

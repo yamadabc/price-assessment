@@ -53,7 +53,8 @@ class BuildingsController extends Controller
                         ->where('building_id',$id)
                         ->where('floor_number',$floor)
                         ->get();
-        return view('buildings.show',compact('rooms','building'));
+        $jsRooms = json_encode($rooms);
+        return view('buildings.floor',compact('jsRooms','rooms','building'));
     }
     /* 
     * @param $building->id,$layout_type

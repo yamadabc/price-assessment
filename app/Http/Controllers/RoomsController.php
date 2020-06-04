@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Room;
 use App\Building;
+use App\SoldRentRoom;
 use App\SoldSalesRoom;
 use App\StockRentRoom;
 use App\StockSalesRoom;
@@ -74,7 +75,7 @@ class RoomsController extends Controller
         $room = Room::find($id);
         $roomData = $room->nullSubZero($request);
 
-        Room::find($id)->update([
+        $room->update([
             'room_number' => $request->room_number,
             'floor_number' => $request->floor_number,
             'layout' => $request->layout,
@@ -86,9 +87,8 @@ class RoomsController extends Controller
             'expected_rent_price' => $roomData['expected_rent_price'],
         ]);
 
-        $builings = Building::getWithRooms();
         \Session::flash('flash_message', '部屋情報を編集しました！');
-        return view('welcome',['buildings' => $builings]);
+        return view('rooms.show',compact('room'));
     }
 
     /*
@@ -116,7 +116,7 @@ class RoomsController extends Controller
         //在庫賃貸更新
         $stockRentRoom = StockRentRoom::firstOrNew(['id' => $stockId]);
         $stockRentRoomData = $stockRentRoom->nullSubZero($request);
-        if(!empty($stockRentRoomData['price']) || !empty($stockRentRoomData['previous_price']) || $request->registered_at || $request->changed_at){
+        if($stockRentRoomData['price'] !== null || $stockRentRoomData['previous_price'] !== null || $request->registered_at || $request->changed_at){
             StockRentRoom::updateOrCreate(
                 ['id' => $stockId ],
                 [
@@ -128,10 +128,10 @@ class RoomsController extends Controller
                 ]
                 );
         }
-        //売買賃貸更新
+        //賃貸成約更新
         $soldRentRoom = new StockRentRoom();
         $soldRentRoomData = $soldRentRoom->nullSubZero($request);
-        if(!empty($soldRentRoomData['sold_price']) || !empty($soldRentRoomData['sold_previous_price']) || $request->sold_registered_at || $request->sold_changed_at){
+        if($soldRentRoomData['sold_price'] !== null || $soldRentRoomData['sold_previous_price'] !== null || $request->sold_registered_at || $request->sold_changed_at){
             SoldRentRoom::updateOrCreate(
                 ['id' => $soldId ],
                 [
@@ -143,8 +143,11 @@ class RoomsController extends Controller
                 ]
                 );
         }
-        $builings = Building::getWithRooms();
-        return view('welcome',['buildings' => $builings]);
+        $buildingId = Room::where('id',$roomId)->value('building_id');
+        $building = Building::select('id','building_name')->find($buildingId);
+        $rooms = new Room();
+        $rooms = $rooms->getForRoomsShow($buildingId);
+        return view('buildings.show',compact('rooms','building'));
     }
 
     /*
@@ -164,15 +167,16 @@ class RoomsController extends Controller
             ]);
     }
     /*
-    * 賃貸情報編集
+    * 売買情報編集
     */
     public function salesUpdate(Rent $request,$roomId,$stockId = -1,$soldId = -1)
     {
         $request->validated();
-        //在庫賃貸更新
+        
+        //売買在庫更新
         $stockSalesRoom = new StockRentRoom();
         $stockSalesRoomData = $stockSalesRoom->nullSubZero($request);
-        if(!empty($stockSalesRoomData['price']) || !empty($stockSalesRoomData['previous_price']) || $request->registered_at || $request->changed_at){
+        if($stockSalesRoomData['price'] !== null || $stockSalesRoomData['previous_price'] !== null || $request->registered_at || $request->changed_at){
             StockSalesRoom::updateOrCreate(
                 ['id' => $stockId ],
                 [
@@ -184,10 +188,10 @@ class RoomsController extends Controller
                 ]
                 );
         }
-        //売買賃貸更新
+        //売買成約更新
         $soldSalesRoom = new StockRentRoom();
         $soldSalesRoomData = $soldSalesRoom->nullSubZero($request);
-        if(!empty($soldSalesRoomData['sold_price']) || !empty($soldSalesRoomData['sold_previous_price']) || $request->sold_registered_at || $request->sold_changed_at){
+        if($stockSalesRoomData['price'] !== null || $stockSalesRoomData['previous_price'] !== null || $request->sold_registered_at || $request->sold_changed_at){
             SoldSalesRoom::updateOrCreate(
                 ['id' => $soldId ],
                 [
@@ -199,8 +203,11 @@ class RoomsController extends Controller
                 ]
                 );
         }
-        $builings = Building::getWithRooms();
-        return view('welcome',['buildings' => $builings]);
+        $buildingId = Room::where('id',$roomId)->value('building_id');
+        $building = Building::select('id','building_name')->find($buildingId);
+        $rooms = new Room();
+        $rooms = $rooms->getForRoomsShow($buildingId);
+        return view('buildings.show',compact('rooms','building'));
     }
 
 }

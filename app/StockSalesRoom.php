@@ -16,6 +16,12 @@ class StockSalesRoom extends Model
     //nullなら0を代入
     public function nullSubZero($request)
     {
+        if($request->price === null){
+            $price = 0;
+        }else{
+            $price = $request->price;
+        }
+
         if($request->previous_price === null){
             $previous_price = 0;
         }else{
@@ -34,6 +40,6 @@ class StockSalesRoom extends Model
             $reserve_fund = $request->reserve_fund;
         }
         
-        return ['previous_price' => $previous_price,'management_fee' => $management_fee,'reserve_fund' => $reserve_fund];
+        return ['price' => $price ,'previous_price' => $previous_price,'management_fee' => $management_fee,'reserve_fund' => $reserve_fund];
     }
 }

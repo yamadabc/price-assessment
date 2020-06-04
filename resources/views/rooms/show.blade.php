@@ -8,8 +8,12 @@
     <div class="item"><a href="{{ route('buildings_show',$room->building_id) }}"><h2>{{ $room->building->building_name }}</h2></a></div>
     <div class="item"><a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
     <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a></div>
-    
 </div>
+@if (session('flash_message'))
+    <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
+        {{ session('flash_message') }}
+    </div>
+@endif
     <table class='table table-striped table-bordered table-sm'>
         <tr>
             <th>部屋番号</th>
