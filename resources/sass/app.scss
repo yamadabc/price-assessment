@@ -27,6 +27,9 @@ th {
     color: white;
     background-color: #443833;
 }
+th,td {
+    text-align: center;
+}
 
 p {
     margin-top: 1rem;
@@ -34,5 +37,12 @@ p {
 .modal {
     .modal-content {
         margin: 0 auto;
+    }
+}
+// floor.blade.php
+.chart_building_name {
+    text-align: center;
+    a {
+        text-decoration:underline;
     }
 }

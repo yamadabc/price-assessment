@@ -32,11 +32,24 @@ th {
   background-color: #443833;
 }
 
+th,
+td {
+  text-align: center;
+}
+
 p {
   margin-top: 1rem;
 }
 
 .modal .modal-content {
   margin: 0 auto;
+}
+
+.chart_building_name {
+  text-align: center;
+}
+
+.chart_building_name a {
+  text-decoration: underline;
 }
 

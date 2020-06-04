@@ -10,6 +10,7 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script type="text/javascript" src="{{ asset('/js/app.js') }}" defer></script>
+    
 </head>
 <body>
     <header>

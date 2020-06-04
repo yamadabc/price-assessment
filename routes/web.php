@@ -21,21 +21,21 @@ Route::prefix('buildings')->group(function(){
 
 Route::prefix('stocks')->group(function(){
     Route::get('/sales/{id}','StockSalesRoomController@create')->name('stock_sales_create');//売買在庫新規
-    Route::post('/sales/store/{id}','StockSalesRoomController@store')->name('stock_sales_store');
+    Route::post('/sales/{id}','StockSalesRoomController@store')->name('stock_sales_store');
     Route::get('/rent/{id}','StockRentRoomController@create')->name('stock_rent_create');//賃貸在庫新規
-    Route::post('/rent/store/{id}','StockRentRoomController@store')->name('stock_rent_store');
+    Route::post('/rent/{id}','StockRentRoomController@store')->name('stock_rent_store');
 });
 Route::prefix('sold')->group(function(){
     Route::get('/sales/{id}','SoldSalesRoomController@create')->name('sold_sales_create');//売買成約新規
-    Route::post('/sales/store/{id}','SoldSalesRoomController@store')->name('sold_sales_store');
+    Route::post('/sales/{id}','SoldSalesRoomController@store')->name('sold_sales_store');
     Route::get('/rent/{id}','SoldRentRoomController@create')->name('sold_rent_create');//賃貸成約新規
-    Route::post('/rent/store/{id}','SoldRentRoomController@store')->name('sold_rent_store');
+    Route::post('/rent/{id}','SoldRentRoomController@store')->name('sold_rent_store');
 });
 
 Route::prefix('room')->group(function(){
     Route::get('/{id}','RoomsController@show')->name('room_show');
     Route::get('/{id}/edit','RoomsController@edit')->name('room_edit');
-    Route::put('/{id}/update','RoomsController@update')->name('room_update');
+    Route::put('/{id}','RoomsController@update')->name('room_update');
     Route::get('/show/{id}/sales','RoomsController@sales')->name('room_sales');//売買切り替え
     Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え
     Route::get('/show/{id}/rent/edit','RoomsController@rentEdit')->name('rent_edit');//賃貸編集

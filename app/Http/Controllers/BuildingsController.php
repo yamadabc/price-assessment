@@ -49,11 +49,14 @@ class BuildingsController extends Controller
     public function floorSort($id,$floor)
     {
         $building = Building::select('id','building_name')->find($id);
-        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price')
+        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
                         ->where('floor_number',$floor)
                         ->get();
-        $jsRooms = json_encode($rooms);
+        $jsRooms = Room::where('building_id',$id)
+                        ->where('floor_number',$floor)
+                        ->select('occupied_area','published_price','expected_price')
+                        ->get();
         return view('buildings.floor',compact('jsRooms','rooms','building'));
     }
     /* 
@@ -63,7 +66,7 @@ class BuildingsController extends Controller
     public function layoutTypeSort($id,$layout)
     {
         $building = Building::select('id','building_name')->find($id);
-        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price')
+        $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
                         ->where('layout_type',$layout)
                         ->get();
