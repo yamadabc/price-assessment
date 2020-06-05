@@ -79,7 +79,7 @@ class CSVController extends Controller
     {
         $request->validated();
 
-        $array = CSV::importBuildingPrepare($request);
+        $array = CSV::updateBuildingPrepare($request);
         $array_count = count($array);
         if($array_count < 500){
             foreach($array as $row){
@@ -110,7 +110,7 @@ class CSVController extends Controller
     {
         $request->validated();
 
-        $array = CSV::importRoomPrepare($request);
+        $array = CSV::updateRoomPrepare($request);
         $array_count = count($array);
         if($array_count < 500){
             foreach($array as $row){
