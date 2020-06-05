@@ -49,6 +49,13 @@ class BuildingsController extends Controller
     public function floorSort($id,$floor)
     {
         $building = Building::select('id','building_name')->find($id);
+        //全階数取得
+        $floor_numbers = [];
+        foreach($building->rooms as $room){
+            $floor_numbers[] = $room->floor_number;
+        }
+        $floor_numbers = array_unique($floor_numbers);
+
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
                         ->where('floor_number',$floor)
@@ -57,7 +64,8 @@ class BuildingsController extends Controller
                         ->where('floor_number',$floor)
                         ->select('occupied_area','published_price','expected_price')
                         ->get();
-        return view('buildings.floor',compact('jsRooms','rooms','building'));
+        
+        return view('buildings.floor',compact('jsRooms','rooms','building','floor_numbers'));
     }
     /* 
     * @param $building->id,$layout_type

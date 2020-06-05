@@ -125,7 +125,13 @@
     </table> 
 </div> 
 
-<h3 class='chart_building_name'><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a> {{ $room->floor_number }}階</h3>
+<h3 class='chart_building_name'><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></h3>
+<p class='chart_building_name'>
+    @foreach($floor_numbers as $floor_number)
+        <a href="{{ route('floor_sort',[$building->id,$floor_number]) }}">{{ $floor_number }} / </a>
+    @endforeach
+    
+</p>
 <figure class='highcharts-figure'>
     <div id='container' style='height:600px;'></div>
 </figure>
@@ -140,7 +146,7 @@ Highcharts.chart('container', {
         zoomType: 'xy'
     },
     title: {
-        text: '売買坪単価'
+        text: {{ $room->floor_number }} + '階 売買坪単価'
     },
     
     xAxis: {
@@ -153,6 +159,7 @@ Highcharts.chart('container', {
         showLastLabel: true
     },
     yAxis: {
+        min:0,
         title: {
             text: '坪単価'
         }
@@ -162,7 +169,7 @@ Highcharts.chart('container', {
         align: 'left',
         verticalAlign: 'top',
         x: 100,
-        y: 70,
+        y: 0,
         floating: true,
         backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
         borderWidth: 1
