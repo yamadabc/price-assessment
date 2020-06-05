@@ -65,7 +65,7 @@ class BuildingsController extends Controller
                         ->select('occupied_area','published_price','expected_price')
                         ->get();
         
-        return view('buildings.floor',compact('jsRooms','rooms','building','floor_numbers'));
+        return view('buildings.floor',compact('jsRooms','rooms','building','floor_numbers','floor'));
     }
     /* 
     * @param $building->id,$layout_type
