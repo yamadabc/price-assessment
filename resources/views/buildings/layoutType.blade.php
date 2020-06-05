@@ -23,6 +23,7 @@
     <table class='table table-hover table-striped table-bordered table-sm'>
         <thead>
             <tr>
+                <th>id</th>
                 <th class='sort' data-sort='room_number'>部屋番号</th>
                 <th class='sort' data-sort='floor_number'>階数</th>
                 <th class='sort' data-sort='layout'>間取り</th>
@@ -46,6 +47,7 @@
         <tbody class='list'>
             @foreach($rooms as $room)
             <tr>
+                <td>{{ $room->id }}</td>
                 <td class='room_number'><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
                 <td class='floor_number'><a href="{{ route('floor_sort',[$building->id,$room->floor_number]) }}">{{ $room->floor_number }}</a></td>
                 <td class='layout'>{{ $room->layout }}</td>

@@ -15,6 +15,7 @@
             <table class='table table-striped table-bordered table-sm' id='buildings'>
                 <thead>
                     <tr>
+                        <th>物件id</th>
                         <th class='sort' data-sort='name'>物件名</th>
                         <th class='sort' data-sort='total_unit'>総戸数</th>
                         <th class='sort' data-sort='countPublishedPrice'>新築時価格有り戸数</th>
@@ -25,6 +26,7 @@
                 <tbody class='list'>
                     @foreach($buildings as $building)
                     <tr>
+                        <td>{{ $building->id }}</td>
                         <td class='name'><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></td>
                         <td class='total_unit'>{{ $building->total_unit }}</td>
                         <td class='countPublishedPrice'>
