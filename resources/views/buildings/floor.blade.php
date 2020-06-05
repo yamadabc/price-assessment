@@ -205,10 +205,12 @@ Highcharts.chart('container', {
         color: 'rgba(223, 83, 83, .5)',
         data:[
             @foreach($jsRooms as $jsRoom)
-            @php            
-                $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
-                $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
-            @endphp
+            @if($jsRoom->occupied_area != 0)
+                @php            
+                    $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
+                    $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
+                @endphp
+            @endif
             [{{$result}}],
             @endforeach
         ]
@@ -217,10 +219,12 @@ Highcharts.chart('container', {
         color: 'rgba(119, 152, 191, .5)',
         data: [
             @foreach($jsRooms as $jsRoom)
-            @php            
-                $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
-                $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
-            @endphp
+            @if($jsRoom->occupied_area != 0)
+                @php            
+                    $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
+                    $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
+                @endphp
+            @endif
             [{{$ooyamaResult}}],
             @endforeach
          ]
