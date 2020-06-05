@@ -99,13 +99,13 @@ Highcharts.chart('container', {
         color: 'rgba(223, 83, 83, .5)',
         data:[
             @foreach($jsRooms as $jsRoom)
-            @if($jsRoom->occupied_area != 0)
-                @php            
-                    $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
-                    $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
-                @endphp
-            @endif
-            [{{$result}}],
+                @if($jsRoom->occupied_area != 0)
+                    @php            
+                        $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
+                        $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
+                    @endphp
+                    [{{$result}}],
+                    @endif
             @endforeach
         ]
     }, {
@@ -118,8 +118,8 @@ Highcharts.chart('container', {
                     $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
                     $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
                 @endphp
-            @endif
-            [{{$ooyamaResult}}],
+                [{{$ooyamaResult}}],
+                @endif
             @endforeach
          ]
     }]
