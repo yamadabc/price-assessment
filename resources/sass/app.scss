@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
+// table
 .red {
     color: red;
 }
@@ -29,6 +29,13 @@ th {
 }
 th,td {
     text-align: center;
+}
+table {
+    font-size: 0.9rem;
+    th {
+        height: 50px;
+        line-height: 50px;
+    }
 }
 
 p {

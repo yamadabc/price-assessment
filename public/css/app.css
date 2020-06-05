@@ -37,6 +37,15 @@ td {
   text-align: center;
 }
 
+table {
+  font-size: 0.9rem;
+}
+
+table th {
+  height: 50px;
+  line-height: 50px;
+}
+
 p {
   margin-top: 1rem;
 }
