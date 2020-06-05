@@ -63,14 +63,19 @@ class BuildingsController extends Controller
     * @param $building->id,$layout_type
     *  間取タイプ別検索
     */
-    public function layoutTypeSort($id,$layout)
+    public function layoutTypeSort($id,$layoutType)
     {
         $building = Building::select('id','building_name')->find($id);
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
-                        ->where('layout_type',$layout)
+                        ->where('layout_type',$layoutType)
                         ->get();
-        return view('buildings.show',compact('rooms','building'));
+        $jsRooms = Room::where('building_id',$id)
+                        ->where('layout_type',$layoutType)
+                        ->select('occupied_area','published_price','expected_price','floor_number')
+                        ->get();
+        $layout_type = rtrim($layoutType);
+        return view('buildings.layoutType',compact('jsRooms','rooms','building','layout_type'));
     }
     
 }
