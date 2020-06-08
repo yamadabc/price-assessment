@@ -26,6 +26,8 @@
         {!! Form::model($room,['route' => ['sales_update',$room->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($stockSalesRoom) && !empty($soldSalesRoom))
         {!! Form::model($room,['route' => ['sales_update',$room->id,$stockSalesRoom->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
+    @elseif(!empty($room) && empty($soldSalesRoom) && empty($stockSalesRoom))
+        {!! Form::model($room,['route' => ['sales_update',$room->id],'method' => 'PUT']) !!}
     @endif
     <tr>
         <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>

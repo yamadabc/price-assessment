@@ -26,8 +26,8 @@ class RoomsController extends Controller
             
     }
     /*  
-    * 売買バージョンに切り替え
-    *　@param $room->id
+    * 売買バージョンに切り替え(1部屋)
+    *　@param $building->id
     */
     public function sales($id)
     {
@@ -40,7 +40,7 @@ class RoomsController extends Controller
             ]);
     }
     /*  
-    * 賃貸バージョンに切り替え
+    * 賃貸バージョンに切り替え(1部屋)
     *　@param $room->id
     */
     public function rent($id)

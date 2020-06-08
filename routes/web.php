@@ -17,6 +17,7 @@ Route::prefix('buildings')->group(function(){
     Route::get('/show/{id}','BuildingsController@show')->name('buildings_show');
     Route::get('/{id}/floor/{floor}','BuildingsController@floorSort')->name('floor_sort');
     Route::get('/{id}/layout_type/{layoutType}','BuildingsController@layoutTypeSort')->name('layout_type_sort');
+    Route::get('/{id}/sales','BuildingsController@sales')->name('building_sales');//売買切り替え(全体)
 });
 
 Route::prefix('stocks')->group(function(){
@@ -36,8 +37,8 @@ Route::prefix('room')->group(function(){
     Route::get('/{id}','RoomsController@show')->name('room_show');
     Route::get('/{id}/edit','RoomsController@edit')->name('room_edit');
     Route::put('/{id}','RoomsController@update')->name('room_update');
-    Route::get('/show/{id}/sales','RoomsController@sales')->name('room_sales');//売買切り替え
-    Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え
+    Route::get('/show/{id}/sales','RoomsController@sales')->name('room_sales');//売買切り替え(1部屋)
+    Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え(1部屋)
     Route::get('/show/{id}/rent/edit','RoomsController@rentEdit')->name('rent_edit');//賃貸編集
     Route::put('/show/{roomId}/rent/update/{stockId?}/{soldId?}','RoomsController@rentUpdate')->name('rent_update');//賃貸編集
     Route::get('/show/{id}/sales/edit','RoomsController@salesEdit')->name('sales_edit');//売買編集

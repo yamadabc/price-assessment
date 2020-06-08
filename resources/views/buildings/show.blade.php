@@ -8,8 +8,10 @@
     <div class="items">
         <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
     </div>
+    
         {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
             <div class="items">
+            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
                 {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
             </div>
@@ -24,3 +26,4 @@
 @include('components.buildingShowTable')
 
 @endsection
+

@@ -17,8 +17,6 @@
                 <th class='sort' data-sort='expected_unit_rent_price'>予想賃料坪単価</th>
                 <th class='sort' data-sort='rimawari'>利回り</th>
                 <th class='sort' data-sort='increase_rate'>値上がり率</th>
-                <th class='sort' data-sort='price'>成約価格</th>
-                <th class='sort' data-sort='diffarence'>差分</th>
                 <th>謄本</th>
                 <th>編集</th>
             </tr>
@@ -72,24 +70,7 @@
                         0
                     @endif
                 %</td>
-                <td class='price'>
-                    @foreach($room->soldSalesRooms as $soldSalesRoom)
-                        @if($loop->last)
-                            {{ $soldSalesRoom->price }}
-                        @endif
-                    @endforeach
-                </td>
-                <td class='diffarence'>
-                    @foreach($room->soldSalesRooms as $soldSalesRoom)
-                        @if($loop->last)
-                            @if($soldSalesRoom->price - $room->expected_price > 0)
-                                <div class="red">+{{ $soldSalesRoom->price - $room->expected_price }}({{ round(($soldSalesRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
-                            @else 
-                                <div class="blue">{{ $soldSalesRoom->price - $room->expected_price }}({{ round(($soldSalesRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
-                            @endif
-                        @endif
-                    @endforeach
-                </td>
+                
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)
                         @if(isset($copyOfRegister))

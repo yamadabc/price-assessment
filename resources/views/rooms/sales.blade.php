@@ -89,10 +89,6 @@
                 @endif
             </tr>
             </table>     
-            <p>新規登録</p>
-            <a href="{{ route('stock_sales_create',$room->id) }}">売買在庫</a>
-            <a href="{{ route('stock_rent_create',$room->id) }}">/賃貸在庫</a>
-            <a href="{{ route('sold_sales_create',$room->id) }}">/売買成約</a>
-            <a href="{{ route('sold_rent_create',$room->id) }}">/賃貸成約</a>  
+            @include('components.createNRegisterData')
     </div>
 @endsection
