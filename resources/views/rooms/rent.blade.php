@@ -81,7 +81,15 @@
                 </td>
                 <td>{{ $room->expected_rent_price }}</td>
                 
-                <td><a href="#">リンク</a></td>
+                <td>
+                    @foreach($room->copyOfRegisters as $copyOfRegister)
+                        @if(isset($copyOfRegister))
+                            @if($loop->last)   
+                            <a href="{{ route('pdf_show',$room->getCopyOfRegisters($room->id)) }}">リンク</a>
+                            @endif
+                        @endif    
+                    @endforeach
+                </td>
                 @if($stockRentRoom || $soldRentRoom)
                     <td>
                         <a href="{{ route('rent_edit',$room->id) }}">編集</a>
