@@ -17,7 +17,7 @@
                 <th class='sort' data-sort='expected_unit_rent_price'>予想賃料坪単価</th>
                 <th class='sort' data-sort='rimawari'>利回り</th>
                 <th class='sort' data-sort='increase_rate'>値上がり率</th>
-                <th>データなし</th>
+                <th>新築時価格表に</br>ない部屋</th>
                 <th>謄本</th>
                 <th>編集</th>
             </tr>
