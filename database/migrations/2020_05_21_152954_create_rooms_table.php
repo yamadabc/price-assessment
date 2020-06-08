@@ -20,16 +20,16 @@ class CreateRoomsTable extends Migration
             $table->smallInteger('floor_number')->nullable()->index();
             $table->char('layout',50)->nullable();
             $table->char('direction',50)->nullable();
-            $table->decimal('occupied_area',6,2)->default(0);
-            $table->decimal('balcony_area',6,2)->default(0);
-            $table->decimal('roof_balcony_area',6,2)->default(0);
-            $table->decimal('terass_area',6,2)->default(0);
-            $table->decimal('garden_area',6,2)->default(0);
+            $table->float('occupied_area',6,2)->default(0);
+            $table->float('balcony_area',6,2)->default(0);
+            $table->float('roof_balcony_area',6,2)->default(0);
+            $table->float('terass_area',6,2)->default(0);
+            $table->float('garden_area',6,2)->default(0);
             $table->char('residential_building_name',100)->nullable();//棟名
             $table->char('layout_type',100)->nullable()->index();
-            $table->integer('published_price')->default(0);//新築時売買価格
-            $table->integer('expected_price')->default(0);//予想売買価格
-            $table->integer('expected_rent_price')->default(0);//予想賃料
+            $table->float('published_price',8,2)->default(0);//新築時売買価格
+            $table->float('expected_price',8,2)->default(0);//予想売買価格
+            $table->float('expected_rent_price',10,2)->default(0);//予想賃料
             $table->timestamps();
 
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');

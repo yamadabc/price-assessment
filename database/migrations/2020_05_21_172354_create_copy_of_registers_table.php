@@ -15,7 +15,7 @@ class CreateCopyOfRegistersTable extends Migration
     {
         Schema::create('copy_of_registers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('room_id')->index();
+            $table->unsignedBigInteger('room_id')->index();
             $table->text('pdf_filename');
             $table->timestamps();
 
