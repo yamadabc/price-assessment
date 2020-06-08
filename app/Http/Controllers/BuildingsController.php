@@ -60,7 +60,7 @@ class BuildingsController extends Controller
             });
             $rooms = $query->orderBy('id','asc')->get();
         }else{
-            $rooms = $rooms->with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
+            $rooms = $rooms->getForSales($id);
         }
 
         return view('buildings.sales',compact('rooms','building'));
@@ -84,10 +84,10 @@ class BuildingsController extends Controller
             });
             $rooms = $query->orderBy('id','asc')->get();
         }else{
-            $rooms = $rooms->with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
+            $rooms = $rooms->getForRent($id);
         }
 
-        return view('buildings.stocks',compact('rooms','building'));
+        return view('buildings.rent',compact('rooms','building'));
     }
 
     /* 

@@ -143,11 +143,12 @@ class RoomsController extends Controller
                 ]
                 );
         }
+        //賃貸バージョンページへリダイレクト
         $buildingId = Room::where('id',$roomId)->value('building_id');
         $building = Building::select('id','building_name')->find($buildingId);
         $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
+        $rooms = $rooms->getForRent($buildingId);
+        return view('buildings.rent',compact('rooms','building'));
     }
 
     /*
@@ -203,11 +204,12 @@ class RoomsController extends Controller
                 ]
                 );
         }
+        //売買バージョンページにリダイレクト
         $buildingId = Room::where('id',$roomId)->value('building_id');
         $building = Building::select('id','building_name')->find($buildingId);
         $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
+        $rooms = $rooms->getForSales($buildingId);
+        return view('buildings.sales',compact('rooms','building'));
     }
 
 }
