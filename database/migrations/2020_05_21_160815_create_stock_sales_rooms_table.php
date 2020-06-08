@@ -16,8 +16,8 @@ class CreateStockSalesRoomsTable extends Migration
         Schema::create('stock_sales_rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id')->index();
-            $table->float('price',8,2)->default(0);//掲載中の価格
-            $table->float('previous_price',8,2)->default(0);//変更前価格
+            $table->float('price',8,2)->nullable();//掲載中の価格
+            $table->float('previous_price',8,2)->nullable();//変更前価格
             $table->float('management_fee',8,2)->default(0);//管理費
             $table->float('reserve_fund')->default(0);//修繕積立金
             $table->char('company_name',100)->nullable();//会員名
