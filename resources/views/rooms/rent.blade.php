@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="row">
-        <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸</h2>
+        <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸情報</h2>
             <div class="bottun">
                 <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
             </div>
@@ -27,6 +27,7 @@
                     <th>登録年月日</th>
                     <th>変更年月日</th>
                     <th>予想賃料</th>
+                    <th>差分</th>
                     <th>謄本</th>
                     @if($stockRentRoom || $soldRentRoom)
                         <th></th>
@@ -80,7 +81,17 @@
                     @endif
                 </td>
                 <td>{{ $room->expected_rent_price }}</td>
-                
+                <td class='diffarence'>
+                    @foreach($room->soldRentRooms as $soldRentRoom)
+                        @if($loop->last)
+                            @if($soldRentRoom->price - $room->expected_price > 0)
+                                <div class="red">+{{ $soldRentRoom->price - $room->expected_price }}({{ round(($soldRentRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                            @else 
+                                <div class="blue">{{ $soldRentRoom->price - $room->expected_price }}({{ round(($soldRentRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                            @endif
+                        @endif
+                    @endforeach
+                </td>
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)
                         @if(isset($copyOfRegister))

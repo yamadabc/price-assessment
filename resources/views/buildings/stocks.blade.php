@@ -6,7 +6,7 @@
 
 <div class="flex">
     <div class="items">
-        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
+    <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・賃貸情報</h2>
     </div>
         {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
             <div class="items">
@@ -50,7 +50,7 @@
             @foreach($rooms as $room)
             <tr>
                 <td>{{ $room->id }}</td>
-                <td class='room_number'><a href="{{ route('room_sales',$room->id) }}">{{ $room->room_number }}</a></td>
+                <td class='room_number'><a href="{{ route('room_rent',$room->id) }}">{{ $room->room_number }}</a></td>
                 <td class='floor_number'>{{ $room->floor_number }}</td>
                 <td class='layout'>{{ $room->layout }}</td>
                 <td class='layout_type'>{{ $room->layout_type }}</td>
@@ -115,7 +115,7 @@
                     @endforeach
                 </td>
                 
-                <td class='expected_price'>{{ $room->expected_price }}</td>
+                <td class='expected_price'>{{ $room->expected_rent_price }}</td>
                 <td class='diffarence'>
                     @foreach($room->soldRentRooms as $soldRentRoom)
                         @if($loop->last)
