@@ -56,8 +56,6 @@ class CSV
                  $station_route_03        = $row[25];
                  $station_name_03         = $row[26];
                  $station_walk_03         = $row[27];
-                 $created_at              = $row[28];
-                 $updated_at              = $row[29];
             
                  
                  $csvimport_array = [
@@ -88,8 +86,6 @@ class CSV
                      'station_route_03'        => $station_route_03,
                      'station_name_03'         => $station_name_03,
                      'station_walk_03'         => $station_walk_03,
-                     'created_at'              => $created_at,
-                     'updated_at'              => $updated_at,
                  ];
                  array_push($array, $csvimport_array);
             }
@@ -149,8 +145,6 @@ class CSV
                  $station_route_03        = $row[25];
                  $station_name_03         = $row[26];
                  $station_walk_03         = $row[27];
-                 $created_at              = $row[28];
-                 $updated_at              = $row[29];
             
                  
                  $csvimport_array = [
@@ -182,8 +176,6 @@ class CSV
                      'station_route_03'        => $station_route_03,
                      'station_name_03'         => $station_name_03,
                      'station_walk_03'         => $station_walk_03,
-                     'created_at'              => $created_at,
-                     'updated_at'              => $updated_at,
                  ];
                  array_push($array, $csvimport_array);
             }
@@ -232,8 +224,6 @@ class CSV
                  $published_price           = $row[13];
                  $expected_price            = $row[14];
                  $expected_rent_price       = $row[15];
-                 $created_at                = $row[16];
-                 $updated_at                = $row[17];
 
                  $csvimport_array = [
                      'building_id'               => $building_id,
@@ -251,8 +241,6 @@ class CSV
                      'published_price'           => $published_price,
                      'expected_price'            => $expected_price,
                      'expected_rent_price'       => $expected_rent_price,
-                     'created_at'                => $created_at,
-                     'updated_at'                => $updated_at,
                  ];
                  array_push($array, $csvimport_array);
             }
@@ -301,8 +289,6 @@ class CSV
                  $published_price           = $row[13];
                  $expected_price            = $row[14];
                  $expected_rent_price       = $row[15];
-                 $created_at                = $row[16];
-                 $updated_at                = $row[17];
 
                  $csvimport_array = [
                      'id'                        => $id,
@@ -321,8 +307,6 @@ class CSV
                      'published_price'           => $published_price,
                      'expected_price'            => $expected_price,
                      'expected_rent_price'       => $expected_rent_price,
-                     'created_at'                => $created_at,
-                     'updated_at'                => $updated_at,
                  ];
                  array_push($array, $csvimport_array);
             }
