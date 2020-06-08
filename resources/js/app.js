@@ -10,3 +10,7 @@ var optionsForBuildings = {
     valueNames:['name','total_unit','countPublishedPrice','countExpectedPrice','percent']
 };
 var buildingList = new List('buildings',optionsForBuildings);
+
+var optionsForSales = {
+    valueNames:['price','previous_price','registered_at','changed_at','sold_price','sold_previous_price','sold_registered_at','sold_changed_at','expected_price']
+};
