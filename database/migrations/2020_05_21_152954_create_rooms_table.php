@@ -30,6 +30,7 @@ class CreateRoomsTable extends Migration
             $table->float('published_price',8,2)->default(0);//新築時売買価格
             $table->float('expected_price',8,2)->default(0);//予想売買価格
             $table->float('expected_rent_price',10,2)->default(0);//予想賃料
+            $table->boolean('has_no_data')->default(0);
             $table->timestamps();
 
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');

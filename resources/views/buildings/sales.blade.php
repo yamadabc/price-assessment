@@ -41,6 +41,7 @@
                 <th class='sort' data-sort='sold_registered_at'>登録年月日</th>
                 <th class='sort' data-sort='sold_changed_at'>変更年月日</th>
                 <th class='sort' data-sort='expected_price'>予想売買価格</th>
+                <th class='sort' data-sort='has_no_data'>データなし</th>
                 <th>差分</th>
                 <th>謄本</th>
                 <th></th>
@@ -113,9 +114,12 @@
                             {{ $soldSalesRoom->changed_at }}
                         @endif
                     @endforeach
+                </td><td class='expected_price'>{{ $room->expected_price }}</td>
+                <td class='has_no_data'>
+                    @if($room->has_no_data == 1)    
+                        ⚪︎
+                    @endif
                 </td>
-                
-                <td class='expected_price'>{{ $room->expected_price }}</td>
                 <td class='diffarence'>
                     @foreach($room->soldSalesRooms as $soldSalesRoom)
                         @if($loop->last)

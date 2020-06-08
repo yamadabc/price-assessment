@@ -41,6 +41,7 @@
                     <th class='sort' data-sort='sold_registered_at'>登録年月日</th>
                     <th class='sort' data-sort='sold_changed_at'>変更年月日</th>
                     <th class='sort' data-sort='expected_price'>予想賃料</th>
+                    <th>データなし</th>
                     <th>差分</th>
                     <th>謄本</th>
                     <th></th>
@@ -114,8 +115,12 @@
                         @endif
                     @endforeach
                 </td>
-                
                 <td class='expected_price'>{{ $room->expected_rent_price }}</td>
+                <td class='has_no_data'>
+                    @if($room->has_no_data == 1)    
+                        ⚪︎
+                    @endif
+                </td>
                 <td class='diffarence'>
                     @foreach($room->soldRentRooms as $soldRentRoom)
                         @if($loop->last)

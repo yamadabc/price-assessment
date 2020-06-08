@@ -28,6 +28,7 @@
                     <th>変更年月日</th>
                     <th>予想売買価格</th>
                     <th>差分</th>
+                    <th>データなし</th>
                     <th>謄本</th>
                     @if($stockSalesRoom || $soldSalesRoom)
                         <th></th>
@@ -92,7 +93,11 @@
                         @endif
                     @endforeach
                 </td>
-                
+                <td class='has_no_data'>
+                    @if($room->has_no_data == 1)    
+                        ⚪︎
+                    @endif
+                </td>
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)
                         @if(isset($copyOfRegister))

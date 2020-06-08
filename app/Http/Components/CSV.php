@@ -224,7 +224,13 @@ class CSV
                  $published_price           = $row[13];
                  $expected_price            = $row[14];
                  $expected_rent_price       = $row[15];
+                 $has_no_data               = $row[16];
 
+                 if(empty($has_no_data)){
+                    $has_no_data = 0;
+                }else{
+                    $has_no_data = 1;
+                }
                  $csvimport_array = [
                      'building_id'               => $building_id,
                      'room_number'               => $room_number,
@@ -241,6 +247,7 @@ class CSV
                      'published_price'           => $published_price,
                      'expected_price'            => $expected_price,
                      'expected_rent_price'       => $expected_rent_price,
+                     'has_no_data'               => $has_no_data,
                  ];
                  array_push($array, $csvimport_array);
             }
@@ -289,7 +296,11 @@ class CSV
                  $published_price           = $row[13];
                  $expected_price            = $row[14];
                  $expected_rent_price       = $row[15];
+                 $has_no_data               = $row[16];
 
+                 if(is_set($has_no_data)){
+                    $has_no_data = 1;
+                }
                  $csvimport_array = [
                      'id'                        => $id,
                      'building_id'               => $building_id,
@@ -307,6 +318,7 @@ class CSV
                      'published_price'           => $published_price,
                      'expected_price'            => $expected_price,
                      'expected_rent_price'       => $expected_rent_price,
+                     'has_no_data'               => $has_no_data,
                  ];
                  array_push($array, $csvimport_array);
             }

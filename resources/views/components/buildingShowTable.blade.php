@@ -17,6 +17,7 @@
                 <th class='sort' data-sort='expected_unit_rent_price'>予想賃料坪単価</th>
                 <th class='sort' data-sort='rimawari'>利回り</th>
                 <th class='sort' data-sort='increase_rate'>値上がり率</th>
+                <th>データなし</th>
                 <th>謄本</th>
                 <th>編集</th>
             </tr>
@@ -70,6 +71,11 @@
                         0
                     @endif
                 %</td>
+                <td>
+                    @if($room->has_no_data == 1)    
+                        ⚪︎
+                    @endif
+                </td>
                 
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)

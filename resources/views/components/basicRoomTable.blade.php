@@ -42,23 +42,10 @@
                 0
             @endif
         %</td>
-        <td class='price'>
-            @foreach($room->soldSalesRooms as $soldSalesRoom)
-                @if($loop->last)
-                    {{ $soldSalesRoom->price }}
-                @endif
-            @endforeach
-        </td>
-        <td class='diffarence'>
-            @foreach($room->soldSalesRooms as $soldSalesRoom)
-                @if($loop->last)
-                    @if($soldSalesRoom->price - $room->expected_price > 0)
-                        <div class="red">+{{ $soldSalesRoom->price - $room->expected_price }}</div>
-                    @else
-                        <div class="blue">{{ $soldSalesRoom->price - $room->expected_price }}</div>
-                    @endif
-                @endif
-            @endforeach
+        <td class='has_no_data'>
+            @if($room->has_no_data == 1)    
+                ⚪︎
+            @endif
         </td>
         <td>
             @foreach($room->copyOfRegisters as $copyOfRegister)
