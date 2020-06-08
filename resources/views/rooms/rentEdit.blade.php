@@ -26,6 +26,8 @@
         {!! Form::model($room,['route' => ['rent_update',$room->id,$soldRentRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($stockRentRoom) && !empty($soldRentRoom))
         {!! Form::model($room,['route' => ['rent_update',$room->id,$stockRentRoom->id,$soldRentRoom->id],'method' => 'PUT']) !!}
+    @elseif(!empty($room) && empty($soldRentRoom) && empty($stockRentRoom))
+        {!! Form::model($room,['route' => ['rent_update',$room->id],'method' => 'PUT']) !!}
     @endif
     <tr>
         <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>

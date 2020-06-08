@@ -12,8 +12,9 @@
         {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
             <div class="items">
             <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
+            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
+                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
             </div>
         {!! Form::close() !!}
 </div>
