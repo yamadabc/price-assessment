@@ -85,10 +85,10 @@
                 <td class='diffarence'>
                     @foreach($room->soldRentRooms as $soldRentRoom)
                         @if($loop->last)
-                            @if($soldRentRoom->price - $room->expected_price > 0)
-                                <div class="red">+{{ $soldRentRoom->price - $room->expected_price }}({{ round(($soldRentRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                            @if($room->expected_rent_price - $soldRentRoom->price > 0)
+                                <div class="red">+{{ $room->expected_rent_price - $soldRentRoom->price }}({{ round(($room->expected_rent_price - $soldRentRoom->price) / $room->expected_rent_price * 100 ,2) }}%)</div>
                             @else 
-                                <div class="blue">{{ $soldRentRoom->price - $room->expected_price }}({{ round(($soldRentRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                                <div class="blue">{{ $room->expected_rent_price - $soldRentRoom->price }}({{ round(( $room->expected_rent_price - $soldRentRoom->price) / $room->expected_rent_price * 100 ,2) }}%)</div>
                             @endif
                         @endif
                     @endforeach

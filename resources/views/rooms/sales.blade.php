@@ -86,9 +86,9 @@
                     @foreach($room->soldSalesRooms as $soldSalesRoom)
                         @if($loop->last)
                             @if($soldSalesRoom->price - $room->expected_price > 0)
-                                <div class="red">+{{ $soldSalesRoom->price - $room->expected_price }}({{ round(($soldSalesRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                                <div class="blue">{{ $room->expected_price - $soldSalesRoom->price }}({{ round(( $room->expected_price - $soldSalesRoom->price) / $room->expected_price * 100 ,2) }}%)</div>
                             @else 
-                                <div class="blue">{{ $soldSalesRoom->price - $room->expected_price }}({{ round(($soldSalesRoom->price - $room->expected_price) / $room->expected_price * 100 ,2) }}%)</div>
+                                <div class="red">+{{ $room->expected_price - $soldSalesRoom->price }}({{ round(($room->expected_price - $soldSalesRoom->price) / $room->expected_price * 100 ,2) }}%)</div>
                             @endif
                         @endif
                     @endforeach
