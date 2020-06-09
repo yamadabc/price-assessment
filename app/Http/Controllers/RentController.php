@@ -103,4 +103,46 @@ class RentController extends Controller
         \Session::flash('flash_message', '賃貸情報を削除しました');
         return back();
     }
+
+    /*  
+    * 賃貸階数別検索
+    *　@param $building->id,$floor_number
+    */
+    public function floorSort($id,$floor)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        //全階数取得
+        $floor_numbers = [];
+        $rooms = new Room();
+        $rooms = $rooms->getForRent($id);
+        foreach($rooms as $room){
+            $floor_numbers[] = $room->floor_number;
+        }
+        $floor_numbers = array_unique($floor_numbers);
+
+        $rooms = Room::with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
+                        ->where('building_id',$id)
+                        ->where('floor_number',$floor)
+                        ->orderBy('id','asc')
+                        ->get();
+        //最小予想賃料坪単価
+        $expectedUnitRentPrices = [];
+        foreach($rooms as $room){
+            if($room->occupied_area != 0){
+                $expectedUnitRentPrices [] = round($room->expected_rent_price / ($room->occupied_area * 0.3025));
+            }
+        }
+        $expectedUnitRentPrice = min($expectedUnitRentPrices);
+
+        // 最小予想賃料
+        $expectedRentPrices = [];
+        foreach($rooms as $room){
+            if($room->expected_rent_price != 0){
+                $expectedRentPrices [] = $room->expected_rent_price;
+            }
+        }
+        $expectedRentPrice = min($expectedRentPrices);
+        
+        return view('buildings.rentFloor',compact('rooms','building','floor_numbers','floor','expectedUnitRentPrice','expectedRentPrice'));
+    }
 }

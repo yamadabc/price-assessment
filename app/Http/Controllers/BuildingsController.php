@@ -140,42 +140,6 @@ class BuildingsController extends Controller
     * 売買階数別検索
     *　@param $building->id,$floor_number
     */
-    public function floorSortSales($id,$floor)
-    {
-        $building = Building::select('id','building_name')->find($id);
-        //全階数取得
-        $floor_numbers = [];
-        $rooms = new Room();
-        $rooms = $rooms->getForSales($id);
-        foreach($rooms as $room){
-            $floor_numbers[] = $room->floor_number;
-        }
-        $floor_numbers = array_unique($floor_numbers);
-
-        $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
-                        ->where('building_id',$id)
-                        ->where('floor_number',$floor)
-                        ->orderBy('id','asc')
-                        ->get();
-        
-        //最小新築時坪単価
-        $expectedUnitPrices = [];
-        foreach($rooms as $room){
-            if($room->occupied_area != 0){
-                $expectedUnitPrices [] = round($room->published_price / ($room->occupied_area * 0.3025));
-            }
-        }
-        $expectedUnitPrice = min($expectedUnitPrices);
-
-        // 最小新築時売買価格
-        $publishedPrices = [];
-        foreach($rooms as $room){
-            if($room->published_price != 0){
-                $publishedPrices [] = $room->published_price;
-            }
-        }
-        $publishedPrice = min($publishedPrices);
-        
-        return view('buildings.salesFloor',compact('rooms','building','floor_numbers','floor','expectedUnitPrice','publishedPrice'));
-    }
+    
+    
 }
