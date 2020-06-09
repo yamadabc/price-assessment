@@ -107,6 +107,7 @@ class BuildingsController extends Controller
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
                         ->where('floor_number',$floor)
+                        ->orderBy('id','asc')
                         ->get();
         $jsRooms = Room::where('building_id',$id)
                         ->where('floor_number',$floor)
@@ -125,6 +126,7 @@ class BuildingsController extends Controller
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
                         ->where('building_id',$id)
                         ->where('layout_type',$layoutType)
+                        ->orderBy('id','asc')
                         ->get();
         $jsRooms = Room::where('building_id',$id)
                         ->where('layout_type',$layoutType)
@@ -153,13 +155,14 @@ class BuildingsController extends Controller
         $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
                         ->where('building_id',$id)
                         ->where('floor_number',$floor)
+                        ->orderBy('id','asc')
                         ->get();
         $jsRooms = Room::where('building_id',$id)
                         ->where('floor_number',$floor)
                         ->select('occupied_area','published_price','expected_price')
                         ->get();
         
-        //最小坪単価
+        //最小新築時坪単価
         $expectedUnitPrices = [];
         foreach($jsRooms as $jsRoom){
             if($jsRoom->occupied_area != 0){
@@ -167,6 +170,16 @@ class BuildingsController extends Controller
             }
         }
         $expectedUnitPrice = min($expectedUnitPrices);
-        return view('buildings.salesFloor',compact('jsRooms','rooms','building','floor_numbers','floor','expectedUnitPrice'));
+
+        // 最小新築時売買価格
+        $publishedPrices = [];
+        foreach($rooms as $room){
+            if($room->published_price != 0){
+                $publishedPrices [] = $room->published_price;
+            }
+        }
+        $publishedPrice = min($publishedPrices);
+        
+        return view('buildings.salesFloor',compact('jsRooms','rooms','building','floor_numbers','floor','expectedUnitPrice','publishedPrice'));
     }
 }

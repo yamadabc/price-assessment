@@ -16,6 +16,7 @@
                 <th class='sort' data-sort='sold_previous_price'>成約前価格</th>
                 <th class='sort' data-sort='sold_registered_at'>登録年月日</th>
                 <th class='sort' data-sort='sold_changed_at'>変更年月日</th>
+                <th class='sort' data-sort='published_price'>新築時売買価格</th>
                 <th class='sort' data-sort='expected_price'>予想売買価格</th>
                 <th class='sort' data-sort='has_no_data'>新築時価格表に</br>ない部屋</th>
                 <th>差分</th>
@@ -94,7 +95,9 @@
                             {{ $soldSalesRoom->changed_at }}
                         @endif
                     @endforeach
-                </td><td class='expected_price'>{{ $room->expected_price }}</td>
+                </td>
+                <td class='published_price'>{{ $room->published_price }}</td>
+                <td class='expected_price'>{{ $room->expected_price }}</td>
                 <td class='has_no_data'>
                     @if($room->has_no_data == 1)    
                         ⚪︎

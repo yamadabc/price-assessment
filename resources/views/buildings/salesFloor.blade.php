@@ -18,26 +18,25 @@
 </div>
 <p class='chart_building_name'>
     @foreach($floor_numbers as $floor_number)
-        <a href="{{ route('floor_sort',[$building->id,$floor_number]) }}">{{ $floor_number }} / </a>
+        <a href="{{ route('floor_sort.sales',[$building->id,$floor_number]) }}">{{ $floor_number }} / </a>
     @endforeach
 </p>
 <div class="flex">
     <div class="items">
-    <figure class='highcharts-figure'>
-        <div id='container' style='height:600px;'></div>
-    </figure>
+        <figure class='highcharts-figure'>
+            <div id='container' style='height:600px;'></div>
+        </figure>
+    </div>
+    <div class="items">
+        <figure class='highcharts-figure'>
+            <div id='price' style='height:600px;'></div>
+        </figure>
     </div>
 </div>
 @include('components.buildingSalesTable')
 
-<figure class='highcharts-figure'>
-    <div id='container' style='height:600px;'></div>
-</figure>
-
 <script>
-let jsRooms = <?php echo $jsRooms; ?>;
-
-
+// 坪単価散布図
 Highcharts.chart('container', {
     chart: {
         type: 'scatter',
@@ -119,6 +118,94 @@ Highcharts.chart('container', {
                     @php            
                         $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
                         $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
+                    @endphp
+                    [{{$ooyamaResult}}],
+                @endif
+            @endforeach
+         ]
+    }]
+});
+
+// 売買価格散布図
+Highcharts.chart('price', {
+    chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+    },
+    title: {
+        text: {{ $floor }} + '階 売買価格'
+    },
+    
+    xAxis: {
+        title: {
+            enabled: true,
+            text: '部屋番号'
+        },
+        startOnTick: true,
+        endOnTick: true,
+        showLastLabel: true
+    },
+    yAxis: {
+        min:{{ $publishedPrice }} - 1000,
+        title: {
+            text: '予想売買価格'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 0,
+        floating: true,
+        backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+        borderWidth: 1
+    },
+    plotOptions: {
+        scatter: {
+            marker: {
+                radius: 5,
+                states: {
+                    hover: {
+                        enabled: true,
+                        lineColor: 'rgb(100,100,100)'
+                    }
+                }
+            },
+            states: {
+                hover: {
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x} 号室, {point.y} 万円'
+            }
+        }
+    },
+    series: [{
+        name: '新築時価格',
+        color: 'rgba(223, 83, 83, .5)',
+        data:[
+            @foreach($rooms as $room)
+                @if($room->published_price != 0)
+                    @php            
+                        $result = $room->room_number.','.$room->published_price;
+                    @endphp
+                    [{{$result}}],
+                @endif
+            @endforeach
+        ]
+    }, {
+        name: '予想売買価格',
+        color: 'rgba(119, 152, 191, .5)',
+        data: [
+            @foreach($rooms as $room)
+                @if($room->expected_price != 0)
+                    @php            
+                        $ooyamaResult = $room->room_number.','.$room->expected_price;
                     @endphp
                     [{{$ooyamaResult}}],
                 @endif
