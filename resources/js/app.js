@@ -14,3 +14,13 @@ var buildingList = new List('buildings',optionsForBuildings);
 var optionsForSales = {
     valueNames:['price','previous_price','registered_at','changed_at','sold_price','sold_previous_price','sold_registered_at','sold_changed_at','expected_price']
 };
+
+//delete確認ダイアログ
+$(function(){
+    $(".dell").click(function(){
+        if(confirm("売買情報を削除してよろしいですか？")){
+        }else{
+            return false;
+        }
+    });
+});

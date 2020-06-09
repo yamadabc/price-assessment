@@ -45,6 +45,9 @@ Route::prefix('room')->group(function(){
     Route::get('/show/{id}/sales/edit','RoomsController@salesEdit')->name('sales_edit');//売買編集
     Route::put('/show/{roomId}/sales/update/{stockId?}/{soldId?}','RoomsController@salesUpdate')->name('sales_update');//売買編集
 });
+Route::prefix('sales')->group(function(){
+    Route::post('/{stockSalesRoomId?}/{soldSalesRoomId?}','SalesController@destroy')->name('sales_delete');
+});
 //登記簿謄本
 Route::prefix('register')->group(function(){
     Route::post('/upload/{id}','CopyOfRegisterController@upload')->name('pdf_upload');
