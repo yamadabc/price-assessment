@@ -49,7 +49,7 @@ Highcharts.chart('container', {
     xAxis: {
         title: {
             enabled: true,
-            text: '占有面積'
+            text: '部屋番号'
         },
         startOnTick: true,
         endOnTick: true,
@@ -91,7 +91,7 @@ Highcharts.chart('container', {
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x} ㎡, {point.y} 万円/坪'
+                pointFormat: '{point.x} 号室, {point.y} 万円/坪'
             }
         }
     },
@@ -99,11 +99,11 @@ Highcharts.chart('container', {
         name: '新築時坪単価',
         color: 'rgba(223, 83, 83, .5)',
         data:[
-            @foreach($jsRooms as $jsRoom)
-                @if($jsRoom->occupied_area != 0)
+            @foreach($rooms as $room)
+                @if($room->occupied_area != 0)
                     @php            
-                        $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
-                        $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
+                        $publishedUnitPrice = round($room->published_price / ($room->occupied_area * 0.3025));
+                        $result = $room->room_number.','.$publishedUnitPrice;
                     @endphp
                     [{{$result}}],
                     @endif
@@ -113,11 +113,11 @@ Highcharts.chart('container', {
         name: '予想価格坪単価',
         color: 'rgba(119, 152, 191, .5)',
         data: [
-            @foreach($jsRooms as $jsRoom)
-                @if($jsRoom->occupied_area != 0)
+            @foreach($rooms as $room)
+                @if($room->occupied_area != 0)
                     @php            
-                        $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
-                        $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
+                        $expectedUnitPrice = round($room->expected_price / ($room->occupied_area * 0.3025));
+                        $ooyamaResult = $room->room_number.','.$expectedUnitPrice;
                     @endphp
                     [{{$ooyamaResult}}],
                 @endif

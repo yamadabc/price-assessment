@@ -157,16 +157,12 @@ class BuildingsController extends Controller
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
-        $jsRooms = Room::where('building_id',$id)
-                        ->where('floor_number',$floor)
-                        ->select('occupied_area','published_price','expected_price')
-                        ->get();
         
         //最小新築時坪単価
         $expectedUnitPrices = [];
-        foreach($jsRooms as $jsRoom){
-            if($jsRoom->occupied_area != 0){
-                $expectedUnitPrices [] = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
+        foreach($rooms as $room){
+            if($room->occupied_area != 0){
+                $expectedUnitPrices [] = round($room->published_price / ($room->occupied_area * 0.3025));
             }
         }
         $expectedUnitPrice = min($expectedUnitPrices);
@@ -180,6 +176,6 @@ class BuildingsController extends Controller
         }
         $publishedPrice = min($publishedPrices);
         
-        return view('buildings.salesFloor',compact('jsRooms','rooms','building','floor_numbers','floor','expectedUnitPrice','publishedPrice'));
+        return view('buildings.salesFloor',compact('rooms','building','floor_numbers','floor','expectedUnitPrice','publishedPrice'));
     }
 }
