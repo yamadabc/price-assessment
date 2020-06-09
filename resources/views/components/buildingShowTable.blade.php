@@ -27,7 +27,10 @@
             <tr>
                 <td>{{ $room->id }}</td>
                 <td class='room_number'><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
-                <td class='floor_number'><a href="{{ route('floor_sort',[$building->id,$room->floor_number]) }}">{{ $room->floor_number }}</a></td>
+                <td class='floor_number'>
+                    @if($room->floor_number)    
+                        <a href="{{ route('floor_sort',[$building->id,$room->floor_number]) }}">{{ $room->floor_number }}</a></td>
+                    @endif
                 <td class='layout'>{{ $room->layout }}</td>
                 <td class='layout_type'>
                     @if($room->layout_type)    

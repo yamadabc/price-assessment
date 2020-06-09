@@ -6,7 +6,7 @@
 
 <div class="flex">
     <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・売買情報</h2>
+        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・売買情報<a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
     </div>
         {!! Form::open(['route' => ['building_sales',$building->id],'method' => 'get']) !!}
             <div class="items">

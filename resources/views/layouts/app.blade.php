@@ -16,8 +16,8 @@
     <header>
         <div class="flex">
             <h1 class='item'><a href="/">大山査定</a></h1>
-            <!-- モーダル表示の為のボタン -->
             <div class="item">
+                <!-- モーダル表示の為のボタン -->
                 <!-- ドロップダウンメニュー -->
                 <div class="dropdown">
                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">csvアップロード</button>

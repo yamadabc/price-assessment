@@ -15,6 +15,49 @@ use App\Http\Requests\Rent;
 class RoomsController extends Controller
 {
     /*
+    * @param int $building->id
+    *
+    */
+    public function create($id)
+    {
+        $building = Building::find($id);
+        return view('rooms.create',[
+            'building' => $building,
+        ]);
+    }
+    /*
+    * @param int $building->id
+    *
+    */
+    public function store(RoomEdit $request,$id)
+    {
+        $request->validated();
+
+        $room = new Room();
+        $roomData = $room->nullSubZero($request);
+        $building = Building::find($id);
+        if($request->has_no_data == 1){
+            $has_no_data = true;
+        }else{
+            $has_no_data = false;
+        }
+        $building->rooms()->create([
+            'room_number' => $request->room_number,
+            'floor_number' => $request->floor_number,
+            'layout' => $request->layout,
+            'layout_type' => $request->layout_type,
+            'direction' => $request->direction,
+            'occupied_area' => $roomData['occupied_area'],
+            'published_price' => $roomData['published_price'],
+            'expected_price' => $roomData['expected_price'],
+            'expected_rent_price' => $roomData['expected_rent_price'],
+            'has_no_data' => false,
+        ]);
+        \Session::flash('flash_message', '部屋情報を登録しました');
+        return redirect()->route('buildings_show',$id);
+        
+    }
+    /*
     *@param $room->id
     *
     */
@@ -60,7 +103,7 @@ class RoomsController extends Controller
             'expected_rent_price' => $roomData['expected_rent_price'],
         ]);
 
-        \Session::flash('flash_message', '部屋情報を編集しました！');
+        \Session::flash('flash_message', '部屋情報を編集しました');
         return view('rooms.show',compact('room'));
     }
 

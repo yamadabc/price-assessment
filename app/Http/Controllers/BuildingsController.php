@@ -38,7 +38,7 @@ class BuildingsController extends Controller
         }else{
             $rooms = $rooms->getForRoomsShow($id);
         }
-        
+
         return view('buildings.show',compact('rooms','building'));
     }
 

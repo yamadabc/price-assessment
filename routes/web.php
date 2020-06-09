@@ -38,6 +38,8 @@ Route::prefix('room')->group(function(){
     Route::get('/{id}','RoomsController@show')->name('room_show');
     Route::get('/{id}/edit','RoomsController@edit')->name('room_edit');
     Route::put('/{id}','RoomsController@update')->name('room_update');
+    Route::get('/create/{id}','RoomsController@create')->name('room_create');
+    Route::post('/create/{id}','RoomsController@store')->name('room_store');
 });
 Route::prefix('sales')->group(function(){
     Route::post('/{stockSalesRoomId?}/{soldSalesRoomId?}','SalesController@destroy')->name('sales_delete');
