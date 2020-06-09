@@ -298,7 +298,9 @@ class CSV
                  $expected_rent_price       = $row[15];
                  $has_no_data               = $row[16];
 
-                 if(is_set($has_no_data)){
+                 if(empty($has_no_data)){
+                    $has_no_data = 0;
+                }else{
                     $has_no_data = 1;
                 }
                  $csvimport_array = [
