@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <div class="row">
-        <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・売買情報</h2>
-        <div class="bottun">
+    <div class="flex">
+        <h2 class='item'><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・売買情報</h2>
+        <div class="item">
             <a href="{{ route('room_rent',$room->id) }}" class='btn btn-success'>賃貸</a>
         </div>
     </div>
