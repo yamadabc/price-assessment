@@ -38,18 +38,18 @@ Route::prefix('room')->group(function(){
     Route::get('/{id}','RoomsController@show')->name('room_show');
     Route::get('/{id}/edit','RoomsController@edit')->name('room_edit');
     Route::put('/{id}','RoomsController@update')->name('room_update');
-    Route::get('/show/{id}/sales','RoomsController@sales')->name('room_sales');//売買切り替え(1部屋)
-    Route::get('/show/{id}/rent','RoomsController@rent')->name('room_rent');//賃貸切り替え(1部屋)
-    Route::get('/show/{id}/rent/edit','RoomsController@rentEdit')->name('rent_edit');//賃貸編集
-    Route::put('/show/{roomId}/rent/update/{stockId?}/{soldId?}','RoomsController@rentUpdate')->name('rent_update');//賃貸編集
-    Route::get('/show/{id}/sales/edit','RoomsController@salesEdit')->name('sales_edit');//売買編集
-    Route::put('/show/{roomId}/sales/update/{stockId?}/{soldId?}','RoomsController@salesUpdate')->name('sales_update');//売買編集
 });
 Route::prefix('sales')->group(function(){
     Route::post('/{stockSalesRoomId?}/{soldSalesRoomId?}','SalesController@destroy')->name('sales_delete');
+    Route::get('/show/{id}','SalesController@sales')->name('room_sales');//売買切り替え(1部屋)
+    Route::get('/edit/{id}','RoomsController@Edit')->name('sales_edit');//売買編集
+    Route::put('/update/{roomId}/{stockId?}/{soldId?}','RoomsController@Update')->name('sales_update');//売買編集
 });
 Route::prefix('rent')->group(function(){
     Route::post('/{stockRentRoomId?}/{soldRentRoomId?}','RentController@destroy')->name('rent_delete');
+    Route::get('/show/{id}','RentController@rent')->name('room_rent');//賃貸切り替え(1部屋)
+    Route::get('/edit/{id}','RentController@Edit')->name('rent_edit');//賃貸編集
+    Route::put('/updata/{roomId}/{stockId?}/{soldId?}','RentController@Update')->name('rent_update');//賃貸編集
 });
 //登記簿謄本
 Route::prefix('register')->group(function(){
