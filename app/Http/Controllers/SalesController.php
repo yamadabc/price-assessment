@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SoldSalesRoom;
 use App\StockSalesRoom;
-use App\Room;
 
 class SalesController extends Controller
 {
@@ -16,7 +15,7 @@ class SalesController extends Controller
         if($soldSalesRoom){
             $soldSalesRoom->delete();
         }
-        if($stockSalesRoom = StockSalesRoom::find($stockSalesRoomId)){
+        if($stockSalesRoom){
             $stockSalesRoom->delete();
         }
         

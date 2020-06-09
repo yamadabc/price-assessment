@@ -23,7 +23,7 @@
     @if(!empty($room) && !empty($stockSalesRoom) && empty($soldSalesRoom))
         {!! Form::model($room,['route' => ['sales_update',$room->id,$stockSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($soldSalesRoom) && empty($stockSalesRoom))
-        {!! Form::model($room,['route' => ['sales_update',$room->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
+        {!! Form::model($room,['route' => ['sales_update',$room->id,-1,$soldSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($stockSalesRoom) && !empty($soldSalesRoom))
         {!! Form::model($room,['route' => ['sales_update',$room->id,$stockSalesRoom->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && empty($soldSalesRoom) && empty($stockSalesRoom))
