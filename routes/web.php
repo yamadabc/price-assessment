@@ -48,6 +48,9 @@ Route::prefix('room')->group(function(){
 Route::prefix('sales')->group(function(){
     Route::post('/{stockSalesRoomId?}/{soldSalesRoomId?}','SalesController@destroy')->name('sales_delete');
 });
+Route::prefix('rent')->group(function(){
+    Route::post('/{stockRentRoomId?}/{soldRentRoomId?}','RentController@destroy')->name('rent_delete');
+});
 //登記簿謄本
 Route::prefix('register')->group(function(){
     Route::post('/upload/{id}','CopyOfRegisterController@upload')->name('pdf_upload');

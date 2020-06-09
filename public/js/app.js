@@ -19302,6 +19302,13 @@ $(function () {
     }
   });
 });
+$(function () {
+  $(".dell_rent").click(function () {
+    if (confirm("賃貸情報を削除してよろしいですか？")) {} else {
+      return false;
+    }
+  });
+});
 
 /***/ }),
 

@@ -11,7 +11,7 @@ class SalesController extends Controller
     public function destroy($stockSalesRoomId = -1,$soldSalesRoomId = -1)
     {
         $soldSalesRoom = SoldSalesRoom::find($soldSalesRoomId);
-        $stockSalesRoom = StockSalesRoom::find($stockSalesRoomId);
+        $stockSalesRoom = StockSalesRoom::find($stockSalesRoomId);dd($soldSalesRoomId,$soldSalesRoom,$stockSalesRoomId,$stockSalesRoom);
         if($soldSalesRoom){
             $soldSalesRoom->delete();
         }

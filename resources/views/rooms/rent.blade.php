@@ -6,10 +6,15 @@
 
     <div class="row">
         <h2><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸情報</h2>
-            <div class="bottun">
-                <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
-            </div>
-            </div>
+        <div class="bottun">
+            <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
+        </div>
+    </div>
+    @if (session('flash_message'))
+        <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
+            {{ session('flash_message') }}
+        </div>
+    @endif
             <table class='table table-striped table-bordered table-sm'>
                 <tr>
                     <th>部屋番号</th>
@@ -31,6 +36,7 @@
                     <th>新築時価格表に</br>ない部屋</th>
                     <th>謄本</th>
                     @if($stockRentRoom || $soldRentRoom)
+                        <th></th>
                         <th></th>
                     @endif
                 </tr>
@@ -112,8 +118,20 @@
                         <a href="{{ route('rent_edit',$room->id) }}">編集</a>
                     </td>
                 @endif
+                @if($stockRentRoom || $soldRentRoom)
+                    <td>
+                        @if(!empty($stockRentRoom) && !empty($soldRentRoom))
+                            {!! Form::model($stockRentRoom,['route' => ['rent_delete',[$stockRentRoom->id,$soldRentRoom->id]],'method' => 'post']) !!}
+                        @elseif(!empty($stockRentRoom) && empty($soldRentRoom))
+                            {!! Form::model($stockRentRoom,['route' => ['rent_delete',$stockRentRoom->id],'method' => 'post']) !!}
+                        @elseif(empty($stockRentRoom) && !empty($soldRentRoom))
+                            {!! Form::model($stockRentRoom,['route' => ['rent_delete',[-1,$soldRentRoom->id]],'method' => 'post']) !!}
+                        @endif
+                            {!! Form::submit('削除',['class' => 'dell_rent btn btn-danger btn-sm']) !!}
+                        {!! Form::close() !!}
+                    </td>
+                @endif
             </tr>
             </table>  
             @include('components.createNRegisterData')
-    </div>
 @endsection
