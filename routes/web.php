@@ -18,6 +18,7 @@ Route::prefix('buildings')->group(function(){
     Route::get('/{id}/floor/{floor}','BuildingsController@floorSort')->name('floor_sort');
     Route::get('/{id}/layout_type/{layoutType}','BuildingsController@layoutTypeSort')->name('layout_type_sort');
     Route::get('/{id}/sales','BuildingsController@sales')->name('building_sales');//売買切り替え(全体)
+    Route::get('/{id}/sales/floor/{floor}','BuildingsController@floorSortSales')->name('floor_sort.sales');//売買階数絞り
     Route::get('/{id}/stocks','BuildingsController@stocks')->name('building_stocks');//売買切り替え(全体)
 });
 

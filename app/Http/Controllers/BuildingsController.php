@@ -134,4 +134,39 @@ class BuildingsController extends Controller
         return view('buildings.layoutType',compact('jsRooms','rooms','building','layout_type'));
     }
     
+    /*  
+    * 売買階数別検索
+    *　@param $building->id,$floor_number
+    */
+    public function floorSortSales($id,$floor)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        //全階数取得
+        $floor_numbers = [];
+        $rooms = new Room();
+        $rooms = $rooms->getForSales($id);
+        foreach($rooms as $room){
+            $floor_numbers[] = $room->floor_number;
+        }
+        $floor_numbers = array_unique($floor_numbers);
+
+        $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
+                        ->where('building_id',$id)
+                        ->where('floor_number',$floor)
+                        ->get();
+        $jsRooms = Room::where('building_id',$id)
+                        ->where('floor_number',$floor)
+                        ->select('occupied_area','published_price','expected_price')
+                        ->get();
+        
+        //最小坪単価
+        $expectedUnitPrices = [];
+        foreach($jsRooms as $jsRoom){
+            if($jsRoom->occupied_area != 0){
+                $expectedUnitPrices [] = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
+            }
+        }
+        $expectedUnitPrice = min($expectedUnitPrices);
+        return view('buildings.salesFloor',compact('jsRooms','rooms','building','floor_numbers','floor','expectedUnitPrice'));
+    }
 }

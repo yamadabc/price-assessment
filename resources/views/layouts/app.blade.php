@@ -10,7 +10,11 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script type="text/javascript" src="{{ asset('/js/app.js') }}" defer></script>
-    
+    <!-- high charts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
 <body>
     <header>
