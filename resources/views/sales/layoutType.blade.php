@@ -15,7 +15,7 @@
         {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
             <div class="items">
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
+                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
             </div>
         {!! Form::close() !!}
 </div>

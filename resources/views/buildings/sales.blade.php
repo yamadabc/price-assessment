@@ -21,7 +21,7 @@
         {{ session('flash_message') }}
     </div>
 @endif
-<div class="flex">
+<div class="flex highcharts">
     <div class="item">
         <figure class='highcharts-figure'>
             <div id='unit_price' style='height:600px;'></div>

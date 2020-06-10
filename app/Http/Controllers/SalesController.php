@@ -174,7 +174,7 @@ class SalesController extends Controller
         $publishedUnitPrices = [];
         foreach($rooms as $room){
             if($room->occupied_area != 0){
-                $publishedUnitPrice [] = round($room->published_price / ($room->occupied_area * 0.3025));
+                $publishedUnitPrices [] = round($room->published_price / ($room->occupied_area * 0.3025));
             }
         }
         if($publishedUnitPrices){
