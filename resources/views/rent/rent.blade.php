@@ -3,39 +3,39 @@
 @section('title',$building->building_name)
 
 @section('content')
-<!-- high charts -->
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <div class="flex">
     <div class="items">
-        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
+    <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・賃貸<a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
     </div>
         {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
             <div class="items">
+            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
+                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
             </div>
         {!! Form::close() !!}
 </div>
-
-<h3 class='chart_building_name'>間取タイプ {{ $layout_type }}</h3>
+@if (session('flash_message'))
+    <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
+        {{ session('flash_message') }}
+    </div>
+@endif
 <div class="flex">
-    <div class="item">
+    <div class="items">
         <figure class='highcharts-figure'>
-            <div id='unit_price' style='height:600px;'></div>
+            <div id='unit_price'' style='height:600px;'></div>
         </figure>
     </div>
-    <div class="item">
+    <div class="items">
         <figure class='highcharts-figure'>
             <div id='rent' style='height:600px;'></div>
         </figure>
     </div>
 </div>
-
-@include('components.buildingRentTable')
-
+<div class="row">
+    @include('components.buildingRentTable')
+</div>
 <script>
 // 坪単価散布図
 Highcharts.chart('unit_price', {
@@ -66,7 +66,7 @@ Highcharts.chart('unit_price', {
         layout: 'vertical',
         align: 'left',
         verticalAlign: 'top',
-        x: 100,
+        x: 50,
         y: 0,
         floating: true,
         backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
@@ -114,7 +114,7 @@ Highcharts.chart('unit_price', {
     
 });
 
-// 賃料価格散布図
+// 予想賃料散布図
 Highcharts.chart('rent', {
     chart: {
         type: 'scatter',
@@ -189,6 +189,4 @@ Highcharts.chart('rent', {
     }]
 });
 </script>
-
-
 @endsection

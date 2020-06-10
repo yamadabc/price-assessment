@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="flex">
-        <h2 class='item'><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸情報</h2>
+        <h2 class='item'><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>・賃貸</h2>
         <div class="item">
             <a href="{{ route('room_sales',$room->id) }}" class='btn btn-danger'>売買</a>
         </div>

@@ -43,7 +43,7 @@ Highcharts.chart('unit_price', {
         zoomType: 'xy'
     },
     title: {
-        text: {{ $floor }} + '階 賃料坪単価'
+        text: {{ $floor }} + '階 予想賃料坪単価'
     },
     
     xAxis: {
@@ -65,7 +65,7 @@ Highcharts.chart('unit_price', {
         layout: 'vertical',
         align: 'left',
         verticalAlign: 'top',
-        x: 100,
+        x: 50,
         y: 0,
         floating: true,
         backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,

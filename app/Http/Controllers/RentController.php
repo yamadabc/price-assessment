@@ -11,6 +11,31 @@ use App\Http\Requests\Rent;
 
 class RentController extends Controller
 {
+    /*  
+    * 賃貸バージョンに切り替え(全体)
+    *　@param $building->id
+    */
+    public function stocksAll(Request $request,$id)
+    {
+        $rooms = new Room();
+        $building = Building::select('id','building_name')->find($id);
+        //部屋番号検索
+        $keyword = $request->input('room_number');
+        if(!empty($keyword)){
+            $query = Room::with('building','stockRentRooms','soldRentRooms');
+            $query->where('building_id','=',$id);
+            $query->where(function ($query) use($keyword) {
+                $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
+            });
+            $rooms = $query->orderBy('id','asc')->get();
+        }else{
+            $rooms = $rooms->getForRent($id);
+        }
+        $expectedUnitRentPrice = $this->minExpectedUnitRentPrice($rooms);//最小予想賃料坪単価
+        $expectedRentPrice     = $this->minExpectedRentPrice($rooms);// 最小予想賃料
+
+        return view('rent.rent',compact('rooms','building','expectedUnitRentPrice','expectedRentPrice'));
+    }
 
     /*  
     * 賃貸バージョンに切り替え(1部屋)
