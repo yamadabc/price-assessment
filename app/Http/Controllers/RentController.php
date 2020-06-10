@@ -125,24 +125,51 @@ class RentController extends Controller
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
-        //最小予想賃料坪単価
+        
+        $expectedUnitRentPrice = $this->minExpectedUnitRentPrice($rooms);//最小予想賃料坪単価
+        $expectedRentPrice     = $this->minExpectedRentPrice($rooms);// 最小予想賃料
+
+        return view('rent.floor',compact('rooms','building','floor_numbers','floor','expectedUnitRentPrice','expectedRentPrice'));
+    }
+
+    /* 
+    * @param $building->id,$layout_type
+    *  間取タイプ別検索
+    */
+    public function layoutTypeSort($id,$layoutType)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        $rooms = Room::with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
+                        ->where('building_id',$id)
+                        ->where('layout_type',$layoutType)
+                        ->orderBy('id','asc')
+                        ->get();
+        $layout_type = rtrim($layoutType);
+        $expectedUnitRentPrice = $this->minExpectedUnitRentPrice($rooms);//最小予想賃料坪単価
+        $expectedRentPrice     = $this->minExpectedRentPrice($rooms);// 最小予想賃料
+
+        return view('rent.layoutType',compact('rooms','building','layout_type','expectedUnitRentPrice','expectedRentPrice'));
+    }
+    
+    private function minExpectedUnitRentPrice($rooms)
+    {
         $expectedUnitRentPrices = [];
         foreach($rooms as $room){
             if($room->occupied_area != 0){
                 $expectedUnitRentPrices [] = round($room->expected_rent_price / ($room->occupied_area * 0.3025));
             }
         }
-        $expectedUnitRentPrice = min($expectedUnitRentPrices);
-
-        // 最小予想賃料
+        return min($expectedUnitRentPrices);
+    }
+    
+    private function minExpectedRentPrice($rooms)
+    {
         $expectedRentPrices = [];
         foreach($rooms as $room){
             if($room->expected_rent_price != 0){
                 $expectedRentPrices [] = $room->expected_rent_price;
             }
         }
-        $expectedRentPrice = min($expectedRentPrices);
-        
-        return view('buildings.rentFloor',compact('rooms','building','floor_numbers','floor','expectedUnitRentPrice','expectedRentPrice'));
+        return min($expectedRentPrices);
     }
 }

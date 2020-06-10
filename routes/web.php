@@ -54,6 +54,7 @@ Route::prefix('rent')->group(function(){
     Route::get('/edit/{id}','RentController@Edit')->name('rent_edit');//賃貸編集
     Route::put('/updata/{roomId}/{stockId?}/{soldId?}','RentController@Update')->name('rent_update');//賃貸編集
     Route::get('/{id}/floor/{floor}','RentController@floorSort')->name('floor_sort.rent');//賃貸階数絞り
+    Route::get('/{id}/layout_type/{layoutType}','RentController@layoutTypeSort')->name('layout_type.rent');//間取タイプ別絞り
 });
 //登記簿謄本
 Route::prefix('register')->group(function(){

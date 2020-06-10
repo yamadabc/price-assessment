@@ -56,7 +56,7 @@ Highcharts.chart('unit_price', {
         showLastLabel: true
     },
     yAxis: {
-        min:{{ $expectedUnitRentPrice }} - 3000,
+        min:{{ $expectedUnitRentPrice }} - 1000,
         title: {
             text: '坪単価'
         }
@@ -133,7 +133,7 @@ Highcharts.chart('rent', {
         showLastLabel: true
     },
     yAxis: {
-        min:0,
+        min:{{ $expectedRentPrice }} - 10000,
         title: {
             text: '予想賃料'
         }

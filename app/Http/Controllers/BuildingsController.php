@@ -136,10 +136,4 @@ class BuildingsController extends Controller
         return view('buildings.layoutType',compact('jsRooms','rooms','building','layout_type'));
     }
     
-    /*  
-    * 売買階数別検索
-    *　@param $building->id,$floor_number
-    */
-    
-    
 }

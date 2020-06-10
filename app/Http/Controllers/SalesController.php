@@ -102,7 +102,11 @@ class SalesController extends Controller
         \Session::flash('flash_message', '売買情報を削除しました');
         return back();
     }
-
+    
+    /*  
+    * 売買階数別検索
+    *　@param $building->id,$floor_number
+    */
     public function floorSort($id,$floor)
     {
         $building = Building::select('id','building_name')->find($id);
