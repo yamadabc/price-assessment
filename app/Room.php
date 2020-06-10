@@ -22,6 +22,7 @@ class Room extends Model
         'published_price',
         'expected_price',
         'expected_rent_price',
+        'has_no_data',
     ];
 
     public function building()

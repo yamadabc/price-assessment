@@ -36,11 +36,7 @@ class RoomsController extends Controller
         $room = new Room();
         $roomData = $room->nullSubZero($request);
         $building = Building::find($id);
-        if($request->has_no_data == 1){
-            $has_no_data = true;
-        }else{
-            $has_no_data = false;
-        }
+        
         $building->rooms()->create([
             'room_number' => $request->room_number,
             'floor_number' => $request->floor_number,
@@ -51,7 +47,7 @@ class RoomsController extends Controller
             'published_price' => $roomData['published_price'],
             'expected_price' => $roomData['expected_price'],
             'expected_rent_price' => $roomData['expected_rent_price'],
-            'has_no_data' => false,
+            'has_no_data' => $request->has_no_data,
         ]);
         \Session::flash('flash_message', '部屋情報を登録しました');
         return redirect()->route('buildings_show',$id);

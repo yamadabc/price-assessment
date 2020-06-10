@@ -117,7 +117,8 @@
                 <div class="row">
                         <div class="col-sm-5">{!! Form::label('has_no_data','新築時価格表') !!}</div>
                     <div class="col-sm-7">
-                        {!! Form::radio('has_no_data',1,) !!}データなしの場合チェックしてください
+                        {!! Form::radio('has_no_data',0,) !!}データあり
+                        {!! Form::radio('has_no_data',1,) !!}データなし
                     </div>
                 </div>
             </div>
