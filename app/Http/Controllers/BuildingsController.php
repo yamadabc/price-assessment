@@ -40,8 +40,13 @@ class BuildingsController extends Controller
         }else{
             $rooms = $rooms->getForRoomsShow($id);
         }
+        //散布図用
+        $salesController = new SalesController();
+        $publishedPrice = $salesController->publishedPrice($rooms);
+        $rentController = new RentController();
+        $minExpectedRentPrice = $rentController->minExpectedRentPrice($rooms);
 
-        return view('buildings.show',compact('rooms','building'));
+        return view('buildings.show',compact('rooms','building','publishedPrice','minExpectedRentPrice'));
     }
 
     /*  
