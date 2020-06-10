@@ -10,6 +10,31 @@ use App\Http\Requests\Rent;
 
 class SalesController extends Controller
 {
+
+    /*  
+    * 売買バージョンに切り替え(全体)
+    *　@param $building->id
+    */
+    public function salesAll(Request $request,$id)
+    {
+        $rooms = new Room();
+        $building = Building::select('id','building_name')->find($id);
+        //部屋番号検索
+        $keyword = $request->input('room_number');
+        if(!empty($keyword)){
+            $query = Room::with('building','stockSalesRooms','soldSalesRooms');
+            $query->where('building_id','=',$id);
+            $query->where(function ($query) use($keyword) {
+                $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
+            });
+            $rooms = $query->orderBy('id','asc')->get();
+        }else{
+            $rooms = $rooms->getForSales($id);
+        }
+        $publishedUnitPrice = $this->publishedUnitPrice($rooms);//最小新築時坪単価
+        $publishedPrice     = $this->publishedPrice($rooms);// 最小新築時売買価格
+        return view('buildings.sales',compact('rooms','building','publishedUnitPrice','publishedPrice'));
+    }
     /*  
     * 売買バージョンに切り替え(1部屋)
     *　@param $building->id

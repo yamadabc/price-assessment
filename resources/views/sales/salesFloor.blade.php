@@ -148,7 +148,7 @@ Highcharts.chart('price', {
     yAxis: {
         min:{{ $publishedPrice }} - 1000,
         title: {
-            text: '予想売買価格'
+            text: '売買価格'
         }
     },
     legend: {

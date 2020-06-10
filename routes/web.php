@@ -17,7 +17,6 @@ Route::prefix('buildings')->group(function(){
     Route::get('/show/{id}','BuildingsController@show')->name('buildings_show');
     Route::get('/{id}/floor/{floor}','BuildingsController@floorSort')->name('floor_sort');
     Route::get('/{id}/layout_type/{layoutType}','BuildingsController@layoutTypeSort')->name('layout_type_sort');
-    Route::get('/{id}/sales','BuildingsController@sales')->name('building_sales');//売買切り替え(全体)
     Route::get('/{id}/stocks','BuildingsController@stocks')->name('building_stocks');//売買切り替え(全体)
 });
 
@@ -43,6 +42,7 @@ Route::prefix('room')->group(function(){
 });
 Route::prefix('sales')->group(function(){
     Route::post('/{stockSalesRoomId?}/{soldSalesRoomId?}','SalesController@destroy')->name('sales_delete');
+    Route::get('/{id}/sales','SalesController@salesAll')->name('building_sales');//売買切り替え(全体)
     Route::get('/show/{id}','SalesController@sales')->name('room_sales');//売買切り替え(1部屋)
     Route::get('/edit/{id}','SalesController@Edit')->name('sales_edit');//売買編集
     Route::put('/update/{roomId}/{stockId?}/{soldId?}','SalesController@Update')->name('sales_update');//売買編集
