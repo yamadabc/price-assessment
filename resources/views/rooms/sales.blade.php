@@ -31,6 +31,7 @@
             <th>成約前価格</th>
             <th>登録年月日</th>
             <th>変更年月日</th>
+            <th>新築時価格</th>
             <th>予想売買価格</th>
             <th>差分</th>
             <th>新築時価格表に</br>ない部屋</th>
@@ -88,6 +89,7 @@
                 {{ $soldSalesRoom->changed_at }}
             @endif
         </td>
+        <td>{{ $room->published_price }}</td>
         <td>{{ $room->expected_price }}</td>
         <td class='diffarence'>
             @foreach($room->soldSalesRooms as $soldSalesRoom)
