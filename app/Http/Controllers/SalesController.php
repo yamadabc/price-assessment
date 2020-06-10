@@ -182,7 +182,11 @@ class SalesController extends Controller
                 $publishedUnitPrice [] = round($room->published_price / ($room->occupied_area * 0.3025));
             }
         }
-        return min($publishedUnitPrice);
+        if($publishedUnitPrices){
+            return min($publishedUnitPrices);
+        }else{
+            return 0;
+        }
     }
 
     public function publishedPrice($rooms)
@@ -193,6 +197,10 @@ class SalesController extends Controller
                 $publishedPrices [] = $room->published_price;
             }
         }
-        return min($publishedPrices);
+        if($publishedPrices){
+            return min($publishedPrices);
+        }else{
+            return 0;
+        }
     }
 }

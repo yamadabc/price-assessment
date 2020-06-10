@@ -184,7 +184,11 @@ class RentController extends Controller
                 $expectedUnitRentPrices [] = round($room->expected_rent_price / ($room->occupied_area * 0.3025));
             }
         }
-        return min($expectedUnitRentPrices);
+        if($expectedUnitRentPrices){
+            return min($expectedUnitRentPrices);
+        }else{
+            return 0;
+        }
     }
     
     public function minExpectedRentPrice($rooms)
@@ -195,6 +199,10 @@ class RentController extends Controller
                 $expectedRentPrices [] = $room->expected_rent_price;
             }
         }
-        return min($expectedRentPrices);
+        if($expectedRentPrices){
+            return min($expectedRentPrices);
+        }else{
+            return 0;
+        }
     }
 }
