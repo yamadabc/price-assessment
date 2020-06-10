@@ -47,6 +47,7 @@ Route::prefix('sales')->group(function(){
     Route::get('/edit/{id}','SalesController@Edit')->name('sales_edit');//売買編集
     Route::put('/update/{roomId}/{stockId?}/{soldId?}','SalesController@Update')->name('sales_update');//売買編集
     Route::get('/{id}/floor/{floor}','SalesController@floorSort')->name('floor_sort.sales');//売買階数絞り
+    Route::get('/{id}/layout_type/{layoutType}','SalesController@layoutTypeSort')->name('layout_type.sales');//間取タイプ別絞り
 });
 Route::prefix('rent')->group(function(){
     Route::post('/{stockRentRoomId?}/{soldRentRoomId?}','RentController@destroy')->name('rent_delete');

@@ -35,7 +35,11 @@
                     @endif
                 </td>
                 <td class='layout'>{{ $room->layout }}</td>
-                <td class='layout_type'>{{ $room->layout_type }}</td>
+                <td class='layout_type'>
+                    @if($room->layout_type)    
+                        <a href="{{ route('layout_type.sales',[$building->id,$room->layout_type]) }}">{{ $room->layout_type }}</a></td>
+                    @endif
+                </td>
                 <td class='direction'>{{ $room->direction }}</td>
                 <td class='occupied_area'>{{ $room->occupied_area }}㎡</td>
                 

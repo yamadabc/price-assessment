@@ -56,7 +56,7 @@ Highcharts.chart('container', {
         showLastLabel: true
     },
     yAxis: {
-        min:{{ $expectedUnitPrice }} - 50,
+        min:{{ $publishedUnitPrice }} - 50,
         title: {
             text: '坪単価'
         }

@@ -125,24 +125,49 @@ class SalesController extends Controller
                         ->orderBy('id','asc')
                         ->get();
         
-        //最小新築時坪単価
-        $expectedUnitPrices = [];
+        $publishedUnitPrice = $this->publishedUnitPrice($rooms);//最小新築時坪単価
+        $publishedPrice     = $this->publishedPrice($rooms);// 最小新築時売買価格
+        
+        return view('sales.salesFloor',compact('rooms','building','floor_numbers','floor','publishedUnitPrice','publishedPrice'));
+    }
+    /* 
+    * @param $building->id,$layout_type
+    *  間取タイプ別検索
+    */
+    public function layoutTypeSort($id,$layoutType)
+    {
+        $building = Building::select('id','building_name')->find($id);
+        $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
+                        ->where('building_id',$id)
+                        ->where('layout_type',$layoutType)
+                        ->orderBy('id','asc')
+                        ->get();
+        $layout_type = rtrim($layoutType);
+        $publishedUnitPrice = $this->publishedUnitPrice($rooms);//最小新築時坪単価
+        $publishedPrice     = $this->publishedPrice($rooms);// 最小新築時売買価格
+
+        return view('sales.layoutType',compact('rooms','building','layout_type','publishedUnitPrice','publishedPrice'));
+    }
+
+    private function publishedUnitPrice($rooms)
+    {
+        $publishedUnitPrices = [];
         foreach($rooms as $room){
             if($room->occupied_area != 0){
-                $expectedUnitPrices [] = round($room->published_price / ($room->occupied_area * 0.3025));
+                $publishedUnitPrice [] = round($room->published_price / ($room->occupied_area * 0.3025));
             }
         }
-        $expectedUnitPrice = min($expectedUnitPrices);
+        return min($publishedUnitPrice);
+    }
 
-        // 最小新築時売買価格
+    private function publishedPrice($rooms)
+    {
         $publishedPrices = [];
         foreach($rooms as $room){
             if($room->published_price != 0){
                 $publishedPrices [] = $room->published_price;
             }
         }
-        $publishedPrice = min($publishedPrices);
-        
-        return view('buildings.salesFloor',compact('rooms','building','floor_numbers','floor','expectedUnitPrice','publishedPrice'));
+        return min($publishedPrices);
     }
 }
