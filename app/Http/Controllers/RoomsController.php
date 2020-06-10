@@ -85,18 +85,16 @@ class RoomsController extends Controller
     {
         $request->validated();
         $room = Room::find($id);
-        $roomData = $room->nullSubZero($request);
-
         $room->update([
             'room_number' => $request->room_number,
             'floor_number' => $request->floor_number,
             'layout' => $request->layout,
             'layout_type' => $request->layout_type,
             'direction' => $request->direction,
-            'occupied_area' => $roomData['occupied_area'],
-            'published_price' => $roomData['published_price'],
-            'expected_price' => $roomData['expected_price'],
-            'expected_rent_price' => $roomData['expected_rent_price'],
+            'occupied_area' => $request->occupied_area,
+            'published_price' => $request->published_price,
+            'expected_price' => $request->expected_price,
+            'expected_rent_price' => $request->expected_rent_price,
         ]);
 
         \Session::flash('flash_message', '部屋情報を編集しました');

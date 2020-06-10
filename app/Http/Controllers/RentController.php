@@ -76,30 +76,26 @@ class RentController extends Controller
     {
         $request->validated();
         //在庫賃貸更新
-        $stockRentRoom = StockRentRoom::firstOrNew(['id' => $stockId]);
-        $stockRentRoomData = $stockRentRoom->nullSubZero($request);
-        if($stockRentRoomData['price'] !== null || $stockRentRoomData['previous_price'] !== null || $request->registered_at || $request->changed_at){
+        if($request->price || $request->previous_price || $request->registered_at || $request->changed_at){
             StockRentRoom::updateOrCreate(
                 ['id' => $stockId ],
                 [
                     'room_id' => $roomId,
-                    'price' => $stockRentRoomData['price'],
-                    'previous_price' => $stockRentRoomData['previous_price'],
+                    'price' => $request->price,
+                    'previous_price' => $request->previous_price,
                     'registered_at' => $request->registered_at,
                     'changed_at' => $request->changed_at,
                 ]
                 );
         }
         //賃貸成約更新
-        $soldRentRoom = new StockRentRoom();
-        $soldRentRoomData = $soldRentRoom->nullSubZero($request);
-        if($soldRentRoomData['sold_price'] !== null || $soldRentRoomData['sold_previous_price'] !== null || $request->sold_registered_at || $request->sold_changed_at){
+        if($request->sold_price || $request->sold_previous_price || $request->sold_registered_at || $request->sold_changed_at){
             SoldRentRoom::updateOrCreate(
                 ['id' => $soldId ],
                 [
                     'room_id' => $roomId,
-                    'price' => $soldRentRoomData['sold_price'],
-                    'previous_price' => $soldRentRoomData['sold_previous_price'],
+                    'price' => $request->sold_price,
+                    'previous_price' => $request->sold_previous_price,
                     'registered_at' => $request->sold_registered_at,
                     'changed_at' => $request->sold_changed_at,
                 ]
@@ -107,10 +103,8 @@ class RentController extends Controller
         }
         //賃貸バージョンページへリダイレクト
         $buildingId = Room::where('id',$roomId)->value('building_id');
-        $building = Building::select('id','building_name')->find($buildingId);
-        $rooms = new Room();
-        $rooms = $rooms->getForRent($buildingId);
-        return view('buildings.rent',compact('rooms','building'));
+        return redirect()->route('building_stocks',$buildingId);
+        
     }
 
     public function destroy($stockRentRoomId = -1,$soldRentRoomId = -1)

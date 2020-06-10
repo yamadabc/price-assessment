@@ -49,7 +49,7 @@ Route::prefix('sales')->group(function(){
     Route::get('/{id}/layout_type/{layoutType}','SalesController@layoutTypeSort')->name('layout_type.sales');//間取タイプ別絞り
 });
 Route::prefix('rent')->group(function(){
-    Route::get('/{id}/stocks','RentController@stocksAll')->name('building_stocks');//売買切り替え(全体)
+    Route::get('/{id}/stocks','RentController@stocksAll')->name('building_stocks');//賃貸切り替え(全体)
     Route::post('/{stockRentRoomId?}/{soldRentRoomId?}','RentController@destroy')->name('rent_delete');
     Route::get('/show/{id}','RentController@rent')->name('room_rent');//賃貸切り替え(1部屋)
     Route::get('/edit/{id}','RentController@Edit')->name('rent_edit');//賃貸編集

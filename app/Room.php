@@ -97,25 +97,25 @@ class Room extends Model
     public function nullSubZero($request)
     {
         if($request->occupied_area === null){
-            $occupied_area = 0;
+            $occupied_area = "";
         }else{
             $occupied_area = $request->occupied_area;
         }
         
         if($request->published_price === null){
-            $published_price = 0;
+            $published_price = "";
         }else{
             $published_price = $request->published_price;
         }
         
         if($request->expected_price === null){
-            $expected_price = 0;
+            $expected_price = "";
         }else{
             $expected_price = $request->expected_price;
         }
         
         if($request->expected_rent_price === null){
-            $expected_rent_price = 0;
+            $expected_rent_price = "";
         }else{
             $expected_rent_price = $request->expected_rent_price;
         }
