@@ -62,3 +62,11 @@ p {
   text-decoration: underline;
 }
 
+.flex {
+  width: 100%;
+}
+
+.flex .highcharts {
+  width: 90%;
+}
+

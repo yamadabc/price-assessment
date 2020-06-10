@@ -63,4 +63,12 @@ p {
 .chart_building_name a {
   text-decoration: underline;
 }
+
+.flex {
+  width: 100%;
+}
+
+.flex .highcharts {
+  width: 90%;
+}
 /*# sourceMappingURL=app.css.map */

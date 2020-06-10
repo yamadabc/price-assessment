@@ -21,12 +21,12 @@
 </div>
 <h3 class='chart_building_name'>間取タイプ {{ $layout_type }}</h3>
 <div class="flex">
-    <div class="items">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='price' style='height:600px;'></div>
         </figure>
     </div>
-    <div class="items">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='rent' style='height:600px;'></div>
         </figure>

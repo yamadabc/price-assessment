@@ -22,12 +22,12 @@
     @endforeach
 </p>
 <div class="flex">
-    <div class="items">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='container' style='height:600px;'></div>
         </figure>
     </div>
-    <div class="items">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='price' style='height:600px;'></div>
         </figure>

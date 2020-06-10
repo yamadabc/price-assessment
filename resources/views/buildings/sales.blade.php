@@ -21,13 +21,13 @@
         {{ session('flash_message') }}
     </div>
 @endif
-<div class="flex highcharts">
-    <div class="item">
+<div class="flex">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='unit_price' style='height:600px;'></div>
         </figure>
     </div>
-    <div class="item">
+    <div class="highcharts">
         <figure class='highcharts-figure'>
             <div id='price' style='height:600px;'></div>
         </figure>
