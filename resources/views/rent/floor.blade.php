@@ -113,7 +113,7 @@ Highcharts.chart('unit_price', {
     
 });
 
-// 売買価格散布図
+// 予想賃料散布図
 Highcharts.chart('rent', {
     chart: {
         type: 'scatter',

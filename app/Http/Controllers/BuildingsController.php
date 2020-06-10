@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Building;
 use App\Room;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\RentController;
 
 class BuildingsController extends Controller
 {
@@ -109,12 +111,11 @@ class BuildingsController extends Controller
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
-        $jsRooms = Room::where('building_id',$id)
-                        ->where('floor_number',$floor)
-                        ->select('occupied_area','published_price','expected_price')
-                        ->get();
-        
-        return view('buildings.floor',compact('jsRooms','rooms','building','floor_numbers','floor'));
+        $salesController = new SalesController();
+        $publishedPrice = $salesController->publishedPrice($rooms);
+        $rentController = new RentController();
+        $minExpectedRentPrice = $rentController->minExpectedRentPrice($rooms);
+        return view('buildings.floor',compact('rooms','building','floor_numbers','floor','publishedPrice','minExpectedRentPrice'));
     }
     /* 
     * @param $building->id,$layout_type
@@ -128,12 +129,12 @@ class BuildingsController extends Controller
                         ->where('layout_type',$layoutType)
                         ->orderBy('id','asc')
                         ->get();
-        $jsRooms = Room::where('building_id',$id)
-                        ->where('layout_type',$layoutType)
-                        ->select('occupied_area','published_price','expected_price','floor_number')
-                        ->get();
+        $salesController = new SalesController();
+        $publishedPrice = $salesController->publishedPrice($rooms);
+        $rentController = new RentController();
+        $minExpectedRentPrice = $rentController->minExpectedRentPrice($rooms);
         $layout_type = rtrim($layoutType);
-        return view('buildings.layoutType',compact('jsRooms','rooms','building','layout_type'));
+        return view('buildings.layoutType',compact('rooms','building','layout_type','publishedPrice','minExpectedRentPrice'));
     }
     
 }

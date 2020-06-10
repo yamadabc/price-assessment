@@ -151,7 +151,7 @@ class RentController extends Controller
         return view('rent.layoutType',compact('rooms','building','layout_type','expectedUnitRentPrice','expectedRentPrice'));
     }
     
-    private function minExpectedUnitRentPrice($rooms)
+    public function minExpectedUnitRentPrice($rooms)
     {
         $expectedUnitRentPrices = [];
         foreach($rooms as $room){
@@ -162,7 +162,7 @@ class RentController extends Controller
         return min($expectedUnitRentPrices);
     }
     
-    private function minExpectedRentPrice($rooms)
+    public function minExpectedRentPrice($rooms)
     {
         $expectedRentPrices = [];
         foreach($rooms as $room){

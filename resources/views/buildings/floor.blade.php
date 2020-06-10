@@ -22,9 +22,14 @@
 </p>
 <div class="flex">
     <div class="items">
-    <figure class='highcharts-figure'>
-        <div id='container' style='height:600px;'></div>
-    </figure>
+        <figure class='highcharts-figure'>
+            <div id='price'' style='height:600px;'></div>
+        </figure>
+    </div>
+    <div class="items">
+        <figure class='highcharts-figure'>
+            <div id='rent' style='height:600px;'></div>
+        </figure>
     </div>
 </div>
 @include('components.buildingShowTable')
@@ -34,31 +39,29 @@
 </figure>
 
 <script>
-let jsRooms = <?php echo $jsRooms; ?>;
-
-
-Highcharts.chart('container', {
+// 売買価格散布図
+Highcharts.chart('price', {
     chart: {
         type: 'scatter',
         zoomType: 'xy'
     },
     title: {
-        text: {{ $floor }} + '階 売買坪単価'
+        text: {{ $floor }} + '階 売買価格'
     },
     
     xAxis: {
         title: {
             enabled: true,
-            text: '占有面積'
+            text: '部屋番号'
         },
         startOnTick: true,
         endOnTick: true,
         showLastLabel: true
     },
     yAxis: {
-        min:0,
+        min:{{ $publishedPrice }} - 1000,
         title: {
-            text: '坪単価'
+            text: '予想売買価格'
         }
     },
     legend: {
@@ -91,38 +94,111 @@ Highcharts.chart('container', {
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x} ㎡, {point.y} 万円/坪'
+                pointFormat: '{point.x} 号室, {point.y} 万円'
             }
         }
     },
     series: [{
-        name: '新築時坪単価',
+        name: '新築時価格',
         color: 'rgba(223, 83, 83, .5)',
         data:[
-            @foreach($jsRooms as $jsRoom)
-                @if($jsRoom->occupied_area != 0)
+            @foreach($rooms as $room)
+                @if($room->published_price != 0)
                     @php            
-                        $publishedUnitPrice = round($jsRoom->published_price / ($jsRoom->occupied_area * 0.3025));
-                        $result = $jsRoom->occupied_area.','.$publishedUnitPrice;
+                        $result = $room->room_number.','.$room->published_price;
                     @endphp
                     [{{$result}}],
-                    @endif
+                @endif
             @endforeach
         ]
     }, {
-        name: '予想価格坪単価',
+        name: '予想売買価格',
         color: 'rgba(119, 152, 191, .5)',
         data: [
-            @foreach($jsRooms as $jsRoom)
-            @if($jsRoom->occupied_area != 0)
-                @php            
-                    $expectedUnitPrice = round($jsRoom->expected_price / ($jsRoom->occupied_area * 0.3025));
-                    $ooyamaResult = $jsRoom->occupied_area.','.$expectedUnitPrice;
-                @endphp
-                [{{$ooyamaResult}}],
+            @foreach($rooms as $room)
+                @if($room->expected_price != 0)
+                    @php            
+                        $ooyamaResult = $room->room_number.','.$room->expected_price;
+                    @endphp
+                    [{{$ooyamaResult}}],
                 @endif
             @endforeach
          ]
+    }]
+});
+
+// 予想賃料散布図
+Highcharts.chart('rent', {
+    chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+    },
+    title: {
+        text: {{ $floor }} + '階 予想賃料'
+    },
+    
+    xAxis: {
+        title: {
+            enabled: true,
+            text: '部屋番号'
+        },
+        startOnTick: true,
+        endOnTick: true,
+        showLastLabel: true
+    },
+    yAxis: {
+        min:{{ $minExpectedRentPrice }} - 10000,
+        title: {
+            text: '予想賃料'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 0,
+        floating: true,
+        backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+        borderWidth: 1
+    },
+    plotOptions: {
+        scatter: {
+            marker: {
+                radius: 5,
+                states: {
+                    hover: {
+                        enabled: true,
+                        lineColor: 'rgb(100,100,100)'
+                    }
+                }
+            },
+            states: {
+                hover: {
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x} 号室, {point.y} 円'
+            }
+        }
+    },
+    series: [{
+        name: '予想賃料',
+        color: 'rgba(223, 83, 83, .5)',
+        data:[
+            @foreach($rooms as $room)
+                @if($room->expected_rent_price != 0)
+                    @php            
+                        $result = $room->room_number.','.$room->expected_rent_price;
+                    @endphp
+                    [{{$result}}],
+                @endif
+            @endforeach
+        ]
     }]
 });
 </script>

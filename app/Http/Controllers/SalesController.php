@@ -149,7 +149,7 @@ class SalesController extends Controller
         return view('sales.layoutType',compact('rooms','building','layout_type','publishedUnitPrice','publishedPrice'));
     }
 
-    private function publishedUnitPrice($rooms)
+    public function publishedUnitPrice($rooms)
     {
         $publishedUnitPrices = [];
         foreach($rooms as $room){
@@ -160,7 +160,7 @@ class SalesController extends Controller
         return min($publishedUnitPrice);
     }
 
-    private function publishedPrice($rooms)
+    public function publishedPrice($rooms)
     {
         $publishedPrices = [];
         foreach($rooms as $room){
