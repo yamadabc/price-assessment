@@ -72,4 +72,9 @@ p {
 .flex .highcharts {
   width: 90%;
 }
+
+.search {
+  width: 20%;
+  margin: 0 0 1rem auto;
+}
 /*# sourceMappingURL=app.css.map */

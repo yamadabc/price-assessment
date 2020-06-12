@@ -3,16 +3,17 @@
 @section('title','物件一覧')
 
 @section('content')
-
-<div class="container">
-    <div class="row">
-        <div class='col-sm-12'>
-            @if (session('flash_message'))
+<div id='buildings'>
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-12'>
+                @if (session('flash_message'))
                 <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
                     {{ session('flash_message') }}
                 </div>
-            @endif
-            <table class='table table-striped table-bordered table-sm' id='buildings'>
+                @endif
+                <input class='search form-control' placeholder='物件名で検索' style='width:20%;'>
+            <table class='table table-striped table-bordered table-sm'>
                 <thead>
                     <tr>
                         <th>物件id</th>
@@ -49,4 +50,6 @@
         </div>
     </div>
 </div>
+</div>
+
 @endsection

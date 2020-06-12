@@ -1,3 +1,5 @@
+<div class="table-responsive">
+
 <table class='table table-striped table-bordered table-sm' id='rooms'>
         <thead>
             <tr>
@@ -135,3 +137,5 @@
             @endforeach
         </tbody>
     </table>
+        
+</div>
