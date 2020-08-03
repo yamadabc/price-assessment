@@ -2,6 +2,7 @@
 body {
   width: 95%;
   margin: 0 auto;
+  margin-bottom: 100px;
 }
 
 .flex {
@@ -39,6 +40,15 @@ th, td {
   text-align: center;
 }
 
+table {
+  font-size: 0.9rem;
+}
+
+table th {
+  height: 50px;
+  line-height: 50px;
+}
+
 p {
   margin-top: 1rem;
 }
@@ -53,5 +63,18 @@ p {
 
 .chart_building_name a {
   text-decoration: underline;
+}
+
+.flex {
+  width: 100%;
+}
+
+.flex .highcharts {
+  width: 90%;
+}
+
+.search {
+  width: 20%;
+  margin: 0 0 1rem auto;
 }
 /*# sourceMappingURL=app.css.map */

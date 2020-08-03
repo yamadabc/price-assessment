@@ -3,31 +3,27 @@
 @section('title',$building->building_name)
 
 @section('content')
-
+<!-- high charts -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <div class="flex">
     <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a><a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
-        
+        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
     </div>
-    
         {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
             <div class="items">
-            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
-            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
+                {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
             </div>
         {!! Form::close() !!}
 </div>
-@if (session('flash_message'))
-    <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
-        {{ session('flash_message') }}
-    </div>
-@endif
+<h3 class='chart_building_name'>間取タイプ {{ $layout_type }}</h3>
 <div class="flex">
     <div class="highcharts">
         <figure class='highcharts-figure'>
-            <div id='price'' style='height:600px;'></div>
+            <div id='price' style='height:600px;'></div>
         </figure>
     </div>
     <div class="highcharts">
@@ -37,6 +33,8 @@
     </div>
 </div>
 @include('components.buildingShowTable')
+
+
 <script>
 // 売買価格散布図
 Highcharts.chart('price', {
@@ -201,5 +199,6 @@ Highcharts.chart('rent', {
     }]
 });
 </script>
-@endsection
 
+
+@endsection

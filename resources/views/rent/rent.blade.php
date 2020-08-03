@@ -6,14 +6,11 @@
 
 <div class="flex">
     <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a><a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
-        
+    <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・賃貸<a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
     </div>
-    
-        {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
+        {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
             <div class="items">
             <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
-            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
                 {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
                 {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
             </div>
@@ -27,7 +24,7 @@
 <div class="flex">
     <div class="highcharts">
         <figure class='highcharts-figure'>
-            <div id='price'' style='height:600px;'></div>
+            <div id='unit_price'' style='height:600px;'></div>
         </figure>
     </div>
     <div class="highcharts">
@@ -36,16 +33,18 @@
         </figure>
     </div>
 </div>
-@include('components.buildingShowTable')
+<div class="row">
+    @include('components.buildingRentTable')
+</div>
 <script>
-// 売買価格散布図
-Highcharts.chart('price', {
+// 坪単価散布図
+Highcharts.chart('unit_price', {
     chart: {
         type: 'scatter',
         zoomType: 'xy'
     },
     title: {
-        text:'売買価格'
+        text:'予想賃料坪単価'
     },
     
     xAxis: {
@@ -58,16 +57,16 @@ Highcharts.chart('price', {
         showLastLabel: true
     },
     yAxis: {
-        min:{{ $publishedPrice }} - 1000,
+        min:{{ $expectedUnitRentPrice }} - 1000,
         title: {
-            text: '売買価格'
+            text: '坪単価'
         }
     },
     legend: {
         layout: 'vertical',
         align: 'left',
         verticalAlign: 'top',
-        x: 100,
+        x: 50,
         y: 0,
         floating: true,
         backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
@@ -93,37 +92,26 @@ Highcharts.chart('price', {
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x} 号室, {point.y} 万円'
+                pointFormat: '{point.x} 号室, {point.y} 円/坪'
             }
         }
     },
     series: [{
-        name: '予想売買価格',
-        color: 'rgba(119, 152, 191, .5)',
-        data: [
-            @foreach($rooms as $room)
-                @if($room->expected_price != 0)
-                    @php            
-                        $ooyamaResult = $room->room_number.','.$room->expected_price;
-                    @endphp
-                    [{{$ooyamaResult}}],
-                @endif
-            @endforeach
-         ]
-    }, {
-        name: '新築時価格',
+        name: '予想賃料坪単価',
         color: 'rgba(223, 83, 83, .5)',
         data:[
             @foreach($rooms as $room)
-                @if($room->published_price != 0)
+                @if($room->occupied_area != 0)
                     @php            
-                        $result = $room->room_number.','.$room->published_price;
+                        $publishedUnitPrice = round($room->expected_rent_price / ($room->occupied_area * 0.3025));
+                        $result = $room->room_number.','.$publishedUnitPrice;
                     @endphp
                     [{{$result}}],
                 @endif
             @endforeach
         ]
     }]
+    
 });
 
 // 予想賃料散布図
@@ -146,7 +134,7 @@ Highcharts.chart('rent', {
         showLastLabel: true
     },
     yAxis: {
-        min:{{ $minExpectedRentPrice }} - 10000,
+        min:{{ $expectedRentPrice }} - 10000,
         title: {
             text: '予想賃料'
         }
@@ -187,7 +175,7 @@ Highcharts.chart('rent', {
     },
     series: [{
         name: '予想賃料',
-        color: 'rgba(119, 152, 191, .5)',
+        color: 'rgba(223, 83, 83, .5)',
         data:[
             @foreach($rooms as $room)
                 @if($room->expected_rent_price != 0)
@@ -202,4 +190,3 @@ Highcharts.chart('rent', {
 });
 </script>
 @endsection
-

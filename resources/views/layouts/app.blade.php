@@ -10,14 +10,18 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script type="text/javascript" src="{{ asset('/js/app.js') }}" defer></script>
-    
+    <!-- high charts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
 <body>
     <header>
         <div class="flex">
             <h1 class='item'><a href="/">大山査定</a></h1>
-            <!-- モーダル表示の為のボタン -->
             <div class="item">
+                <!-- モーダル表示の為のボタン -->
                 <!-- ドロップダウンメニュー -->
                 <div class="dropdown">
                     <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">csvアップロード</button>

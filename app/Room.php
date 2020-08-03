@@ -22,6 +22,7 @@ class Room extends Model
         'published_price',
         'expected_price',
         'expected_rent_price',
+        'has_no_data',
     ];
 
     public function building()
@@ -82,29 +83,39 @@ class Room extends Model
     {
         return $this->with(['soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->find($id);
     }
+    //building@sales
+    public function getForSales($id)
+    {
+        return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
+    }
+    //building@stocks
+    public function getForRent($id)
+    {
+        return $this->with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
+    }
     //nullなら0を代入
     public function nullSubZero($request)
     {
         if($request->occupied_area === null){
-            $occupied_area = 0;
+            $occupied_area = "";
         }else{
             $occupied_area = $request->occupied_area;
         }
         
         if($request->published_price === null){
-            $published_price = 0;
+            $published_price = "";
         }else{
             $published_price = $request->published_price;
         }
         
         if($request->expected_price === null){
-            $expected_price = 0;
+            $expected_price = "";
         }else{
             $expected_price = $request->expected_price;
         }
         
         if($request->expected_rent_price === null){
-            $expected_rent_price = 0;
+            $expected_rent_price = "";
         }else{
             $expected_rent_price = $request->expected_rent_price;
         }

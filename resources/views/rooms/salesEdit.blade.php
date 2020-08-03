@@ -23,9 +23,11 @@
     @if(!empty($room) && !empty($stockSalesRoom) && empty($soldSalesRoom))
         {!! Form::model($room,['route' => ['sales_update',$room->id,$stockSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($soldSalesRoom) && empty($stockSalesRoom))
-        {!! Form::model($room,['route' => ['sales_update',$room->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
+        {!! Form::model($room,['route' => ['sales_update',$room->id,-1,$soldSalesRoom->id],'method' => 'PUT']) !!}
     @elseif(!empty($room) && !empty($stockSalesRoom) && !empty($soldSalesRoom))
         {!! Form::model($room,['route' => ['sales_update',$room->id,$stockSalesRoom->id,$soldSalesRoom->id],'method' => 'PUT']) !!}
+    @elseif(!empty($room) && empty($soldSalesRoom) && empty($stockSalesRoom))
+        {!! Form::model($room,['route' => ['sales_update',$room->id],'method' => 'PUT']) !!}
     @endif
     <tr>
         <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
@@ -47,16 +49,16 @@
         </div>
         <div class="form-group">
             @if(isset($stockSalesRoom))
-                <td>{!! Form::text('registered_at',old('registered_at',$stockSalesRoom->registered_at),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('registered_at',old('registered_at',$stockSalesRoom->registered_at),['class' => 'form-control']) !!}</a></td>
             @else
-                <td>{!! Form::text('registered_at',old('registered_at'),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('registered_at',old('registered_at'),['class' => 'form-control']) !!}</a></td>
             @endif
         </div>
         <div class="form-group">
             @if(isset($stockSalesRoom))
-                <td>{!! Form::text('changed_at',old('changed_at',$stockSalesRoom->changed_at),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('changed_at',old('changed_at',$stockSalesRoom->changed_at),['class' => 'form-control']) !!}</a></td>
             @else
-                <td>{!! Form::text('changed_at',old('changed_at'),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('changed_at',old('changed_at'),['class' => 'form-control']) !!}</a></td>
             @endif
         </div>
         <div class="form-group">
@@ -75,16 +77,16 @@
         </div>
         <div class="form-group">
             @if(isset($soldSalesRoom))
-                <td>{!! Form::text('sold_registered_at',old('sold_registered_at',$soldSalesRoom->registered_at),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('sold_registered_at',old('sold_registered_at',$soldSalesRoom->registered_at),['class' => 'form-control']) !!}</a></td>
             @else
-                <td>{!! Form::text('sold_registered_at',old('sold_registered_at'),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('sold_registered_at',old('sold_registered_at'),['class' => 'form-control']) !!}</a></td>
             @endif
         </div>
         <div class="form-group">
             @if(isset($soldSalesRoom))
-                <td>{!! Form::text('sold_changed_at',old('sold_changed_at',$soldSalesRoom->changed_at),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('sold_changed_at',old('sold_changed_at',$soldSalesRoom->changed_at),['class' => 'form-control']) !!}</a></td>
             @else
-                <td>{!! Form::text('sold_changed_at',old('sold_changed_at'),['class' => 'form-control']) !!}</a></td>
+                <td>{!! Form::date('sold_changed_at',old('sold_changed_at'),['class' => 'form-control']) !!}</a></td>
             @endif
         </div>
         <td>{!! Form::submit('変更',['class'=>'btn btn-secondary']) !!}</td>

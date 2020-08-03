@@ -16,13 +16,13 @@ class CreateStockRentRoomsTable extends Migration
         Schema::create('stock_rent_rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id')->index();
-            $table->float('price',8,2)->default(0);//掲載中の賃料
-            $table->float('previous_price',8,2)->default(0);//変更前価格
-            $table->integer('management_fee')->default(0);//管理費
-            $table->integer('monthly_fee')->default(0);//共益費
+            $table->float('price',8,2)->nullable();//掲載中の賃料
+            $table->float('previous_price',8,2)->nullable();//変更前価格
+            $table->float('management_fee',8,2)->default(0);//管理費
+            $table->float('monthly_fee',8,2)->default(0);//共益費
             $table->float('security_deposit',10,2)->default(0);//敷金
             $table->float('gratuity_fee',10,2)->default(0);//礼金
-            $table->integer('deposit')->default(0);//保証金
+            $table->float('deposit',8,2)->default(0);//保証金
             $table->char('company_name',100)->nullable();//会員名
             $table->char('contact_phonenumber',100)->nullable();//代表電話番号
             $table->char('pic',100)->nullable();//問合せ担当者

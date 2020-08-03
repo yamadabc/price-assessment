@@ -33,6 +33,7 @@ class RoomEdit extends FormRequest
             'published_price' => 'nullable|integer',
             'expected_price' => 'nullable|integer',
             'expected_rent_price' => 'nullable|integer',
+            'has_no_data' => 'nullable',
         ];
     }
 }

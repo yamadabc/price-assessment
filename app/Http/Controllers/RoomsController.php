@@ -15,6 +15,45 @@ use App\Http\Requests\Rent;
 class RoomsController extends Controller
 {
     /*
+    * @param int $building->id
+    *
+    */
+    public function create($id)
+    {
+        $building = Building::find($id);
+        return view('rooms.create',[
+            'building' => $building,
+        ]);
+    }
+    /*
+    * @param int $building->id
+    *
+    */
+    public function store(RoomEdit $request,$id)
+    {
+        $request->validated();
+
+        $room = new Room();
+        $roomData = $room->nullSubZero($request);
+        $building = Building::find($id);
+        
+        $building->rooms()->create([
+            'room_number' => $request->room_number,
+            'floor_number' => $request->floor_number,
+            'layout' => $request->layout,
+            'layout_type' => $request->layout_type,
+            'direction' => $request->direction,
+            'occupied_area' => $roomData['occupied_area'],
+            'published_price' => $roomData['published_price'],
+            'expected_price' => $roomData['expected_price'],
+            'expected_rent_price' => $roomData['expected_rent_price'],
+            'has_no_data' => $request->has_no_data,
+        ]);
+        \Session::flash('flash_message', '部屋情報を登録しました');
+        return redirect()->route('buildings_show',$id);
+        
+    }
+    /*
     *@param $room->id
     *
     */
@@ -25,34 +64,7 @@ class RoomsController extends Controller
         return view('rooms.show',compact('room'));
             
     }
-    /*  
-    * 売買バージョンに切り替え
-    *　@param $room->id
-    */
-    public function sales($id)
-    {
-        $room = Room::find($id);
-        $salesData = $room->getRoomSalesVer($id);
-        return view('rooms.sales',[
-            'room' => $room,
-            'soldSalesRoom' => $salesData['soldSalesRoom'],
-            'stockSalesRoom' => $salesData['stockSalesRoom'],
-            ]);
-    }
-    /*  
-    * 賃貸バージョンに切り替え
-    *　@param $room->id
-    */
-    public function rent($id)
-    {
-        $room = Room::find($id);
-        $salesData = $room->getRoomRentVer($id);
-        return view('rooms.rent',[
-            'room' => $room,
-            'soldRentRoom' => $salesData['soldRentRoom'],
-            'stockRentRoom' => $salesData['stockRentRoom'],
-            ]);
-    }
+    
     /*
     * @param $room->id
     */
@@ -73,141 +85,21 @@ class RoomsController extends Controller
     {
         $request->validated();
         $room = Room::find($id);
-        $roomData = $room->nullSubZero($request);
-
         $room->update([
             'room_number' => $request->room_number,
             'floor_number' => $request->floor_number,
             'layout' => $request->layout,
             'layout_type' => $request->layout_type,
             'direction' => $request->direction,
-            'occupied_area' => $roomData['occupied_area'],
-            'published_price' => $roomData['published_price'],
-            'expected_price' => $roomData['expected_price'],
-            'expected_rent_price' => $roomData['expected_rent_price'],
+            'occupied_area' => $request->occupied_area,
+            'published_price' => $request->published_price,
+            'expected_price' => $request->expected_price,
+            'expected_rent_price' => $request->expected_rent_price,
         ]);
 
-        \Session::flash('flash_message', '部屋情報を編集しました！');
+        \Session::flash('flash_message', '部屋情報を編集しました');
         return view('rooms.show',compact('room'));
     }
 
-    /*
-    * @param $room->id
-    */
-    public function rentEdit($id)
-    {
-        $room = Room::find($id);
-        $rentData = $room->getRoomRentVer($id);
-        $soldRentRoom = $rentData['soldRentRoom'];
-        $stockRentRoom = $rentData['stockRentRoom'];
-        
-        return view('rooms.rentEdit',[
-            'room' => $room,
-            'soldRentRoom' => $rentData['soldRentRoom'],
-            'stockRentRoom' => $rentData['stockRentRoom'],
-            ]);
-    }
-    /*
-    * 賃貸情報編集
-    */
-    public function rentUpdate(Rent $request,$roomId,$stockId = -1,$soldId = -1)
-    {
-        $request->validated();
-        //在庫賃貸更新
-        $stockRentRoom = StockRentRoom::firstOrNew(['id' => $stockId]);
-        $stockRentRoomData = $stockRentRoom->nullSubZero($request);
-        if($stockRentRoomData['price'] !== null || $stockRentRoomData['previous_price'] !== null || $request->registered_at || $request->changed_at){
-            StockRentRoom::updateOrCreate(
-                ['id' => $stockId ],
-                [
-                    'room_id' => $roomId,
-                    'price' => $stockRentRoomData['price'],
-                    'previous_price' => $stockRentRoomData['previous_price'],
-                    'registered_at' => $request->registered_at,
-                    'changed_at' => $request->changed_at,
-                ]
-                );
-        }
-        //賃貸成約更新
-        $soldRentRoom = new StockRentRoom();
-        $soldRentRoomData = $soldRentRoom->nullSubZero($request);
-        if($soldRentRoomData['sold_price'] !== null || $soldRentRoomData['sold_previous_price'] !== null || $request->sold_registered_at || $request->sold_changed_at){
-            SoldRentRoom::updateOrCreate(
-                ['id' => $soldId ],
-                [
-                    'room_id' => $roomId,
-                    'price' => $soldRentRoomData['sold_price'],
-                    'previous_price' => $soldRentRoomData['sold_previous_price'],
-                    'registered_at' => $request->sold_registered_at,
-                    'changed_at' => $request->sold_changed_at,
-                ]
-                );
-        }
-        $buildingId = Room::where('id',$roomId)->value('building_id');
-        $building = Building::select('id','building_name')->find($buildingId);
-        $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
-    }
-
-    /*
-    * @param $room->id
-    */
-    public function salesEdit($id)
-    {
-        $room = Room::find($id);
-        $rentData = $room->getRoomSalesVer($id);
-        $soldSalesRoom = $rentData['soldSalesRoom'];
-        $stockSalesRoom = $rentData['stockSalesRoom'];
-        
-        return view('rooms.salesEdit',[
-            'room' => $room,
-            'soldSalesRoom' => $rentData['soldSalesRoom'],
-            'stockSalesRoom' => $rentData['stockSalesRoom'],
-            ]);
-    }
-    /*
-    * 売買情報編集
-    */
-    public function salesUpdate(Rent $request,$roomId,$stockId = -1,$soldId = -1)
-    {
-        $request->validated();
-        
-        //売買在庫更新
-        $stockSalesRoom = new StockRentRoom();
-        $stockSalesRoomData = $stockSalesRoom->nullSubZero($request);
-        if($stockSalesRoomData['price'] !== null || $stockSalesRoomData['previous_price'] !== null || $request->registered_at || $request->changed_at){
-            StockSalesRoom::updateOrCreate(
-                ['id' => $stockId ],
-                [
-                    'room_id' => $roomId,
-                    'price' => $stockSalesRoomData['price'],
-                    'previous_price' => $stockSalesRoomData['previous_price'],
-                    'registered_at' => $request->registered_at,
-                    'changed_at' => $request->changed_at,
-                ]
-                );
-        }
-        //売買成約更新
-        $soldSalesRoom = new StockRentRoom();
-        $soldSalesRoomData = $soldSalesRoom->nullSubZero($request);
-        if($stockSalesRoomData['price'] !== null || $stockSalesRoomData['previous_price'] !== null || $request->sold_registered_at || $request->sold_changed_at){
-            SoldSalesRoom::updateOrCreate(
-                ['id' => $soldId ],
-                [
-                    'room_id' => $roomId,
-                    'price' => $soldSalesRoomData['sold_price'],
-                    'previous_price' => $soldSalesRoomData['sold_previous_price'],
-                    'registered_at' => $request->sold_registered_at,
-                    'changed_at' => $request->sold_changed_at,
-                ]
-                );
-        }
-        $buildingId = Room::where('id',$roomId)->value('building_id');
-        $building = Building::select('id','building_name')->find($buildingId);
-        $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
-    }
 
 }

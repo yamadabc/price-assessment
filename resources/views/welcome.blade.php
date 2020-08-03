@@ -3,18 +3,20 @@
 @section('title','物件一覧')
 
 @section('content')
-
-<div class="container">
-    <div class="row">
-        <div class='col-sm-12'>
-            @if (session('flash_message'))
+<div id='buildings'>
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-12'>
+                @if (session('flash_message'))
                 <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
                     {{ session('flash_message') }}
                 </div>
-            @endif
-            <table class='table table-striped table-bordered table-sm' id='buildings'>
+                @endif
+                <input class='search form-control' placeholder='物件名で検索' style='width:20%;'>
+            <table class='table table-striped table-bordered table-sm'>
                 <thead>
                     <tr>
+                        <th>物件id</th>
                         <th class='sort' data-sort='name'>物件名</th>
                         <th class='sort' data-sort='total_unit'>総戸数</th>
                         <th class='sort' data-sort='countPublishedPrice'>新築時価格有り戸数</th>
@@ -25,6 +27,7 @@
                 <tbody class='list'>
                     @foreach($buildings as $building)
                     <tr>
+                        <td>{{ $building->id }}</td>
                         <td class='name'><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></td>
                         <td class='total_unit'>{{ $building->total_unit }}</td>
                         <td class='countPublishedPrice'>
@@ -47,4 +50,6 @@
         </div>
     </div>
 </div>
+</div>
+
 @endsection
