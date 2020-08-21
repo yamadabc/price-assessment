@@ -61,7 +61,7 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-sm-5">{!! Form::label('occupied_area','占有面積') !!}</div>
+                    <div class="col-sm-5">{!! Form::label('occupied_area','専有面積') !!}</div>
                     <div class="col-sm-7">
                         <div class="input-group">
                             {!! Form::text('occupied_area',old('occupied_area'),['class'=>'form-control']) !!}
@@ -72,11 +72,11 @@
                     </div>
                 </div>
             </div>
-                
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-5">{!! Form::label('published_price','新築時価格') !!}</div>
-                    <div class="col-sm-7">    
+                    <div class="col-sm-7">
                         <div class="input-group">
                             {!! Form::text('published_price',old('published_price'),['class'=>'form-control']) !!}
                             <div class='input-group-append'>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <div class="row">
                         <div class="col-sm-5">{!! Form::label('has_no_data','新築時価格表') !!}</div>

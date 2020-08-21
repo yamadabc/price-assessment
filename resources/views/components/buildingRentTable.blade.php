@@ -7,7 +7,7 @@
                     <th class='sort' data-sort='layout'>間取り</th>
                     <th class='sort' data-sort='layout_type'>間取りタイプ</th>
                     <th class='sort' data-sort='direction'>方角</th>
-                    <th class='sort' data-sort='occupied_area'>占有面積</th>
+                    <th class='sort' data-sort='occupied_area'>専有面積</th>
                     <th class='sort' data-sort='price'>掲載中の賃料(万円)</th>
                     <th class='sort' data-sort='previous_price'>変更前賃料(万円)</th>
                     <th class='sort' data-sort='registered_at'>登録年月日</th>
@@ -29,19 +29,19 @@
                 <td>{{ $room->id }}</td>
                 <td class='room_number'><a href="{{ route('room_rent',$room->id) }}">{{ $room->room_number }}</a></td>
                 <td class='floor_number'>
-                    @if($room->floor_number)    
+                    @if($room->floor_number)
                         <a href="{{ route('floor_sort.rent',[$building->id,$room->floor_number]) }}">{{ $room->floor_number }}</a></td>
-                    @endif    
+                    @endif
                 </td>
                 <td class='layout'>{{ $room->layout }}</td>
                 <td class='layout_type'>
-                    @if($room->layout_type)    
+                    @if($room->layout_type)
                         <a href="{{ route('layout_type.rent',[$building->id,$room->layout_type]) }}">{{ $room->layout_type }}</a></td>
                     @endif
                 </td>
                 <td class='direction'>{{ $room->direction }}</td>
                 <td class='occupied_area'>{{ $room->occupied_area }}㎡</td>
-                
+
                 <td class='price'>
                     @foreach($room->stockRentRooms as $stockRentRoom)
                         @if($loop->last)
@@ -70,7 +70,7 @@
                         @endif
                     @endforeach
                 </td>
-                
+
                 <td class='sold_price'>
                     @foreach($room->soldRentRooms as $soldRentRoom)
                         @if($loop->last)
@@ -101,7 +101,7 @@
                 </td>
                 <td class='expected_price'>{{ $room->expected_rent_price }}</td>
                 <td class='has_no_data'>
-                    @if($room->has_no_data == 1)    
+                    @if($room->has_no_data == 1)
                         ⚪︎
                     @endif
                 </td>
@@ -110,20 +110,20 @@
                         @if($loop->last)
                             @if($room->expected_rent_price - $soldRentRoom->price > 0)
                                 <div class="red">+{{ $room->expected_rent_price - $soldRentRoom->price }}({{ round(($room->expected_rent_price - $soldRentRoom->price) / $room->expected_rent_price * 100 ,2) }}%)</div>
-                            @else 
+                            @else
                                 <div class="blue">{{ $room->expected_rent_price - $soldRentRoom->price }}({{ round(( $room->expected_rent_price - $soldRentRoom->price) / $room->expected_rent_price * 100 ,2) }}%)</div>
                             @endif
                         @endif
                     @endforeach
                 </td>
-                
+
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)
                         @if(isset($copyOfRegister))
-                            @if($loop->last)   
+                            @if($loop->last)
                             <a href="{{ route('pdf_show',$room->getCopyOfRegisters($room->id)) }}">リンク</a>
                             @endif
-                        @endif    
+                        @endif
                     @endforeach
                 </td>
                 <td>

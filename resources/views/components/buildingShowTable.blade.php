@@ -8,7 +8,7 @@
                 <th class='sort' data-sort='layout'>間取り</th>
                 <th class='sort' data-sort='layout_type'>間取りタイプ</th>
                 <th class='sort' data-sort='direction'>方角</th>
-                <th class='sort' data-sort='occupied_area'>占有面積</th>
+                <th class='sort' data-sort='occupied_area'>専有面積</th>
                 <th class='sort' data-sort='published_price'>新築時価格</th>
                 <th class='sort' data-sort='published_unit_price'>新築時坪単価</th>
                 <th class='sort' data-sort='expected_price'>予想売買価格</th>
@@ -28,12 +28,12 @@
                 <td>{{ $room->id }}</td>
                 <td class='room_number'><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
                 <td class='floor_number'>
-                    @if($room->floor_number)    
+                    @if($room->floor_number)
                         <a href="{{ route('floor_sort',[$building->id,$room->floor_number]) }}">{{ $room->floor_number }}</a></td>
                     @endif
                 <td class='layout'>{{ $room->layout }}</td>
                 <td class='layout_type'>
-                    @if($room->layout_type)    
+                    @if($room->layout_type)
                         <a href="{{ route('layout_type_sort',[$building->id,$room->layout_type]) }}">{{ $room->layout_type }}</a></td>
                     @endif
                 <td class='direction'>{{ $room->direction }}</td>
@@ -75,23 +75,23 @@
                     @endif
                 %</td>
                 <td>
-                    @if($room->has_no_data == 1)    
+                    @if($room->has_no_data == 1)
                         ⚪︎
                     @endif
                 </td>
-                
+
                 <td>
                     @foreach($room->copyOfRegisters as $copyOfRegister)
                         @if(isset($copyOfRegister))
-                            @if($loop->last)   
+                            @if($loop->last)
                             <a href="{{ route('pdf_show',$room->getCopyOfRegisters($room->id)) }}">リンク</a>
                             @endif
-                        @endif    
+                        @endif
                     @endforeach
                 </td>
                 <td><a href="{{ route('room_edit',$room->id) }}">編集</a></td>
             </tr>
             @endforeach
         </tbody>
-    </table> 
-</div> 
+    </table>
+</div>

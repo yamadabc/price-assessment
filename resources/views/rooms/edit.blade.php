@@ -14,7 +14,7 @@
             @endif
         </div>
 </div>
-            
+
 <table class='table table-striped table-bordered table-sm'>
     <tr>
         <th>部屋番号</th>
@@ -22,7 +22,7 @@
         <th>間取り</th>
         <th>間取りタイプ</th>
         <th>方角</th>
-        <th>占有面積</th>
+        <th>専有面積</th>
         <th>新築時価格</th>
         <th>新築時坪単価</th>
         <th>予想売買価格</th>
@@ -117,6 +117,6 @@
     </tr>
 {!! Form::close() !!}
 </table>
-            
+
 @include('components.createNRegisterData')
 @endsection

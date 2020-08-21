@@ -22,7 +22,7 @@
             <th>間取り</th>
             <th>間取りタイプ</th>
             <th>方角</th>
-            <th>占有面積</th>
+            <th>専有面積</th>
             <th>掲載中の価格(万円)</th>
             <th>変更前価格(万円)</th>
             <th>登録年月日</th>
@@ -40,7 +40,7 @@
                 <th></th>
                 <th></th>
             @endif
-            
+
         </tr>
     <tr>
         <td><a href="{{ route('room_show',$room->id) }}">{{ $room->room_number }}</a></td>
@@ -96,24 +96,24 @@
                 @if($loop->last)
                     @if($soldSalesRoom->price - $room->expected_price > 0)
                         <div class="blue">{{ $room->expected_price - $soldSalesRoom->price }}({{ round(( $room->expected_price - $soldSalesRoom->price) / $room->expected_price * 100 ,2) }}%)</div>
-                    @else 
+                    @else
                         <div class="red">+{{ $room->expected_price - $soldSalesRoom->price }}({{ round(($room->expected_price - $soldSalesRoom->price) / $room->expected_price * 100 ,2) }}%)</div>
                     @endif
                 @endif
             @endforeach
         </td>
         <td class='has_no_data'>
-            @if($room->has_no_data == 1)    
+            @if($room->has_no_data == 1)
                 ⚪︎
             @endif
         </td>
         <td>
             @foreach($room->copyOfRegisters as $copyOfRegister)
                 @if(isset($copyOfRegister))
-                    @if($loop->last)   
+                    @if($loop->last)
                     <a href="{{ route('pdf_show',$room->getCopyOfRegisters($room->id)) }}">リンク</a>
                     @endif
-                @endif    
+                @endif
             @endforeach
         </td>
         @if($stockSalesRoom || $soldSalesRoom)
@@ -135,6 +135,6 @@
             </td>
         @endif
     </tr>
-    </table>     
+    </table>
     @include('components.createNRegisterData')
 @endsection
