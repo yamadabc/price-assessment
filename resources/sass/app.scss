@@ -23,6 +23,7 @@ body {
 .sort.asc:after {
     content:"▲";
 }
+
 th {
     cursor: pointer;
     color: white;
@@ -36,6 +37,10 @@ table {
     th {
         height: 50px;
         line-height: 50px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1;
     }
 }
 
