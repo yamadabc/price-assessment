@@ -17,7 +17,7 @@
                     <th class='sort' data-sort='sold_registered_at'>登録年月日</th>
                     <th class='sort' data-sort='sold_changed_at'>変更年月日</th>
                     <th class='sort' data-sort='expected_price'>予想賃料</th>
-                    <th>新築時価格表に</br>ない部屋</th>
+                    <th>新築時価格表にない部屋</th>
                     <th>差分</th>
                     <th>謄本</th>
                     <th></th>
