@@ -6,6 +6,9 @@ body {
 .flex {
     display: flex;
     justify-content: space-between;
+    h1 {
+        font-size: 2rem;
+    }
 }
 // table
 .red {
