@@ -36,6 +36,7 @@ th,
   cursor: pointer;
   color: white;
   background-color: #443833;
+  font-weight: bold;
 }
 
 th,
@@ -71,10 +72,19 @@ p {
 
 #stucking td {
   width: 70px;
+  font-weight: 250;
 }
 
 #stucking .undefined {
   background-color: #ffcdd2;
+}
+
+#stucking a {
+  color: black;
+}
+
+.block {
+  display: inline-block;
 }
 
 .chart_building_name {

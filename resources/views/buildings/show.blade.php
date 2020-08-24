@@ -10,7 +10,7 @@
 
     </div>
     <div class='items'>
-        <p>テーブル表示 /</p>
+        <p class='block'>テーブル表示 /</p>
         <a href="{{ route('buildings_stucking',$building->id) }}">スタッキング表示</a>
     </div>
     {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}

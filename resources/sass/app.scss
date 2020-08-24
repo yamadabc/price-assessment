@@ -31,6 +31,7 @@ th,.th {
     cursor: pointer;
     color: white;
     background-color: #443833;
+    font-weight: bold;
 }
 th,td {
     text-align: center;
@@ -63,10 +64,17 @@ p {
     }
     td {
         width: 70px;
+        font-weight: 250;
     }
     .undefined {
         background-color: #ffcdd2;
     }
+    a {
+        color: black;
+    }
+}
+.block {
+    display: inline-block;
 }
 // floor.blade.php
 .chart_building_name {
