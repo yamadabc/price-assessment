@@ -14,7 +14,8 @@
 Route::get('/', 'BuildingsController@index');
 
 Route::prefix('buildings')->group(function(){
-    Route::get('/show/{id}','BuildingsController@show')->name('buildings_show');
+    Route::get('/show/{id}','BuildingsController@show')->name('buildings_show');//物件ごとのtop page(table表示)
+    Route::get('/stucking/{id}','BuildingsController@stucking')->name('buildings_stucking');//物件ごとのtop page(stucking表示)
     Route::get('/{id}/floor/{floor}','BuildingsController@floorSort')->name('floor_sort');
     Route::get('/{id}/layout_type/{layoutType}','BuildingsController@layoutTypeSort')->name('layout_type_sort');
 });

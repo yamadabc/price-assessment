@@ -27,7 +27,7 @@ body {
     content:"▲";
 }
 
-th {
+th,.th {
     cursor: pointer;
     color: white;
     background-color: #443833;
@@ -53,6 +53,19 @@ p {
 .modal {
     .modal-content {
         margin: 0 auto;
+    }
+}
+//スタッキング表示
+#stucking {
+    p{
+        margin: 0;
+        font-size:0.8rem;
+    }
+    td {
+        width: 70px;
+    }
+    .undefined {
+        background-color: #ffcdd2;
     }
 }
 // floor.blade.php

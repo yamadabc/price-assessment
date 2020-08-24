@@ -7,17 +7,20 @@
 <div class="flex">
     <div class="items">
         <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a><a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
-        
+
     </div>
-    
-        {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
-            <div class="items">
-            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
-            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
-                {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
-            </div>
-        {!! Form::close() !!}
+    <div class='items'>
+        <p>テーブル表示 /</p>
+        <a href="{{ route('buildings_stucking',$building->id) }}">スタッキング表示</a>
+    </div>
+    {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
+        <div class="items">
+        <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
+        <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
+            {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
+            {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
+        </div>
+    {!! Form::close() !!}
 </div>
 @if (session('flash_message'))
     <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
@@ -47,7 +50,7 @@ Highcharts.chart('price', {
     title: {
         text:'売買価格'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -103,7 +106,7 @@ Highcharts.chart('price', {
         data: [
             @foreach($rooms as $room)
                 @if($room->expected_price != 0)
-                    @php            
+                    @php
                         $ooyamaResult = $room->room_number.','.$room->expected_price;
                     @endphp
                     [{{$ooyamaResult}}],
@@ -116,7 +119,7 @@ Highcharts.chart('price', {
         data:[
             @foreach($rooms as $room)
                 @if($room->published_price != 0)
-                    @php            
+                    @php
                         $result = $room->room_number.','.$room->published_price;
                     @endphp
                     [{{$result}}],
@@ -135,7 +138,7 @@ Highcharts.chart('rent', {
     title: {
         text:'予想賃料'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -191,7 +194,7 @@ Highcharts.chart('rent', {
         data:[
             @foreach($rooms as $room)
                 @if($room->expected_rent_price != 0)
-                    @php            
+                    @php
                         $result = $room->room_number.','.$room->expected_rent_price;
                     @endphp
                     [{{$result}}],
@@ -202,4 +205,3 @@ Highcharts.chart('rent', {
 });
 </script>
 @endsection
-

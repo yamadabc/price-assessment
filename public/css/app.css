@@ -31,7 +31,8 @@ body {
   content: "\25B2";
 }
 
-th {
+th,
+.th {
   cursor: pointer;
   color: white;
   background-color: #443833;
@@ -61,6 +62,19 @@ p {
 
 .modal .modal-content {
   margin: 0 auto;
+}
+
+#stucking p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+#stucking td {
+  width: 70px;
+}
+
+#stucking .undefined {
+  background-color: #ffcdd2;
 }
 
 .chart_building_name {
