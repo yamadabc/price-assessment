@@ -174,7 +174,7 @@ return [
         'published_price' => '新築時売買価格',
         'expected_price' => '予想売買価格',
         'expected_rent_price' => '予想賃料価格',
-
+        'has_no_data' => '新築時価格表',
         'file_name' => 'ファイル',
     ],
 
