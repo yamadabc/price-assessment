@@ -12,7 +12,7 @@ class BuildingsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Building::class,50)->create()->each(function ($building){
+        factory(App\Building::class,10)->create()->each(function ($building){
             $building->make();
         });
     }
