@@ -27,7 +27,7 @@
     @foreach($floorNumbers as $floorNumber)
     <tr>
         @php
-            $rooms = App\Room::where('building_id',$building->id)->where('floor_number',$floorNumber->floor_number)->get();
+            $rooms = App\Room::where('building_id',$building->id)->where('floor_number',$floorNumber->floor_number)->orderBy('room_number','asc')->get();
         @endphp
         @foreach($rooms as $room)
         @if(!empty(trim($room->layout_type)))
