@@ -72,7 +72,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-5">{!! Form::label('published_price','新築時価格') !!}</div>

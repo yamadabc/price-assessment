@@ -6,7 +6,7 @@
 
 <div class="flex">
     <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a><a href="{{ route('room_create',$building->id) }}" class='btn btn-light'>新規部屋情報入力</a></h2>
+        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></h2>
 
     </div>
     <div class='items'>

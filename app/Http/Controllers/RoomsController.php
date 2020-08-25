@@ -25,33 +25,32 @@ class RoomsController extends Controller
             'building' => $building,
         ]);
     }
-    /*
-    * @param int $building->id
-    *
-    */
-    public function store(RoomEdit $request,$id)
+    /**
+     * @param int
+     * @return redirect
+     */
+    public function store(RoomEdit $request,$buildingId)
     {
         $request->validated();
 
         $room = new Room();
-        $roomData = $room->nullSubZero($request);
-        $building = Building::find($id);
-        
+        $building = Building::find($buildingId);
+
         $building->rooms()->create([
             'room_number' => $request->room_number,
             'floor_number' => $request->floor_number,
             'layout' => $request->layout,
             'layout_type' => $request->layout_type,
             'direction' => $request->direction,
-            'occupied_area' => $roomData['occupied_area'],
-            'published_price' => $roomData['published_price'],
-            'expected_price' => $roomData['expected_price'],
-            'expected_rent_price' => $roomData['expected_rent_price'],
+            'occupied_area' => $request->occupied_area,
+            'published_price' => $request->published_price,
+            'expected_price' => $request->expected_price,
+            'expected_rent_price' => $request->expected_rent_price,
             'has_no_data' => $request->has_no_data,
         ]);
         \Session::flash('flash_message', '部屋情報を登録しました');
-        return redirect()->route('buildings_show',$id);
-        
+        return redirect()->route('buildings_show',$buildingId);
+
     }
     /*
     *@param $room->id
@@ -62,9 +61,9 @@ class RoomsController extends Controller
         $room = new Room();
         $room = $room->getForRoomsShowRoomId($id);
         return view('rooms.show',compact('room'));
-            
+
     }
-    
+
     /*
     * @param $room->id
     */
