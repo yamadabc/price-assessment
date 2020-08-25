@@ -1,13 +1,27 @@
+$oyama-main-color:#443833;
 body {
-    width: 95%;
     margin: 0 auto;
     margin-bottom: 100px;
+    width: 98%;
 }
 .flex {
     display: flex;
     justify-content: space-between;
-    h1 {
-        font-size: 2rem;
+}
+header {
+    background-color: $oyama-main-color;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    .header-flex {
+        display: flex;
+        h1 {
+            font-size: 2rem;
+            margin-right: 1rem;
+            a {
+                color: white;
+            }
+        }
     }
 }
 // table
@@ -30,7 +44,7 @@ body {
 th,.th {
     cursor: pointer;
     color: white;
-    background-color: #443833;
+    background-color: $oyama-main-color;
     font-weight: bold;
 }
 th,td {

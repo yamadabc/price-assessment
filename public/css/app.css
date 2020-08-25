@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 body {
-  width: 95%;
   margin: 0 auto;
   margin-bottom: 100px;
+  width: 98%;
 }
 
 .flex {
@@ -11,8 +11,24 @@ body {
   justify-content: space-between;
 }
 
-.flex h1 {
+header {
+  background-color: #443833;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+header .header-flex {
+  display: flex;
+}
+
+header .header-flex h1 {
   font-size: 2rem;
+  margin-right: 1rem;
+}
+
+header .header-flex h1 a {
+  color: white;
 }
 
 .red {
