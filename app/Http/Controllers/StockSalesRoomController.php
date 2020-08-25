@@ -10,16 +10,23 @@ use App\Http\Requests\Sales;
 
 class StockSalesRoomController extends Controller
 {
-    /*
-    * @param $room->id 
-    */
+    /**
+     * 売買在庫情報登録ページ
+     * @param int $room->id
+     * @return reponse
+     */
     public function create($id)
     {
         $room = Room::find($id);
         return view('stocks.createSales',compact('id','room'));
     }
-    
-    public function store(Sales $request,$id)
+    /**
+     * 売買在庫登録
+     * @param Sales $request
+     * @param int $roomId
+     * @return response
+     */
+    public function store(Sales $request,$roomId)
     {
         $validated = $request->validated();
 
@@ -27,7 +34,7 @@ class StockSalesRoomController extends Controller
         $stackSalesRoomData = [];
         $stackSalesRoomData = $stackSalesRoom->nullSubZero($request);
         $stackSalesRoom::create([
-            'room_id' => $id,
+            'room_id' => $roomId,
             'price' => $request->price,
             'previous_price' => $stackSalesRoomData['previous_price'],
             'management_fee' => $stackSalesRoomData['management_fee'],
@@ -40,11 +47,8 @@ class StockSalesRoomController extends Controller
             'changed_at' => $request->changed_at,
         ]);
         \Session::flash('flash_message', '新規売買在庫を登録しました！');
-        $buildingId = Room::where('id',$id)->value('building_id');
-        $building = Building::select('id','building_name')->find($buildingId);
-        $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
+        $buildingId = Room::where('id',$roomId)->value('building_id');
+        return redirect()->route('buildings_show',$buildingId);
     }
 
 }

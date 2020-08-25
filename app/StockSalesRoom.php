@@ -13,7 +13,11 @@ class StockSalesRoom extends Model
         return $this->belongsTo('App\Room');
     }
 
-    //nullなら0を代入
+    /**
+     * nullなら0を代入
+     * @param Request $request
+     * @return int[]
+     */
     public function nullSubZero($request)
     {
         if($request->price === null){
@@ -39,7 +43,7 @@ class StockSalesRoom extends Model
         }else{
             $reserve_fund = $request->reserve_fund;
         }
-        
+
         return ['price' => $price ,'previous_price' => $previous_price,'management_fee' => $management_fee,'reserve_fund' => $reserve_fund];
     }
 }

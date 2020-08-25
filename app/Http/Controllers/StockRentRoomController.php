@@ -11,16 +11,24 @@ use App\Http\Requests\Rent;
 
 class StockRentRoomController extends Controller
 {
-    /*
-    * @param $room->id 
-    */
+    /**
+     * 賃貸在庫情報登録ページ
+     * @param int $room->id
+     * @return response
+     */
     public function create($id)
     {
         $room = Room::find($id);
         return view('stocks.createRent',compact('id','room'));
     }
 
-    public function store(Rent $request,$id)
+    /**
+     * 賃貸在庫登録
+     * @param Rent $request
+     * @param int $roomId
+     * @return response
+     */
+    public function store(Rent $request,$roomId)
     {
         $validated = $request->validated();
 
@@ -28,7 +36,7 @@ class StockRentRoomController extends Controller
         $stackRentRoomData = [];
         $stackRentRoomData = $stackRentRoom->nullSubZero($request);
         $stackRentRoom::create([
-            'room_id'             => $id,
+            'room_id'             => $roomId,
             'price'               => $request->price,
             'previous_price'      => $stackRentRoomData['previous_price'],
             'management_fee'      => $stackRentRoomData['management_fee'],
@@ -44,11 +52,8 @@ class StockRentRoomController extends Controller
             'changed_at'          => $request->changed_at,
         ]);
         \Session::flash('flash_message', '新規賃貸在庫情報を登録しました！');
-        $buildingId = Room::where('id',$id)->value('building_id');
-        $building = Building::select('id','building_name')->find($buildingId);
-        $rooms = new Room();
-        $rooms = $rooms->getForRoomsShow($buildingId);
-        return view('buildings.show',compact('rooms','building'));
+        $buildingId = Room::where('id',$roomId)->value('building_id');
+        return redirect()->route('buildings_show',$buildingId);
     }
 
 }
