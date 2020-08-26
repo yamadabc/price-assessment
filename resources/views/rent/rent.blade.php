@@ -5,14 +5,9 @@
 @section('content')
 
 <div class="flex">
-    <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・賃貸</h2>
-    </div>
-    <div class='items'>
-        <p class='block'>テーブル表示 /</p>
-        <a href="{{ route('buildings_stucking',$building->id) }}">スタッキング表示</a>
-    </div>
-    {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
+    @include('components.roomsFlexHeader')
+
+    {!! Form::open(['route' => ['building_sales',$building->id],'method' => 'get']) !!}
         <div class="items">
         <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
             {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
@@ -20,11 +15,13 @@
         </div>
     {!! Form::close() !!}
 </div>
+
 @if (session('flash_message'))
     <div class="alert alert-success text-center py-3 my-0 mb-3" role="alert">
         {{ session('flash_message') }}
     </div>
 @endif
+
 <div class="flex">
     <div class="highcharts">
         <figure class='highcharts-figure'>

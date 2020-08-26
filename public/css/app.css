@@ -11,6 +11,10 @@ body {
   justify-content: space-between;
 }
 
+.flex .block {
+  display: inline-block;
+}
+
 header {
   background-color: #443833;
   width: 100%;
@@ -97,10 +101,6 @@ p {
 
 #stucking a {
   color: black;
-}
-
-.block {
-  display: inline-block;
 }
 
 .chart_building_name {

@@ -146,7 +146,7 @@
     <div class='item'>
         @if(Request::is('/'))
         @elseif(isset($building))
-        <a href="{{ route('room_create',$building->id) }}" class='btn btn-light ml-2'>新規部屋情報入力</a>
+            <a href="{{ route('room_create',$building->id) }}" class='btn btn-light ml-2'>新規部屋情報入力</a>
         @elseif(isset($room))
             <a href="{{ route('room_create',$room->building_id) }}" class='btn btn-light ml-2'>新規部屋情報入力</a>
         @endif

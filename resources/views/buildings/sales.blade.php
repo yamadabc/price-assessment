@@ -5,13 +5,8 @@
 @section('content')
 
 <div class="flex">
-    <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・売買</h2>
-    </div>
-    <div class='items'>
-        <p class='block'>テーブル表示 /</p>
-        <a href="{{ route('buildings_stucking',$building->id) }}">スタッキング表示</a>
-    </div>
+    @include('components.roomsFlexHeader')
+
     {!! Form::open(['route' => ['building_sales',$building->id],'method' => 'get']) !!}
         <div class="items">
             <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>

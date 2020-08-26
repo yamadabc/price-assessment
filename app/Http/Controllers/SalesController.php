@@ -12,39 +12,44 @@ use App\Http\Requests\Rent;
 
 class SalesController extends Controller
 {
-
-    /*  
-    * 売買バージョンに切り替え(全体)
-    *　@param $building->id
-    */
-    public function salesAll(Request $request,$id)
+    /**
+     * 売買バージョンに切り替え(全体)
+     * @param Request $request
+     * @param int $buildingId
+     * @return response
+     */
+    public function salesAll(Request $request,$buildingId)
     {
         $rooms = new Room();
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //部屋番号検索
         $keyword = $request->input('room_number');
         if(!empty($keyword)){
             $query = Room::with('building','stockSalesRooms','soldSalesRooms');
-            $query->where('building_id','=',$id);
+            $query->where('building_id','=',$buildingId);
             $query->where(function ($query) use($keyword) {
                 $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
             });
             $rooms = $query->orderBy('id','asc')->get();
         }else{
-            $rooms = $rooms->getForSales($id);
+            $rooms = $rooms->getForSales($buildingId);
         }
         $publishedUnitPrice = $this->publishedUnitPrice($rooms);//最小新築時坪単価
         $publishedPrice     = $this->publishedPrice($rooms);// 最小新築時売買価格
         return view('buildings.sales',compact('rooms','building','publishedUnitPrice','publishedPrice'));
     }
-    /*  
-    * 売買バージョンに切り替え(1部屋)
-    *　@param $building->id
-    */
-    public function sales($id)
+    /**
+     * 売買バージョンに切り替え(1部屋)
+     * @param int $buildingId
+     * @return response
+     */
+    public function sales($buildingId)
     {
-        $room = Room::find($id);
-        $salesData = $room->getRoomSalesVer($id);
+        $room = Room::find($buildingId);
+        $salesData = $room->getRoomSalesVer($buildingId);
+
         return view('rooms.sales',[
             'room' => $room,
             'soldSalesRoom' => $salesData['soldSalesRoom'],
@@ -52,30 +57,32 @@ class SalesController extends Controller
             ]);
     }
 
-
-    /*
-    * @param $room->id
-    */
-    public function Edit($id)
+    /**
+     * 売買情報編集ページ
+     * @param int $roomId
+     * @return response
+     */
+    public function Edit($roomId)
     {
-        $room = Room::find($id);
-        $rentData = $room->getRoomSalesVer($id);
+        $room = Room::find($roomId);
+        $rentData = $room->getRoomSalesVer($roomId);
         $soldSalesRoom = $rentData['soldSalesRoom'];
         $stockSalesRoom = $rentData['stockSalesRoom'];
-        
+
         return view('rooms.salesEdit',[
             'room' => $room,
             'soldSalesRoom' => $rentData['soldSalesRoom'],
             'stockSalesRoom' => $rentData['stockSalesRoom'],
             ]);
     }
+
     /*
     * 売買情報編集
     */
     public function Update(Rent $request,$roomId,$stockId = -1,$soldId = -1)
     {
         $request->validated();
-        
+
         //売買在庫更新
         if($request->price || $request->previous_price || $request->registered_at || $request->changed_at){
             StockSalesRoom::updateOrCreate(
@@ -117,48 +124,56 @@ class SalesController extends Controller
         if($stockSalesRoom){
             $stockSalesRoom->delete();
         }
-        
+
         //売買バージョンページにリダイレクト
         \Session::flash('flash_message', '売買情報を削除しました');
         return back();
     }
-    
-    /*  
-    * 売買階数別検索
-    *　@param $building->id,$floor_number
-    */
-    public function floorSort($id,$floor)
+
+    /**
+     * 売買階数別検索
+     * @param int $buildingId,$floor
+     * @return response
+     */
+    public function floorSort($buildingId,$floor)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //全階数取得
         $floor_numbers = [];
         $rooms = new Room();
-        $rooms = $rooms->getForSales($id);
+        $rooms = $rooms->getForSales($buildingId);
         foreach($rooms as $room){
             $floor_numbers[] = $room->floor_number;
         }
         $floor_numbers = array_unique($floor_numbers);
 
         $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
-        
+
         $publishedUnitPrice = $this->publishedUnitPrice($rooms);//最小新築時坪単価
         $publishedPrice     = $this->publishedPrice($rooms);// 最小新築時売買価格
-        
+
         return view('sales.salesFloor',compact('rooms','building','floor_numbers','floor','publishedUnitPrice','publishedPrice'));
     }
-    /* 
-    * @param $building->id,$layout_type
-    *  間取タイプ別検索
-    */
-    public function layoutTypeSort($id,$layoutType)
+
+    /**
+     * 間取タイプ別検索
+     * @param int $buildingId
+     * @param string $layout_type
+     * @return response
+     */
+    public function layoutTypeSort($buildingId,$layoutType)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         $rooms = Room::with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('layout_type',$layoutType)
                         ->orderBy('id','asc')
                         ->get();

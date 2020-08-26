@@ -8,6 +8,9 @@ body {
 .flex {
     display: flex;
     justify-content: space-between;
+    .block {
+        display: inline-block;
+    }
 }
 header {
     background-color: $oyama-main-color;
@@ -88,9 +91,7 @@ p {
         color: black;
     }
 }
-.block {
-    display: inline-block;
-}
+
 // floor.blade.php
 .chart_building_name {
     text-align: center;

@@ -11,25 +11,29 @@ use App\Http\Requests\Rent;
 
 class RentController extends Controller
 {
-    /*  
-    * 賃貸バージョンに切り替え(全体)
-    *　@param $building->id
-    */
-    public function stocksAll(Request $request,$id)
+    /**
+     * 賃貸バージョンに切り替え(全体)
+     * @param Request $request
+     * @param int $buildingId
+     * @return response
+     */
+    public function stocksAll(Request $request,$buildingId)
     {
         $rooms = new Room();
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //部屋番号検索
         $keyword = $request->input('room_number');
         if(!empty($keyword)){
             $query = Room::with('building','stockRentRooms','soldRentRooms');
-            $query->where('building_id','=',$id);
+            $query->where('building_id','=',$buildingId);
             $query->where(function ($query) use($keyword) {
                 $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
             });
             $rooms = $query->orderBy('id','asc')->get();
         }else{
-            $rooms = $rooms->getForRent($id);
+            $rooms = $rooms->getForRent($buildingId);
         }
         $expectedUnitRentPrice = $this->minExpectedUnitRentPrice($rooms);//最小予想賃料坪単価
         $expectedRentPrice     = $this->minExpectedRentPrice($rooms);// 最小予想賃料
@@ -37,14 +41,15 @@ class RentController extends Controller
         return view('rent.rent',compact('rooms','building','expectedUnitRentPrice','expectedRentPrice'));
     }
 
-    /*  
-    * 賃貸バージョンに切り替え(1部屋)
-    *　@param $room->id
-    */
-    public function rent($id)
+    /**
+     * 賃貸バージョンに切り替え(1部屋)
+     * @param int $roomId
+     * @return response
+     */
+    public function rent($roomId)
     {
-        $room = Room::find($id);
-        $salesData = $room->getRoomRentVer($id);
+        $room = Room::find($roomId);
+        $salesData = $room->getRoomRentVer($roomId);
         return view('rooms.rent',[
             'room' => $room,
             'soldRentRoom' => $salesData['soldRentRoom'],
@@ -52,26 +57,29 @@ class RentController extends Controller
             ]);
     }
 
-
-    /*
-    * @param $room->id
-    */
-    public function Edit($id)
+    /**
+     * 賃貸情報編集ページ
+     * @param int $roomId
+     * @return response
+     */
+    public function Edit($roomId)
     {
-        $room = Room::find($id);
-        $rentData = $room->getRoomRentVer($id);
+        $room = Room::find($roomId);
+        $rentData = $room->getRoomRentVer($roomId);
         $soldRentRoom = $rentData['soldRentRoom'];
         $stockRentRoom = $rentData['stockRentRoom'];
-        
+
         return view('rooms.rentEdit',[
             'room' => $room,
             'soldRentRoom' => $rentData['soldRentRoom'],
             'stockRentRoom' => $rentData['stockRentRoom'],
             ]);
     }
-    /*
-    * 賃貸情報編集
-    */
+    /**
+     * 賃貸情報編集
+     * @param Rent $request
+     * @param int $roomId,$stockId,$soldId
+     */
     public function Update(Rent $request,$roomId,$stockId = -1,$soldId = -1)
     {
         $request->validated();
@@ -104,7 +112,7 @@ class RentController extends Controller
         //賃貸バージョンページへリダイレクト
         $buildingId = Room::where('id',$roomId)->value('building_id');
         return redirect()->route('building_stocks',$buildingId);
-        
+
     }
 
     public function destroy($stockRentRoomId = -1,$soldRentRoomId = -1)
@@ -117,49 +125,56 @@ class RentController extends Controller
         if($stockRentRoom){
             $stockRentRoom->delete();
         }
-        
+
         //賃貸バージョンページにリダイレクト
         \Session::flash('flash_message', '賃貸情報を削除しました');
         return back();
     }
 
-    /*  
-    * 賃貸階数別検索
-    *　@param $building->id,$floor_number
-    */
-    public function floorSort($id,$floor)
+    /**
+     * 賃貸階数別検索
+     * @param $buildingId,$floor
+     * @return response
+     */
+    public function floorSort($buildingId,$floor)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //全階数取得
         $floor_numbers = [];
         $rooms = new Room();
-        $rooms = $rooms->getForRent($id);
+        $rooms = $rooms->getForRent($buildingId);
         foreach($rooms as $room){
             $floor_numbers[] = $room->floor_number;
         }
         $floor_numbers = array_unique($floor_numbers);
 
         $rooms = Room::with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
-        
+
         $expectedUnitRentPrice = $this->minExpectedUnitRentPrice($rooms);//最小予想賃料坪単価
         $expectedRentPrice     = $this->minExpectedRentPrice($rooms);// 最小予想賃料
 
         return view('rent.floor',compact('rooms','building','floor_numbers','floor','expectedUnitRentPrice','expectedRentPrice'));
     }
 
-    /* 
-    * @param $building->id,$layout_type
-    *  間取タイプ別検索
-    */
-    public function layoutTypeSort($id,$layoutType)
+    /**
+     * 間取タイプ別検索
+     * @param int $buildingId
+     * @param string $layout_type
+     * @return response
+     */
+    public function layoutTypeSort($buildingId,$layoutType)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         $rooms = Room::with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('layout_type',$layoutType)
                         ->orderBy('id','asc')
                         ->get();
@@ -169,7 +184,7 @@ class RentController extends Controller
 
         return view('rent.layoutType',compact('rooms','building','layout_type','expectedUnitRentPrice','expectedRentPrice'));
     }
-    
+
     public function minExpectedUnitRentPrice($rooms)
     {
         $expectedUnitRentPrices = [];
@@ -184,7 +199,7 @@ class RentController extends Controller
             return 0;
         }
     }
-    
+
     public function minExpectedRentPrice($rooms)
     {
         $expectedRentPrices = [];

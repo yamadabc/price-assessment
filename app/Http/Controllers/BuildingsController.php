@@ -21,24 +21,26 @@ class BuildingsController extends Controller
 
     /**
      * 物件ごとのtop(テーブル表示)
-     * @param int $id
+     * @param int $buildingId
      * @return response
      */
-    public function show(Request $request,$id)
+    public function show(Request $request,$buildingId)
     {
         $rooms = new Room();
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //部屋番号検索
         $keyword = $request->input('room_number');
         if(!empty($keyword)){
             $query = Room::with('building');
-            $query->where('building_id','=',$id);
+            $query->where('building_id','=',$buildingId);
             $query->where(function ($query) use($keyword) {
                 $query->where('room_number',$keyword)->orWhere('room_number','like','%'.$keyword);
             });
             $rooms = $query->orderBy('id','asc')->get();
         }else{
-            $rooms = $rooms->getForRoomsShow($id);
+            $rooms = $rooms->getForRoomsShow($buildingId);
         }
         //散布図用
         $salesController = new SalesController();
@@ -56,7 +58,10 @@ class BuildingsController extends Controller
      */
     public function stucking($buildingId)
     {
-        $building = Building::select('id','building_name')->find($buildingId);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
+
         $floorNumbers = Room::where('building_id',$buildingId)
                         ->select('floor_number')
                         ->groupBy('floor_number')
@@ -66,11 +71,14 @@ class BuildingsController extends Controller
     }
     /**
      *  階数別検索
-     * @param $building->id,$floor_number
+     * @param $buildingId,$floor_number
+     * @return response
      */
-    public function floorSort($id,$floor)
+    public function floorSort($buildingId,$floor)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         //全階数取得
         $floor_numbers = [];
         foreach($building->rooms as $room){
@@ -79,7 +87,7 @@ class BuildingsController extends Controller
         $floor_numbers = array_unique($floor_numbers);
 
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('floor_number',$floor)
                         ->orderBy('id','asc')
                         ->get();
@@ -87,17 +95,20 @@ class BuildingsController extends Controller
         $publishedPrice = $salesController->publishedPrice($rooms);
         $rentController = new RentController();
         $minExpectedRentPrice = $rentController->minExpectedRentPrice($rooms);
+
         return view('buildings.floor',compact('rooms','building','floor_numbers','floor','publishedPrice','minExpectedRentPrice'));
     }
     /**
      * 間取タイプ別検索
-     * @param $building->id,$layout_type
+     * @param $buildingId,$layout_type
      */
-    public function layoutTypeSort($id,$layoutType)
+    public function layoutTypeSort($buildingId,$layoutType)
     {
-        $building = Building::select('id','building_name')->find($id);
+        $building = Building::with(['rooms' => function($query){
+            $query->where('expected_price','>',0);
+        }])->select('id','building_name','total_unit')->find($buildingId);
         $rooms = Room::with('building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters')
-                        ->where('building_id',$id)
+                        ->where('building_id',$buildingId)
                         ->where('layout_type',$layoutType)
                         ->orderBy('id','asc')
                         ->get();
@@ -106,6 +117,7 @@ class BuildingsController extends Controller
         $rentController = new RentController();
         $minExpectedRentPrice = $rentController->minExpectedRentPrice($rooms);
         $layout_type = rtrim($layoutType);
+
         return view('buildings.layoutType',compact('rooms','building','layout_type','publishedPrice','minExpectedRentPrice'));
     }
 

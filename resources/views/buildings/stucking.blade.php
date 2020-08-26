@@ -3,20 +3,13 @@
 @section('title',$building->building_name)
 
 @section('content')
-
 <div class="flex">
-    <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></h2>
+    @include('components.roomsFlexHeader')
 
-    </div>
-    <div class='items'>
-        <a href="{{ route('buildings_show',$building->id) }}">テーブル表示</a>
-        <p class='block'>/ スタッキング表示</p>
-    </div>
     {!! Form::open(['route' => ['buildings_show',$building->id],'method' => 'get']) !!}
         <div class="items">
-        <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
-        <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
+            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
+            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
             {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
             {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
         </div>

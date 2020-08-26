@@ -8,16 +8,17 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <div class="flex">
-    <div class="items">
-        <a href="{{ route('buildings_show',$building->id) }}"><h2>{{ $building->building_name }}</h2></a>
-    </div>
-        {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
-            <div class="items">
-                {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
-            </div>
-        {!! Form::close() !!}
+    @include('components.roomsFlexHeader')
+
+    {!! Form::open(['route' => ['building_stocks',$building->id],'method' => 'get']) !!}
+        <div class="items">
+            <a href="{{ route('building_sales',$building->id) }}" class='btn btn-danger'>売買</a>
+            {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
+            {!! Form::submit('検索',['class' => 'btn btn-success']) !!}
+        </div>
+    {!! Form::close() !!}
 </div>
 
 <h3 class='chart_building_name'>間取タイプ {{ $layout_type }}</h3>
@@ -46,7 +47,7 @@ Highcharts.chart('unit_price', {
     title: {
         text:'予想賃料坪単価'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -102,7 +103,7 @@ Highcharts.chart('unit_price', {
         data:[
             @foreach($rooms as $room)
                 @if($room->occupied_area != 0)
-                    @php            
+                    @php
                         $publishedUnitPrice = round($room->expected_rent_price / ($room->occupied_area * 0.3025));
                         $result = $room->room_number.','.$publishedUnitPrice;
                     @endphp
@@ -111,7 +112,7 @@ Highcharts.chart('unit_price', {
             @endforeach
         ]
     }]
-    
+
 });
 
 // 賃料価格散布図
@@ -123,7 +124,7 @@ Highcharts.chart('rent', {
     title: {
         text:'予想賃料'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -179,7 +180,7 @@ Highcharts.chart('rent', {
         data:[
             @foreach($rooms as $room)
                 @if($room->expected_rent_price != 0)
-                    @php            
+                    @php
                         $result = $room->room_number.','.$room->expected_rent_price;
                     @endphp
                     [{{$result}}],

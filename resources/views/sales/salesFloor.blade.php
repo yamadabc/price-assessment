@@ -5,17 +5,17 @@
 @section('content')
 
 <div class="flex">
-    <div class="items">
-        <h2><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a>・売買</h2>
-    </div>
-        {!! Form::open(['route' => ['building_sales',$building->id],'method' => 'get']) !!}
-            <div class="items">
-                <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
-                {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
-                {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
-            </div>
-        {!! Form::close() !!}
+    @include('components.roomsFlexHeader')
+
+    {!! Form::open(['route' => ['building_sales',$building->id],'method' => 'get']) !!}
+        <div class="items">
+            <a href="{{ route('building_stocks',$building->id) }}" class='btn btn-success'>賃貸</a>
+            {!! Form::text('room_number',old('room_number'),['placeholder'=>'部屋番号を入力']) !!}
+            {!! Form::submit('検索',['class' => 'btn btn-info']) !!}
+        </div>
+    {!! Form::close() !!}
 </div>
+
 <p class='chart_building_name'>
     @foreach($floor_numbers as $floor_number)
         <a href="{{ route('floor_sort.sales',[$building->id,$floor_number]) }}">{{ $floor_number }} / </a>
@@ -45,7 +45,7 @@ Highcharts.chart('container', {
     title: {
         text: {{ $floor }} + '階 売買坪単価'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -101,7 +101,7 @@ Highcharts.chart('container', {
         data:[
             @foreach($rooms as $room)
                 @if($room->occupied_area != 0)
-                    @php            
+                    @php
                         $publishedUnitPrice = round($room->published_price / ($room->occupied_area * 0.3025));
                         $result = $room->room_number.','.$publishedUnitPrice;
                     @endphp
@@ -115,7 +115,7 @@ Highcharts.chart('container', {
         data: [
             @foreach($rooms as $room)
                 @if($room->occupied_area != 0)
-                    @php            
+                    @php
                         $expectedUnitPrice = round($room->expected_price / ($room->occupied_area * 0.3025));
                         $ooyamaResult = $room->room_number.','.$expectedUnitPrice;
                     @endphp
@@ -135,7 +135,7 @@ Highcharts.chart('price', {
     title: {
         text: {{ $floor }} + '階 売買価格'
     },
-    
+
     xAxis: {
         title: {
             enabled: true,
@@ -191,7 +191,7 @@ Highcharts.chart('price', {
         data:[
             @foreach($rooms as $room)
                 @if($room->published_price != 0)
-                    @php            
+                    @php
                         $result = $room->room_number.','.$room->published_price;
                     @endphp
                     [{{$result}}],
@@ -204,7 +204,7 @@ Highcharts.chart('price', {
         data: [
             @foreach($rooms as $room)
                 @if($room->expected_price != 0)
-                    @php            
+                    @php
                         $ooyamaResult = $room->room_number.','.$room->expected_price;
                     @endphp
                     [{{$ooyamaResult}}],
