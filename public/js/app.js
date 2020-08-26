@@ -19337,7 +19337,7 @@ var options = {
 };
 var roomList = new List('rooms', options);
 var optionsForBuildings = {
-  valueNames: ['name', 'total_unit', 'countPublishedPrice', 'countExpectedPrice', 'percent']
+  valueNames: ['name', 'total_unit', 'countPublishedPrice', 'countExpectedPrice', 'percent', 'publishedMedian', 'expectedMedian', 'occupiedAreaMedian', 'expectedRentMedian', 'rimawari']
 };
 var buildingList = new List('buildings', optionsForBuildings);
 var optionsForSales = {
