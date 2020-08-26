@@ -7,6 +7,7 @@ use App\Building;
 use App\Room;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\RentController;
+use App\Library\BaseClass;
 
 class BuildingsController extends Controller
 {
@@ -16,7 +17,8 @@ class BuildingsController extends Controller
     public function index()
     {
         $buildings = Building::getWithRooms();
-        return view('welcome',compact('buildings'));
+        $baseClass = new BaseClass();
+        return view('welcome',compact('buildings','baseClass'));
     }
 
     /**

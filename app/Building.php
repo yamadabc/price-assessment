@@ -41,9 +41,9 @@ class Building extends Model
     //building@index
     public static function getWithRooms()
     {
-        return self::with('rooms:id,building_id,published_price,expected_price,expected_rent_price')->orderBy('id')->select('id','building_name','total_unit')->get();
+        return self::with('rooms:id,building_id,published_price,expected_price,expected_rent_price,occupied_area')->orderBy('id')->select('id','building_name','total_unit')->get();
     }
-    
+
     public function getOrderBy()
     {
         return $this->rooms()->orderBy('id');
