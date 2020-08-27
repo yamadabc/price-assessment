@@ -4,9 +4,8 @@
 
 @section('content')
 
-<div class="container">
     <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-sm-4">
             <h3>部屋情報新規入力</h3>
             <h3><a href="{{ route('buildings_show',$building->id) }}">{{ $building->building_name }}</a></h3>
             @if ($errors->any())
@@ -124,7 +123,6 @@
             {!! Form::submit('登録する',['class'=>'btn btn-success btn-block']) !!}
             {!! Form::close() !!}
         </div>
-    </div>
     </div>
 </div>
 

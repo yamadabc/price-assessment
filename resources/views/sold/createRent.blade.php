@@ -4,9 +4,8 @@
 
 @section('content')
 
-<div class="container">
     <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-sm-4">
             <h3>賃貸成約情報新規入力</h3>
             <h3><a href="{{ route('buildings_show',$room->building_id) }}">{{ $room->building->building_name }}</a>{{ $room->room_number }}号室</h3>
             @if ($errors->any())
@@ -32,11 +31,11 @@
                     </div>
                 </div>
             </div>
-                
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-5">{!! Form::label('previous_price','成約前の賃料') !!}</div>
-                    <div class="col-sm-7">    
+                    <div class="col-sm-7">
                         <div class="input-group">
                             {!! Form::text('previous_price',old('previous_price'),['class'=>'form-control']) !!}
                             <div class='input-group-append'>
@@ -164,7 +163,6 @@
         </div>
     </div>
     </div>
-</div>
 
 
 @endsection
