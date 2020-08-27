@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','物件一覧')
+@section('title','査定進捗管理')
 
 @section('content')
 <div id='buildings'>
@@ -18,15 +18,15 @@
                     <tr>
                         <th>物件id</th>
                         <th class='sort' data-sort='name'>物件名</th>
-                        <th class='sort' data-sort='publishedMedian'>中央値(新築)</th>
-                        <th class='sort' data-sort='expectedMedian'>中央値(予想)</th>
-                        <th class='sort' data-sort='occupiedAreaMedian'>中央値(専有面積)</th>
-                        <th class='sort' data-sort='expectedRentMedian'>中央値(賃料坪単価)</th>
-                        <th class='sort' data-sort='rimawari'>中央値(利回り)</th>
+                        <th class='sort' data-sort='publishedMedian'>中央値<br>(新築)</th>
+                        <th class='sort' data-sort='expectedMedian'>中央値<br>(予想)</th>
+                        <th class='sort' data-sort='occupiedAreaMedian'>中央値<br>(専有面積)</th>
+                        <th class='sort' data-sort='expectedRentMedian'>中央値<br>(賃料坪単価)</th>
+                        <th class='sort' data-sort='rimawari'>中央値<br>(利回り)</th>
                         <th class='sort' data-sort='total_unit'>総戸数</th>
-                        <th class='sort' data-sort='countPublishedPrice'>新築時価格有り戸数</th>
-                        <th class='sort' data-sort='countExpectedPrice'>大山査定数</th>
-                        <th class='sort' data-sort='percent'>査定進捗率(総戸数比)</th>
+                        <th class='sort' data-sort='countPublishedPrice'>新築時価格<br>有り戸数</th>
+                        <th class='sort' data-sort='countExpectedPrice'>査定数</th>
+                        <th class='sort' data-sort='percent'>査定進捗率<br>(総戸数比)</th>
                     </tr>
                 </thead>
                 <tbody class='list'>
