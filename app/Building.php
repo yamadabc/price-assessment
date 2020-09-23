@@ -44,11 +44,10 @@ class Building extends Model
         return self::with('rooms:id,building_id,published_price,expected_price,expected_rent_price,occupied_area')->orderBy('id')->select('id','building_name','total_unit')->get();
     }
 
-    public function getOrderBy()
-    {
-        return $this->rooms()->orderBy('id');
-    }
-
+    /**
+     * 物件の査定終了部屋数をカウント
+     * @return int
+     */
     public function countExpectedPrice()
     {
         $expectedPriceCount = 0;
@@ -62,6 +61,10 @@ class Building extends Model
         return $expectedPriceCount;
     }
 
+    /**
+     * 物件の新築時価格あり戸数をカウント
+     * @return int
+     */
     public function countPublishedPrice()
     {
         $publishedPriceCount = 0;

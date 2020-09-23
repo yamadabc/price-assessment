@@ -8,6 +8,9 @@ class StockSalesRoom extends Model
 {
     protected $guarded = ['id'];
 
+    /**
+     * この賃貸在庫情報をもつ部屋を取得
+     */
     public function room()
     {
         return $this->belongsTo('App\Room');
@@ -16,7 +19,7 @@ class StockSalesRoom extends Model
     /**
      * nullなら0を代入
      * @param Request $request
-     * @return int[]
+     * @return float[]
      */
     public function nullSubZero($request)
     {

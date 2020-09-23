@@ -51,7 +51,11 @@ class Room extends Model
         return $this->hasMany('App\CopyOfRegister');
     }
 
-    //rooms@sales
+    /**
+     * 最新の売買の在庫情報と成約情報を取得
+     * @param int $id
+     * @return object[]
+     */
     public function getRoomSalesVer($id)
     {
         $soldSalesRoom  = $this::find($id)->soldSalesRooms()->orderBy('created_at','desc')->first();
@@ -62,38 +66,63 @@ class Room extends Model
             'stockSalesRoom' => $stockSalesRoom,
         ];
     }
-    //rooms@rent
-    public function getRoomRentVer($id)
+    /**
+     * この部屋の最新の賃貸の在庫情報と成約情報を取得
+     * @param int $room_id
+     * @return object[]
+     */
+    public function getRoomRentVer($room_id)
     {
-        $soldRentRoom  = $this::find($id)->soldRentRooms()->orderBy('created_at','desc')->first();
-        $stockRentRoom = $this::find($id)->stockRentRooms()->orderBy('created_at','desc')->first();
+        $soldRentRoom  = $this::find($room_id)->soldRentRooms()->orderBy('created_at','desc')->first();
+        $stockRentRoom = $this::find($room_id)->stockRentRooms()->orderBy('created_at','desc')->first();
 
         return [
             'soldRentRoom'  => $soldRentRoom,
             'stockRentRoom' => $stockRentRoom,
         ];
     }
-    //building@show
+    /**
+     * 該当物件の部屋情報を物件idから取得
+     * @param int $building_id
+     * @return object
+     */
     public function getForRoomsShow($id)
     {
         return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
     }
-    //rooms@show
+    /**
+     * この部屋の情報を売買成約情報と登記簿情報と共に取得
+     * @param int $room_id
+     * @return object
+     */
     public function getForRoomsShowRoomId($id)
     {
         return $this->with(['soldSalesRooms:id,room_id,price','copyOfRegisters:id,room_id,pdf_filename'])->find($id);
     }
-    //building@sales
+
+    /**
+     * この部屋の情報を売買情報メインで取得
+     * @param int $id
+     * @param object
+     */
     public function getForSales($id)
     {
         return $this->with(['building:id,building_name','soldSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','stockSalesRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
     }
-    //building@stocks
+    /**
+     * この部屋の情報を賃貸情報メインで取得
+     * @param int $building_id
+     * @param object
+     */
     public function getForRent($id)
     {
         return $this->with(['building:id,building_name','soldRentRooms:id,room_id,price,previous_price,changed_at,registered_at','stockRentRooms:id,room_id,price,previous_price,changed_at,registered_at','copyOfRegisters:id,room_id,pdf_filename'])->where('building_id',$id)->orderBy('id','asc')->get();
     }
-    //nullなら0を代入
+    /**
+     * nullなら0を代入
+     * @param Request $request
+     * @return int[]
+     */
     public function nullSubZero($request)
     {
         if($request->occupied_area === null){
@@ -101,19 +130,19 @@ class Room extends Model
         }else{
             $occupied_area = $request->occupied_area;
         }
-        
+
         if($request->published_price === null){
             $published_price = "";
         }else{
             $published_price = $request->published_price;
         }
-        
+
         if($request->expected_price === null){
             $expected_price = "";
         }else{
             $expected_price = $request->expected_price;
         }
-        
+
         if($request->expected_rent_price === null){
             $expected_rent_price = "";
         }else{
@@ -128,6 +157,11 @@ class Room extends Model
         ];
     }
 
+    /**
+     * この部屋の最新の登記簿謄本を取得
+     * @param int $id
+     * @return int
+     */
     public function getCopyOfRegisters($id)
     {
         $end = $this->copyOfRegisters;

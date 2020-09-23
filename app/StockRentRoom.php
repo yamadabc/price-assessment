@@ -16,7 +16,7 @@ class StockRentRoom extends Model
     /**
      * nullなら0を代入
      * @param Request $request
-     * @return int[]
+     * @return float[]
      */
     public function nullSubZero($request)
     {
